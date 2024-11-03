@@ -127,6 +127,17 @@
                         </div>
                     </div>
                 </div>
+
+                <b-alert
+                    :show="dismissCountDown"
+                    dismissible
+                    fade
+                    variant="warning"
+                    @dismiss-count-down="countDownChanged"
+                    class="custom-alert"
+                >
+                    This alert will dismiss after {{ dismissCountDown }} seconds...
+                </b-alert>
             </div>
         </div>
 
@@ -227,6 +238,8 @@
                 <b-button variant="warning" value="1" @click="updateAlbum()">Update</b-button>
             </template>
         </b-modal>
+
+        
                             
     </div>
 </template>
@@ -246,6 +259,9 @@
                     album_tags: [],
                     album_tags_new:[],
                     data_eventInformation:{},
+                    dismissSecs: 5,
+                    dismissCountDown: 0,
+                    showDismissibleAlert: false
                 }
             },
             mounted(){
@@ -297,7 +313,9 @@
                         formData_.append('event_tags', this.album_tags_new);
                         
                         const response_ = await assets_service.updateAlbum(this.event_id, formData_);
+                        this.$refs['modal_albumInfo'].hide();
                         console.log("Event Information updated successfully!");
+                        this.dismissCountDown = this.dismissSecs
                     }
                     catch(error){
                         console.log("An error occurred!");
@@ -306,3 +324,14 @@
             }
         }
 </script>
+
+<style>
+    .custom-alert {
+        position: fixed;
+        bottom: 10px; /* Adjust to move closer or farther from the bottom */
+        right: 10px; /* Adjust to move closer or farther from the right */
+        z-index: 1050; /* Ensure it's on top of other elements */
+        max-width: 300px; /* Optional: Control width */
+        padding: 15px; /* Add padding for better spacing within the alert */
+    }
+</style>
