@@ -55,6 +55,10 @@ export function getAllListVideo(){
     return http().get('/getAllListVideo');
 }
 
+export function getAlbumStatus(album_id){
+    return httpFile().post(`/getAlbumStatus/${album_id}`);
+}
+
 export function countAlbumEntry(){
     return http().get('/countAlbumEntry');
 }
@@ -63,12 +67,20 @@ export function countAlbumPhotoEntry(album_id){
     return httpFile().post(`/countAlbumPhotoEntry/${album_id}`);
 }
 
+export function checkTagsExists(album_id, tag_name){
+    return httpFile().post(`/checkTagsExists/${album_id}/${tag_name}`);
+}
+
 export function getEventDetails(album_id){
     return httpFile().post(`/getEventDetails/${album_id}`);
 }
 
 export function getListPhoto_selected(album_id){
     return httpFile().post(`/getListPhoto_selected/${album_id}`);
+}
+
+export function getAlbumID(id){
+    return httpFile().post(`/getAlbumID/${id}`);
 }
 
 export function getListVideo_selected(album_id){

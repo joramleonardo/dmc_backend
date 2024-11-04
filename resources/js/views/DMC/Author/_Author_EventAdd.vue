@@ -409,28 +409,6 @@
                         { value: '16', text: 'Service Directors' },
                         { value: '17', text: 'Undersecretaries' }
                     ],
-                    selected_category_album: null,
-                    options_category_album: [
-                        { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Anniversary' },
-                        { value: '2', text: 'Awarding Ceremonies' },
-                        { value: '3', text: 'Building Inauguration' },
-                        { value: '4', text: 'Conference' },
-                        { value: '5', text: 'Convention' },
-                        { value: '6', text: 'Exhibits' },
-                        { value: '7', text: 'Forum' },
-                        { value: '8', text: 'MOA Signing' },
-                        { value: '9', text: 'MOU Signing' },
-                        { value: '10', text: 'NSTW' },
-                        { value: '11', text: 'NYSTIF' },
-                        { value: '12', text: 'Program Launch' },
-                        { value: '13', text: 'Prject Launch' },
-                        { value: '14', text: 'Project Visit' },
-                        { value: '15', text: 'RSTW' },
-                        { value: '16', text: 'Scholarship' },
-                        { value: '17', text: 'Scientific Meeting' },
-                        { value: '18', text: 'Training/Seminar' }
-                    ],
                     selected_category_photo: null,
                     options_category_photo: [
                         { value: null, text: 'Please select category', disabled: true},

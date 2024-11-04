@@ -73,12 +73,16 @@ Route::get('getAllListUnpublished', [AssetsController::class, 'getAllListUnpubli
 Route::get('getAllListPhoto', [AssetsController::class, 'getAllListPhoto']);
 Route::post('/getEventDetails/{album_id}', [AssetsController::class, 'getEventDetails']);
 Route::post('/getListPhoto_selected/{album_id}', [AssetsController::class, 'getListPhoto_selected']);
+Route::post('/getAlbumID/{id}', [AssetsController::class, 'getAlbumID']);
 Route::post('/getListVideo_selected/{album_id}', [AssetsController::class, 'getListVideo_selected']);
 Route::post('/getTags_selected/{album_id}', [AssetsController::class, 'getTags_selected']);
 Route::get('getAllListVideo', [AssetsController::class, 'getAllListVideo']);
+Route::post('/getAlbumStatus/{album_id}', [AssetsController::class, 'getAlbumStatus']);
 
 Route::get('countAlbumEntry', [AssetsController::class, 'countAlbumEntry']);
 Route::post('/countAlbumPhotoEntry/{album_id}', [AssetsController::class, 'countAlbumPhotoEntry']);
+Route::post('/checkTagsExists/{album_id}/{tag_name}', [AssetsController::class, 'checkTagsExists']);
+
 // Route::post('/countEntry/{date}', 'TicketController@countEntry');
 
 

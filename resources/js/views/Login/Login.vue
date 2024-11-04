@@ -83,7 +83,8 @@
                         this.$router.push('/admin/home/dashboard');
                     } 
                     else if(role_data == 'encoder'){
-                        this.$router.push('/author/home/dashboard');
+                        // this.$router.push('/author/home/dashboard');
+                        this.$router.push('/author/events');
                     } 
                     else if(role_data == 'publisher'){
                         this.$router.push('/pub/dashboard');

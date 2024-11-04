@@ -60,9 +60,8 @@ class AssetsController extends Controller
 
                     $data = new Photo(); 
                     $data->album_id = $item['album_id'];
-                    // $data->photo_id = $item['photo_id'];
+                    $data->photo_id = $item['photo_id'];
                     $data->photo_fileName = $file_newName;
-                    $data->photo_personInvolved = $item['photo_personInvolved'];
                     $data->photo_title = $item['photo_title'];
                     $data->photo_category = $item['photo_category'];
                     $data->photo_description = $item['photo_description'];
@@ -83,7 +82,6 @@ class AssetsController extends Controller
             $data->video_link = $item['video_link'];
             $data->video_youtubeID = $item['video_youtubeID'];
             $data->video_title = $item['video_title'];
-            $data->video_personInvolved = $item['video_personInvolved'];
             $data->video_category = $item['video_category'];
             $data->video_duration = $item['video_duration'];
             $data->video_type = $item['video_type'];
@@ -101,11 +99,46 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
 
-    public function countAlbumPhotoEntry(Request $album_id){
+    public function countAlbumPhotoEntry(Request $request, $album_id){
+        $data = Photo::where('album_id', $album_id)
+                            ->count();
+        return response()->json($data, 200);
+    }
+
+    public function checkTagsExists(Request $request, $album_id, $tag_name){
+        // Check if the tag exists
+        $exists = AlbumTags::where('album_id', $album_id)
+                            ->where('album_tagName', $tag_name)->exists();
+
+        if ($exists) {
+            // Tag already exists
+            return response()->json(['message' => 'exists']);
+        } else {
+            // Tag does not exist
+            // Proceed to create the tag or other actions
+            // Tag::create(['tag_name' => $tagName]);
+            return response()->json(['message' => 'none']);
+        }
+
+        // $data = AlbumTags::where('tbl_album_tags.album_id', $album_id)
+        //                     ->count();
+        // return response()->json($data, 200);
+    }
+    
+
+    public function countAlbumTags(Request $album_id){
         $data = Photo::where('tbl_photo.photo_id', $album_id)
                             ->count();
         return response()->json($data, 200);
     }
+
+    public function getAlbumStatus(Request $request, $album_id){
+        $data = AlbumStatus::where('album_id', $album_id)
+                            ->get('*');
+    
+        return response()->json($data, 200);
+}
+
     public function getAllListEvents(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
                     ->orderBy('tbl_album.created_at', 'desc')
@@ -113,7 +146,6 @@ class AssetsController extends Controller
         
             return response()->json($data, 200);
     }
-
 
     public function getAllListDraft(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
@@ -160,12 +192,6 @@ class AssetsController extends Controller
             return response()->json($data, 200);
     }
 
-    // public function getAllListDraft(Request $request){
-    //         $data = Assets::get('*');
-
-    //         return response()->json($data, 200);
-    // }
-
 
     public function getEventDetails(Request $request, $album_id){
               $data = Assets::where('tbl_album.id', $album_id)
@@ -181,6 +207,12 @@ class AssetsController extends Controller
     public function getListPhoto_selected(Request $request, $album_id){
         // return $request;
               $data = Photo::where('tbl_photo.album_id', $album_id)
+                    ->get('*');
+        return response()->json($data, 200);
+    }
+    public function getAlbumID(Request $request, $id){
+        // return $request;
+              $data = Assets::where('id', $id)
                     ->get('*');
         return response()->json($data, 200);
     }

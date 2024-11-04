@@ -22679,8 +22679,8 @@ Progressbg
   color: #ffffff;
   text-align: center;
   text-transform: uppercase;
-  background: var(--tblr-primary);
-  border-color: var(--tblr-primary);
+  /* background: var(--tblr-primary);
+  border-color: var(--tblr-primary); */
   border-radius: var(--tblr-ribbon-border-radius) 0 var(--tblr-ribbon-border-radius) var(--tblr-ribbon-border-radius);
   display: inline-flex;
   align-items: center;

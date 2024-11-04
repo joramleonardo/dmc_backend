@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="d-flex">
-                            <b-button size="sm" @click="viewAlbumInfo()" class="mr-1" variant="primary">
+                            <b-button size="sm" @click="addAlbumInfo()" class="mr-1" variant="primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                                     Add Event
                             </b-button>
@@ -22,6 +22,365 @@
         <div class="page-body">
             <div class="tabler-container-xl">
                 <div class="row row-cards">
+                    <div class="col-lg-12">
+                        <div >
+                            <b-tabs card>
+                                <b-tab active>
+                                    <template #title>
+                                        All 
+                                        <span v-if="totalRows_allEvents != 0">
+                                            <b-badge variant="primary">{{totalRows_allEvents}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards">
+                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_allEvents" :key="index">
+                                            <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
+                                                <div class="card card-sm">
+                                                    <a class="d-block">
+                                                        <img src="images/no_img.jpg" class="card-img-top">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="font-size: 12px; font-weight: 600;">
+                                                                <div>{{event.event_title}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="margin-top: 1%;">
+                                                                <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Published' ">
+                                                                    <span class="badge bg-green text-green-fg">Published</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Unpublished' ">
+                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'For Revision' ">
+                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <a class="text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                    467
+                                                                </a>
+                                                                <a class="ms-3 text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    67
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </b-tab>
+                                <b-tab>
+                                    <template #title>
+                                        Drafts 
+                                        <span v-if="totalRows_draft != 0">
+                                            <b-badge variant="danger">{{totalRows_draft}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards">
+                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_draft" :key="index">
+                                            <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
+                                                <div class="card card-sm">
+                                                    <a class="d-block">
+                                                        <img src="images/no_img.jpg" class="card-img-top">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="font-size: 12px; font-weight: 600;">
+                                                                <div>{{event.event_title}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="margin-top: 1%;">
+                                                                <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Published' ">
+                                                                    <span class="badge bg-green text-green-fg">Published</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Unpublished' ">
+                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'For Revision' ">
+                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <a class="text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                    467
+                                                                </a>
+                                                                <a class="ms-3 text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    67
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </b-tab>
+                                <b-tab >
+                                    <template #title>
+                                        Submitted for Review 
+                                        <span v-if="totalRows_forReview != 0">
+                                            <b-badge variant="danger">{{totalRows_forReview}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards">
+                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_forReview" :key="index">
+                                            <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
+                                                <div class="card card-sm">
+                                                    <a class="d-block">
+                                                        <img src="images/no_img.jpg" class="card-img-top">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="font-size: 12px; font-weight: 600;">
+                                                                <div>{{event.event_title}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="margin-top: 1%;">
+                                                                <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Published' ">
+                                                                    <span class="badge bg-green text-green-fg">Published</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Unpublished' ">
+                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'For Revision' ">
+                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <a class="text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                    467
+                                                                </a>
+                                                                <a class="ms-3 text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    67
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </b-tab>
+                                <b-tab >
+                                    <template #title>
+                                        To Be Revised 
+                                        <span v-if="totalRows_forRevision != 0">
+                                            <b-badge variant="danger">{{totalRows_forRevision}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards">
+                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_forRevision" :key="index">
+                                            <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
+                                                <div class="card card-sm">
+                                                    <a class="d-block">
+                                                        <img src="images/no_img.jpg" class="card-img-top">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="font-size: 12px; font-weight: 600;">
+                                                                <div>{{event.event_title}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="margin-top: 1%;">
+                                                                <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Published' ">
+                                                                    <span class="badge bg-green text-green-fg">Published</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Unpublished' ">
+                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'For Revision' ">
+                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <a class="text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                    467
+                                                                </a>
+                                                                <a class="ms-3 text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    67
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </b-tab>
+                                <b-tab >
+                                    <template #title>
+                                        Unpublished 
+                                        <span v-if="totalRows_unpublished != 0">
+                                            <b-badge variant="warning">{{totalRows_unpublished}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards">
+                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_unpublished" :key="index">
+                                            <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
+                                                <div class="card card-sm">
+                                                    <a class="d-block">
+                                                        <img src="images/no_img.jpg" class="card-img-top">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="font-size: 12px; font-weight: 600;">
+                                                                <div>{{event.event_title}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="margin-top: 1%;">
+                                                                <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Published' ">
+                                                                    <span class="badge bg-green text-green-fg">Published</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Unpublished' ">
+                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'For Revision' ">
+                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <a class="text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                    467
+                                                                </a>
+                                                                <a class="ms-3 text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    67
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </b-tab>
+                                <b-tab >
+                                    <template #title>
+                                        Published 
+                                        <span v-if="totalRows_published != 0">
+                                            <b-badge variant="success">{{totalRows_published}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                        
+                                    </template>
+                                    <div class="row row-cards">
+                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_published" :key="index">
+                                            <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
+                                                <div class="card card-sm">
+                                                    <a class="d-block">
+                                                        <img src="images/no_img.jpg" class="card-img-top">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="font-size: 12px; font-weight: 600;">
+                                                                <div>{{event.event_title}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div style="margin-top: 1%;">
+                                                                <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Published' ">
+                                                                    <span class="badge bg-green text-green-fg">Published</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'Unpublished' ">
+                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
+                                                                </div>
+                                                                <div v-if="event.album_status === 'For Revision' ">
+                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <a class="text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                    467
+                                                                </a>
+                                                                <a class="ms-3 text-secondary">
+                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                    67
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                           
+                                            </router-link>
+                                        </div>
+                                    </div>
+                                </b-tab>
+                            </b-tabs>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row row-cards">
                     <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_allEvents" :key="index">
                         <router-link v-bind:to="{name : 'album', params: { id: event.id}}"  target="_blank" style="text-decoration: none;">
                             <div class="card card-sm">
@@ -67,11 +426,11 @@
                             </div>                           
                         </router-link>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
-        <b-modal id="modal_albumInfo" ref="modal_albumInfo"  title="Event Information" size="lg" centered ok-only >
+        <b-modal id="modal_addAlbumInfo" ref="modal_addAlbumInfo"  title="Event Information" size="lg" centered ok-only >
             
             <div class="card" id="createEventForm" >
                 <div class="card-header">
@@ -169,7 +528,7 @@
         </b-modal>
 
         <b-modal id="modal_savedSuccessfully" ref="modal_savedSuccessfully" centered title="Success" hide-footer no-close-on-backdrop
-        :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
+            :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
             <div>
                 <h5>Album was created successfully!</h5>
             </div>
@@ -365,12 +724,27 @@
                         reference_code:''
                     },
                     list_allEvents: [],
+                    list_draft: [],
+                    list_forRevision: [],
+                    list_forReview: [],
+                    list_published: [],
+                    list_unpublished: [],
                     totalRows_allEvents: '',
+                    totalRows_draft: '',
+                    totalRows_forRevision: '',
+                    totalRows_forReview: '',
+                    totalRows_published: '',
+                    totalRows_unpublished: '',
                 }
             },
             mounted(){
                 this.userData();
                 this.loadAllEvents();
+                this.loadDraftList();
+                this.loadForReviewList();
+                this.loadForRevisionList();
+                this.loadPublishedList();
+                this.loadUnpublishedList();
             },
             methods: {
                 // open_requiredfields(){
@@ -403,8 +777,13 @@
                 },
                 reloadPage() {
                     this.$refs.modal_savedSuccessfully.hide();
-                    this.$refs.modal_albumInfo.hide();
+                    this.$refs.modal_addAlbumInfo.hide();
                     this.loadAllEvents();
+                    this.loadDraftList();
+                    this.loadForReviewList();
+                    this.loadForRevisionList();
+                    this.loadPublishedList();
+                    this.loadUnpublishedList();
                     // window.location.reload();
                 },
                 createTicket_external: async function(value) {
@@ -527,6 +906,66 @@
                         });
                     }
                 },
+                loadDraftList: async function() {
+                    try{
+                        const response = await assets_service.getAllListDraft();
+                        this.list_draft = response.data;
+                        this.totalRows_draft = this.list_draft.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadForRevisionList: async function() {
+                    try{
+                        const response = await assets_service.getAllListForRevision();
+                        this.list_forRevision = response.data;
+                        this.totalRows_forRevision= this.list_forRevision.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadForReviewList: async function() {
+                    try{
+                        const response = await assets_service.getAllListForReview();
+                        this.list_forReview = response.data;
+                        this.totalRows_forReview= this.list_forReview.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadPublishedList: async function() {
+                    try{
+                        const response = await assets_service.getAllListPublished();
+                        this.list_published = response.data;
+                        this.totalRows_published= this.list_published.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadUnpublishedList: async function() {
+                    try{
+                        const response = await assets_service.getAllListUnpublished();
+                        this.list_unpublished = response.data;
+                        this.totalRows_unpublished= this.list_unpublished.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
                 countAlbumPhotoEntry: async function(){
                     
                         // const const_2 = assets_service.countAlbumPhotoEntry(this.album_id);
@@ -545,9 +984,8 @@
                 clearEntry(index){
                     this.photo_tabs.splice(index,1);
                 },
-                viewAlbumInfo() {
-                    
-                    this.$refs['modal_albumInfo'].show();
+                addAlbumInfo() {
+                    this.$refs['modal_addAlbumInfo'].show();
                 },
                 userData: async function(){
                     try{

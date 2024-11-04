@@ -7,13 +7,30 @@
                         <h2 class="page-title">
                             <span style="color: gray;">Events > </span>{{data_eventInformation.event_title}}
                         </h2>
+                        <div style="margin-top: 1%;">
+                            <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                <h5><span class="badge bg-azure text-azure-fg">Draft</span></h5>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                <h5><span class="badge bg-orange text-orange-fg">Under Review</span></h5>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Published' ">
+                                <h5><span class="badge bg-green text-green-fg">Published</span></h5>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'For Revision' ">
+                                <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="d-flex">
-                            <b-button @click="viewAlbumInfo()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo">
+                            <b-button @click="showModal_uploadPhoto()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo">
                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M14 14l1 -1c.67 -.644 1.45 -.824 2.182 -.54" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                             </b-button>
-                            <b-button @click="viewAlbumInfo()" class="mr-1" variant="warning"  v-b-tooltip.hover title="Upload Video">
+                            <b-button @click="showModal_uploadVideo()" class="mr-1" variant="warning"  v-b-tooltip.hover title="Upload Video">
                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /><path d="M7 12l4 0" /><path d="M9 10l0 4" /></svg>    <!-- Upload Photo -->
                             </b-button>
                         </div>
@@ -41,6 +58,12 @@
                             </div>
                             <div class="card-body">
                                 <dl class="row">
+                                    <dt class="col-5">Title:</dt>
+                                    <dd class="col-7">{{data_eventInformation.event_title}}</dd>
+
+                                    <dt class="col-5">Description:</dt>
+                                    <dd class="col-7">{{data_eventInformation.event_description}}</dd>
+
                                     <dt class="col-5">Date:</dt>
                                     <dd class="col-7">{{data_eventInformation.event_date}}</dd>
 
@@ -69,80 +92,172 @@
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <div class="row row-cards">
-                            <div class="space-y">
-                                <div class="card">
-                                    <div class="row g-0">
-                                        <div class="col-auto">
-                                            <div class="card-body">
-                                                <div class="avatar avatar-md" style="background-image: url(./static/jobs/job-1.jpg)"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card-body ps-0">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <h4 class="mb-0"><a href="#">Lead Tailwind Developer</a></h4>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md">
-                                                        <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
-                                                            <div class="list-inline-item"><!-- Download SVG icon from http://tabler-icons.io/i/building-community -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" /><path d="M13 7l0 .01" /><path d="M17 7l0 .01" /><path d="M17 11l0 .01" /><path d="M17 15l0 .01" /></svg>
-                                                            CMS Max</div>
-                                                            <div class="list-inline-item"><!-- Download SVG icon from http://tabler-icons.io/i/license -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11" /><path d="M9 7l4 0" /><path d="M9 11l4 0" /></svg>
-                                                            Full-time</div>
-                                                            <div class="list-inline-item"><!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
-                                                            Remote / USA</div>
-                                                        </div>
-                                                        <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
-                                                            <div class="list-item"><!-- Download SVG icon from http://tabler-icons.io/i/building-community -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8" /><path d="M13 7l0 .01" /><path d="M17 7l0 .01" /><path d="M17 11l0 .01" /><path d="M17 15l0 .01" /></svg>
-                                                            CMS Max</div>
-                                                            <div class="list-item"><!-- Download SVG icon from http://tabler-icons.io/i/license -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11" /><path d="M9 7l4 0" /><path d="M9 11l4 0" /></svg>
-                                                            Full-time</div>
-                                                            <div class="list-item"><!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
-                                                            Remote / USA</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-auto">
-                                                        <div class="mt-3 badges">
-                                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">PHP</a>
-                                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Laravel</a>
-                                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">CSS</a>
-                                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Vue</a>
-                                                        </div>
-                                                    </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                                <li class="nav-item">
+                                    <a href="#tabs-home-7" class="nav-link active" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                        Photos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#tabs-profile-7" class="nav-link" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/user -->
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                        Videos
+                                    </a>
+                                </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active show" id="tabs-home-7">
+                                        
+                                        <div v-if="this.photo_length === 0">
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO PHOTO AVAILAVLE 
                                                 </div>
                                             </div>
                                         </div>
+                                        <div v-else>
+                                            <div class="row row-cards">
+                                                <div class="col-6" v-for="(event, index) in list_photo" :key="index">
+                                                    <div class="card placeholder-glow">
+                                                        
+                                                        <a data-fslightbox="gallery" :href='`/storage/images/${event.photo_fileName}`'>
+                                                            <div class="img-responsive  rounded border" 
+                                                            :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }">
+                                                            </div>
+                                                        </a>
+                                                        <div class="ribbon ribbon-top">
+                                                            <b-button @click="showModal_updatePhoto()" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
+                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                            </b-button>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <dl class="row">
+                                                                <dt class="col-12">Title:</dt>
+                                                                <dd class="col-12">{{event.photo_title}}</dd>
+                                                                <dt class="col-12">Description:</dt>
+                                                                <dd class="col-12">{{event.photo_description}}</dd>
+                                                                <dt class="col-12">Photographer:</dt>
+                                                                <dd class="col-12">{{event.photo_photographer}}</dd>
+                                                                <dt class="col-12">Category:</dt>
+                                                                <dd class="col-12">{{event.photo_category}}</dd>
+                                                                <dt class="col-12">Tags:</dt>
+                                                                <dd class="col-12">{{event.photo_tags}}</dd>
+                                                            </dl>
+                                                        </div>
+                                                        <!-- <div class="col-auto">
+                                                            <div class="dropdown">
+                                                            <a href="#" class="btn-action" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a href="#" class="dropdown-item">Import</a>
+                                                                <a href="#" class="dropdown-item">Export</a>
+                                                                <a href="#" class="dropdown-item">Download</a>
+                                                                <a href="#" class="dropdown-item text-danger">Delete</a>
+                                                            </div>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="tab-pane" id="tabs-profile-7">
+                                            <span v-if="this.video_length === 0">
+                                                <div class="row row-cards">
+                                                    <div class="h3 m-0">
+                                                        NO VIDEO AVAILAVLE 
+                                                    </div>
+                                                </div>
+                                            </span>
+                                            <span v-else>
+                                                <div class="row row-cards">
+                                                    <div class="col-6" v-for="(event, index) in list_video" :key="index">
+                                                        <div class="card placeholder-glow">
+                                                            <div class="ratio ratio-4x3 card-img-top">
+                                                                <!-- <a data-fslightbox="gallery" :href='`/storage/images/${event.photo_fileName}`'>
+                                                                    <div class="img-responsive  rounded border" 
+                                                                    :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }">
+                                                                    </div>
+                                                                </a> -->
+                                                                <iframe width="420" height="315"
+                                                                :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
+                                                                
+                                                            </iframe>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <dl class="row">
+                                                                    <dt class="col-12">Title:</dt>
+                                                                    <dd class="col-12">{{event.video_title}}</dd>
+                                                                    <!-- <dt class="col-12">Description:</dt>
+                                                                    <dd class="col-12">{{event.photo_description}}</dd>
+                                                                    <dt class="col-12">Photographer:</dt>
+                                                                    <dd class="col-12">{{event.photo_photographer}}</dd>
+                                                                    <dt class="col-12">Category:</dt>
+                                                                    <dd class="col-12">{{event.photo_category}}</dd>
+                                                                    <dt class="col-12">Tags:</dt>
+                                                                    <dd class="col-12">{{event.photo_tags}}</dd> -->
+                                                                </dl>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                       
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- <div class="row row-cards">
+                            <div class="table-responsive">
+                                                <table class="table card-table table-vcenter text-nowrap datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="w-1">Photo ID</th>
+                                                            <th>Photo</th>
+                                                            <th>Title</th>
+                                                            <th>Description</th>
+                                                            <th>Category</th>
+                                                            <th>Photographer</th>
+                                                            <th>Tags</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody v-if="photo_length === 0">
+                                                        NO PHOTO AVAILAVLE
+                                                    </tbody>
+                                                    <tbody  v-else>
+                                                            <tr v-for="(event, index) in list_photo" :key="index">
+                                                                <td><span class="text-secondary">001401</span></td>
+                                                                <td>
+                                                                    <a data-fslightbox="gallery" :href='`/storage/images/${event.photo_fileName}`'>
+                                                                        <div class="img-responsive img-responsive-1x1 rounded border" 
+                                                                        :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }">
+                                                                        </div>
+                                                                    </a>
+                                                                </td>
+                                                                <td>{{event.photo_title}}</td>
+                                                                <td>{{event.photo_description}}</td>
+                                                                <td>{{event.photo_category}}</td>
+                                                                <td>{{event.photo_photographer}}</td>
+                                                                <td>{{event.photo_tags}}</td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                        </div> -->
                     </div>
                 </div>
 
-                <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    fade
-                    variant="warning"
-                    @dismiss-count-down="countDownChanged"
-                    class="custom-alert"
-                >
-                    This alert will dismiss after {{ dismissCountDown }} seconds...
-                </b-alert>
+                
             </div>
         </div>
 
-        
-        
         <b-modal id="modal_albumInfo" ref="modal_albumInfo"  title="Event Information" size="lg" centered>
             <div class="card" id="createEventForm" >
                 <div class="card-header">
@@ -153,38 +268,38 @@
                         <div class="col-md-12">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Event Title:</label>
-                            <b-form-input v-model="data_eventInformation.event_title" placeholder="Enter Title..." required></b-form-input>
+                            <b-form-input v-model="data_eventInformation_update.event_title" placeholder="Enter Title..." required></b-form-input>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="mb-3 mb-0">
                             <label class="form-label"><span style="color: red;">* </span>Short Description:</label>
-                            <textarea class="form-control" v-model="data_eventInformation.event_description" rows="2" placeholder="Short description here.."></textarea>
+                            <textarea class="form-control" v-model="data_eventInformation_update.event_description" rows="2" placeholder="Short description here.."></textarea>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Event Date:</label>
-                            <b-form-datepicker required id="eventDate" v-model="data_eventInformation.event_date" class="mb-2"></b-form-datepicker>
+                            <b-form-datepicker required id="eventDate" v-model="data_eventInformation_update.event_date" class="mb-2"></b-form-datepicker>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Event Venue:</label>
-                            <b-form-input required id="input-2" v-model="data_eventInformation.event_venue" placeholder="Enter Venue..."   ></b-form-input>
+                            <b-form-input required id="input-2" v-model="data_eventInformation_update.event_venue" placeholder="Enter Venue..."   ></b-form-input>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Organizing Agency/Office:</label>
-                            <b-form-input v-model="data_eventInformation.event_organizingAgency" placeholder="Enter Organizing Agency/Office..." required></b-form-input>
+                            <b-form-input v-model="data_eventInformation_update.event_organizingAgency" placeholder="Enter Organizing Agency/Office..." required></b-form-input>
                             </div>
                         </div>
                         <div class="ccol-sm-6 col-md-4">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Category:</label>
                                 <div class="col">
-                                    <select class="form-select" v-model="data_eventInformation.event_category">
+                                    <select class="form-select" v-model="data_eventInformation_update.event_category">
                                         <option selected disabled>Please select category</option>
                                         <option value="1">Assistant Secretaries</option>
                                         <option value="2">Deputy Directors</option>
@@ -211,7 +326,7 @@
                             <div class="mb-3">
                                 <label class="form-label"><span style="color: red;">* </span>Sector:</label>
                                 <div class="col">
-                                    <select class="form-select" v-model="data_eventInformation.event_sector">
+                                    <select class="form-select" v-model="data_eventInformation_update.event_sector">
                                         <option selected disabled>Please select sector</option>
                                         <option value="1">Collegial and Scientific Bodies</option>
                                         <option value="2">Regional Offices and S&T Provincial Centers</option>
@@ -239,7 +354,176 @@
             </template>
         </b-modal>
 
-        
+        <b-modal id="modal_uploadPhoto" ref="modal_uploadPhoto"  title="Upload Photo" size="xl" centered>
+            <b-tabs v-model="tabIndex" small card >
+                <b-tab title="Photo" >
+                    <b-card no-body>
+                        <b-tabs card v-model="tabIndex_photo">
+                            <b-tab v-for="(photoEntry, i) in photo_tabs" :key="'dyn-tab-' + i" :title="'Photo ' + (i+1)">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 mb-0">
+                                        <b-form-group >   
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Select Photo:</label>
+                                            <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="photoEntry.photo_fileName">
+                                            </b-form-file>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 mb-0">
+                                        
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photographer:</label>
+                                            <b-form-input  v-model="photoEntry.photo_photographer" placeholder="Enter Photographer..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 col-lg-8 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Title:</label>
+                                            <b-form-input v-model="photoEntry.photo_title" placeholder="Enter Title..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
+                                            <b-form-select id="input-3" v-model="photoEntry.category_photo" :options="options_category_photo"   ></b-form-select>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Short Description of the Photo:</label>
+                                            <b-form-textarea id="textarea" v-model="photoEntry.photo_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Tags:</label>
+                                            <b-form-tags input-id="tags-basic" name="tags" v-model="photoEntry.photo_tags" placeholder="Add new tags separated by enter key..."></b-form-tags>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <b-button style="margin-bottom: 2%" size="sm" variant="danger" class="float-right" @click="clearEntry(i)">
+                                        Clear Entry
+                                </b-button>
+                            </b-tab>
+                            <template #tabs-end>
+                                <b-nav-item role="presentation" @click.prevent="photo_newTab" href="#"><b>+</b></b-nav-item>
+                            </template>
+                            <template #empty>
+                                <div class="text-center text-muted">
+                                    There are no open tabs<br>
+                                    Open a new tab using the <b>+</b> button above.
+                                </div>
+                            </template>
+                        </b-tabs>
+                    </b-card>
+                </b-tab>
+            </b-tabs>
+            <template #modal-footer>
+                <b-button variant="secondary" @click="$bvModal.hide('modal_uploadPhoto')">Close</b-button>
+                <b-button variant="warning" value="1" @click="uploadPhoto()">Upload Photo</b-button>
+            </template>
+        </b-modal>
+
+        <b-modal id="modal_uploadVideo" ref="modal_uploadVideo"  title="Upload Video" size="xl" centered>
+            <b-tabs v-model="tabIndex" small card >
+                <b-tab title="Video">
+                    <b-card no-body>
+                        <b-tabs card>
+                            <b-tab v-for="(videoEntry, i) in vidClip_tabs" :key="'dyn-tab-' + i" :title="'Video Clip ' + (i+1)">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 mb-0">
+                                        <b-form-group >   
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Clip Link:</label>
+                                            <b-form-input id="" v-model="videoEntry.video_link"  placeholder="Enter Youtube Link here..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Title:</label>
+                                            <b-form-input v-model="videoEntry.video_title" placeholder="Enter Title..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration:</label>
+                                            <b-form-input id="input-2" v-model="videoEntry.video_duration" placeholder="Enter duration time..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Type:</label>
+                                            <b-form-select id="input-3" v-model="videoEntry.video_type" :options="options_category_type"   ></b-form-select>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
+                                            <b-form-select id="input-3" v-model="videoEntry.video_category" :options="options_category_video"   ></b-form-select>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Person Involved:</label>
+                                            <b-form-input v-model="videoEntry.video_personInvolved" placeholder="Enter Names..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Videographer:</label>
+                                            <b-form-input  v-model="videoEntry.video_photographer" placeholder="Enter Photographer..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Short Description of the Video:</label>
+                                            <b-form-textarea id="textarea" v-model="videoEntry.video_description" placeholder="Short description of the Video..." rows="3" max-rows="6" ></b-form-textarea>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Clip Tags:</label>
+                                            <b-form-tags input-id="tags-basic" name="tags" v-model="videoEntry.video_tags" placeholder="Add new tags separated by enter key..."></b-form-tags>
+                                        </b-form-group> 
+                                    </div>
+                                </div>
+                                <b-button size="sm" variant="danger" class="float-right" @click="vidClip_closeTab(i)">
+                                        Clear Entry
+                                </b-button>
+                            </b-tab>
+                            <template #tabs-end>
+                                <b-nav-item role="presentation" @click.prevent="vidClip_newTab" href="#"><b>+</b></b-nav-item>
+                            </template>
+                            <template #empty>
+                                <div class="text-center text-muted">
+                                    There are no open tabs<br>
+                                    Open a new tab using the <b>+</b> button above.
+                                </div>
+                            </template>
+                        </b-tabs>
+                    </b-card>
+                </b-tab>
+            </b-tabs>
+            <template #modal-footer>
+                <b-button variant="secondary" @click="$bvModal.hide('modal_uploadPhoto')">Close</b-button>
+                <b-button variant="warning" value="1" @click="uploadVideo()">Upload Video</b-button>
+            </template>
+        </b-modal>
+
+        <b-modal id="modal_updatePhoto" ref="modal_updatePhoto"  title="Update Photo Information" size="xl" centered>
+
+        </b-modal>
                             
     </div>
 </template>
@@ -253,19 +537,99 @@
             data() {
                 return {
                     event_id : this.$route.params.id,
+                    albumID:[],
+                    albumInfo:{},
                     data_eventInformation: [],
                     data_eventInformation_length: 0,
                     event_tagsss: [],
                     album_tags: [],
                     album_tags_new:[],
-                    data_eventInformation:{},
-                    dismissSecs: 5,
-                    dismissCountDown: 0,
-                    showDismissibleAlert: false
+                    data_eventInformation_update:{},
+                    tabIndex: 0,
+                    tabIndex_photo: 0,
+                    photoData: [],
+                    photo_tabs: [
+                        {
+                            photo_fileName: null,
+                            photo_personInvolved: '',
+                            photo_title: '',
+                            photo_category: '',
+                            photo_description: '',
+                            photo_photographer: ''
+                        }
+                    ],
+                    photo_tabCounter: 1,
+                    photo_id: 1,
+                    vidClip_tabs: [
+                        {
+                            video_link: null,
+                            video_title: '',
+                            video_personInvolved: '',
+                            video_category: '',
+                            video_duration: '',
+                            video_type: '',
+                            video_description: '',
+                            video_videographer:''
+                        }
+                    ],
+                    vidClip_tabCounter: 1,
+                    video_id: 1,
+                    selected_category_photo: null,
+                    options_category_photo: [
+                        { value: null, text: 'Please select category', disabled: true},
+                        { value: '1', text: 'Assistant Secretaries' },
+                        { value: '2', text: 'Deputy Directors' },
+                        { value: '3', text: 'Directors' },
+                        { value: '4', text: 'Executive Director' },
+                        { value: '5', text: 'Group photo' },
+                        { value: '6', text: 'Launch/ Events/Activities' },
+                        { value: '7', text: 'Lecturers/Resource Speaker' },
+                        { value: '8', text: 'MOA/MOU signing' },
+                        { value: '9', text: 'Participants' },
+                        { value: '10', text: 'Portraits' },
+                        { value: '11', text: 'Product/Service' },
+                        { value: '12', text: 'Project visits' },
+                        { value: '13', text: 'Project/Program activities' },
+                        { value: '14', text: 'Regional Directors' },
+                        { value: '15', text: 'Secretaries' },
+                        { value: '16', text: 'Service Directors' },
+                        { value: '17', text: 'Undersecretaries' }
+                    ],
+                    options_category_type: [
+                        { value: null, text: 'Please select video type', disabled: true},
+                        { value: '1', text: 'Full Video' },
+                        { value: '2', text: 'Video Clip' },
+                    ],
+                    selected_category_video: null,
+                    options_category_video: [
+                        { value: null, text: 'Please select category', disabled: true},
+                        { value: '1', text: 'Anniversaries' },
+                        { value: '2', text: 'Awarding Ceremonies' },
+                        { value: '3', text: 'Competition/ Contests' },
+                        { value: '4', text: 'Exhibits' },
+                        { value: '5', text: 'Lectures, Discussion, Seminar, Training' },
+                        { value: '6', text: 'MOA/MOU signing' },
+                        { value: '7', text: 'NSTW' },
+                        { value: '8', text: 'NYSTIF' },
+                        { value: '9', text: 'Program Launch' },
+                        { value: '10', text: 'Project Launch' },
+                        { value: '11', text: 'Project/Program activities' },
+                        { value: '12', text: 'RSTW' },
+                        { value: '13', text: 'Same day edits' },
+                        { value: '14', text: 'Speeches' },
+                        { value: '15', text: 'Others' }
+                    ],
+                    list_photo: [],
+                    list_video: [],
+                    photo_length: 0,
+                    video_length: 0,
+                    currentAlbumStatus: '',
                 }
             },
             mounted(){
                 this.loadEventDetails();
+                this.loadEventPhotos();
+                this.loadEventVideos();
             },
             methods: {
                 loadEventDetails: async function(data){
@@ -276,51 +640,213 @@
 
                     const response = await assets_service.getTags_selected(this.data_eventInformation.album_id);
                     this.album_tags = response.data;
-                    console.log( this.album_tags);
+
+                    const response_statusAlbum = await assets_service.getAlbumStatus(this.data_eventInformation.album_id);
+                    this.currentAlbumStatus = response_statusAlbum.data[0].album_status;
+                    // console.log( this.currentAlbumStatus.album_status);
+
+                },
+                loadEventPhotos: async function(){
+                    const response_eventDetails = await assets_service.getEventDetails(this.event_id);
+                    this.data_eventInformation = response_eventDetails.data[0];
+                    // console.log(this.data_eventInformation.album_id);
+
+                    const response_photoList = await assets_service.getListPhoto_selected(this.data_eventInformation.album_id);
+                    this.list_photo = response_photoList.data;
+                    this.photo_length = this.list_photo.length;
+
+                },
+                loadEventVideos: async function(){
+                    const response_eventDetails = await assets_service.getEventDetails(this.event_id);
+                    // this.data_eventInformation = response_eventDetails.data[0];
+                    // console.log(this.data_eventInformation.album_id);
+
+                    const response_videoList = await assets_service.getListVideo_selected(this.data_eventInformation.album_id);
+                    this.list_video = response_videoList.data;
+                    this.video_length = this.list_video.length;
 
                 },
                 editAlbumInfo: async function(data){
 
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
-                    this.data_eventInformation = response_eventDetails.data[0];
-                    this.data_eventInformation_length = this.data_eventInformation.length;
+                    this.data_eventInformation_update = response_eventDetails.data[0];
+                    this.data_eventInformation_length = this.data_eventInformation_update.length;
 
-                    const response = await assets_service.getTags_selected(this.data_eventInformation.album_id);
+                    const response = await assets_service.getTags_selected(this.data_eventInformation_update.album_id);
                     this.album_tags_new = response.data.map(item => item.album_tagName);
                     console.log(this.album_tags_new);
 
                     this.$refs['modal_albumInfo'].show();
                 },
                 updateAlbum: async function() {
-                    // console.log(this.data_eventInformation.event_title);
-                    // console.log(this.data_eventInformation.event_description);
-                    // console.log(this.data_eventInformation.event_date);
-                    // console.log(this.data_eventInformation.event_venue);
-                    // console.log(this.data_eventInformation.event_organizingAgency);
-                    // console.log(this.data_eventInformation.event_category);
-                    // console.log(this.data_eventInformation.event_sector);
-                    // console.log(this.album_tags_new);
-
                     try{
                         let formData_ = new FormData();
-                        formData_.append('event_title', this.data_eventInformation.event_title);
-                        formData_.append('event_description', this.data_eventInformation.event_description);
-                        formData_.append('event_date', this.data_eventInformation.event_date);
-                        formData_.append('event_venue', this.data_eventInformation.event_venue);
-                        formData_.append('event_organizingAgency', this.data_eventInformation.event_organizingAgency);
-                        formData_.append('event_category', this.data_eventInformation.event_category);
-                        formData_.append('event_sector', this.data_eventInformation.event_sector);
+                        formData_.append('event_title', this.data_eventInformation_update.event_title);
+                        formData_.append('event_description', this.data_eventInformation_update.event_description);
+                        formData_.append('event_date', this.data_eventInformation_update.event_date);
+                        formData_.append('event_venue', this.data_eventInformation_update.event_venue);
+                        formData_.append('event_organizingAgency', this.data_eventInformation_update.event_organizingAgency);
+                        formData_.append('event_category', this.data_eventInformation_update.event_category);
+                        formData_.append('event_sector', this.data_eventInformation_update.event_sector);
                         formData_.append('event_tags', this.album_tags_new);
                         
                         const response_ = await assets_service.updateAlbum(this.event_id, formData_);
+                        
+                        // Save tags
+                        let formData_albumTags = new FormData();
+                        let tagList = [];
+                        tagList = this.album_tags_new;
+
+                        for (let i = 0; i < tagList.length; i ++) {
+                            let tagName = tagList.slice(i, i+1);
+             
+                            const response_albumTags = await assets_service.checkTagsExists(this.data_eventInformation_update.album_id,tagName);
+                            console.log(tagName +": " + response_albumTags.data.message)
+
+                            if (response_albumTags.data.message === "none"){
+                                formData_albumTags.append('album_id', this.data_eventInformation_update.album_id);
+                                formData_albumTags.append('album_tagName', tagName);
+                                console.log(tagName +": " + "Added to db");
+
+                                const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
+                            }
+                        }
+
+                        this.loadEventDetails();
                         this.$refs['modal_albumInfo'].hide();
                         console.log("Event Information updated successfully!");
-                        this.dismissCountDown = this.dismissSecs
+                        
                     }
                     catch(error){
                         console.log("An error occurred!");
                     }
-                }
+                },
+                showModal_uploadPhoto: async function(){
+
+                    this.$refs['modal_uploadPhoto'].show();
+                },
+                showModal_uploadVideo: async function(){
+
+                    this.$refs['modal_uploadVideo'].show();
+                },
+                showModal_updatePhoto: async function(){
+
+                    this.$refs['modal_updatePhoto'].show();
+                },
+                uploadPhoto: async function() {
+
+                    const response_countAlbumPhoto = await assets_service.countAlbumPhotoEntry(this.data_eventInformation.album_id);
+
+                    try{
+                        let formData_photoData = new FormData();
+
+                        this.photo_tabs.forEach((photoEntry, index) => {
+
+                            let count_newPhoto = index+1;
+                            let totalPhotoEntry = response_countAlbumPhoto.data;
+                            let count_finalPhoto = count_newPhoto + totalPhotoEntry;
+                            if (totalPhotoEntry == 0 ){
+                                this.photo_id = "PH2024-00001";
+                            }
+                            else if (totalPhotoEntry <= 9 ){
+                                let i = count_finalPhoto;
+                                this.photo_id = "PH2024-000" + i;
+                            }
+                            else if (totalPhotoEntry > 9){
+                                let i = count_finalPhoto;
+                                this.photo_id = "PH2024-00" + i;
+                            }
+
+                            formData_photoData.append(`photo_form[${index}][album_id]`, this.data_eventInformation.album_id);
+                            formData_photoData.append(`photo_form[${index}][photo_id]`, this.photo_id );
+                            formData_photoData.append(`photo_form[${index}][photo_fileName]`, photoEntry.photo_fileName);
+                            formData_photoData.append(`photo_form[${index}][photo_title]`, photoEntry.photo_title);
+                            formData_photoData.append(`photo_form[${index}][photo_category]`, photoEntry.category_photo);
+                            formData_photoData.append(`photo_form[${index}][photo_description]`, photoEntry.photo_description);
+                            formData_photoData.append(`photo_form[${index}][photo_photographer]`, photoEntry.photo_photographer);
+                            formData_photoData.append(`photo_form[${index}][photo_tags]`, photoEntry.photo_tags);
+
+                        });
+                        
+                        const response_photoData = await assets_service.addPhotoData(formData_photoData);
+                        this.loadEventPhotos();
+                        this.$refs['modal_uploadPhoto'].hide();
+                        this.photo_tabs.forEach((photoEntry, index) => {
+                            photoEntry.photo_fileName = null;
+                            photoEntry.photo_title = '';
+                            photoEntry.photo_photographer = '';
+                            photoEntry.category_photo = '';
+                            photoEntry.photo_description = '';
+                            photoEntry.photo_tags = '';
+                        });
+                    }
+                    catch(error){
+
+                    }
+                },
+                uploadVideo: async function() {
+                    try{
+
+                        let formData_videoData = new FormData();
+                        this.vidClip_tabs.forEach((videoEntry, index) => {
+                            let url = videoEntry.video_link;
+                            let urlID = url.split("v=")[1].substring(0, 11)
+                                
+                            console.log("this is album id" + this.album_id);
+                            formData_videoData.append(`video_form[${index}][album_id]`, this.data_eventInformation.album_id);
+                            formData_videoData.append(`video_form[${index}][video_link]`, videoEntry.video_link);
+                            formData_videoData.append(`video_form[${index}][video_youtubeID]`, urlID);
+                            formData_videoData.append(`video_form[${index}][video_title]`, videoEntry.video_title);
+                            formData_videoData.append(`video_form[${index}][video_category]`, videoEntry.video_category);
+                            formData_videoData.append(`video_form[${index}][video_duration]`, videoEntry.video_duration);
+                            formData_videoData.append(`video_form[${index}][video_type]`, videoEntry.video_type);
+                            formData_videoData.append(`video_form[${index}][video_description]`, videoEntry.video_description);
+                            formData_videoData.append(`video_form[${index}][video_videographer]`, videoEntry.video_videographer);
+                        });
+                        
+                        const response_videoData = await assets_service.addVideoData(formData_videoData);
+
+                        this.loadEventVideos();
+                        this.$refs['modal_uploadVideo'].hide();
+                        this.vidClip_tabs.forEach((videoEntry, index) => {
+                            videoEntry.video_link = null;
+                            videoEntry.video_title = '';
+                            videoEntry.video_videographer = '';
+                            videoEntry.video_category = '';
+                            videoEntry.video_description = '';
+                            
+                        });
+                    }
+                    catch(error){
+
+                    }
+                },
+                clearEntry(index){
+                    this.photo_tabs.splice(index,1);
+                },
+                photo_newTab() {
+                    this.photo_tabs.push({
+                            photo_fileName: null,
+                            photo_personInvolved: '',
+                            photo_title: '',
+                            photo_category: '',
+                            photo_description: '',
+                            photo_photographer: '',
+                            photo_photographer: ''
+                        })
+                    this.tabIndex_photo = this.photo_tabs.length+2;
+                    
+                },
+                vidClip_newTab() {
+                    this.vidClip_tabs.push({
+                            video_fileName: null,
+                            video_personInvolved: '',
+                            video_title: '',
+                            video_category: '',
+                            video_description: '',
+                            video_photographer: ''
+                        })
+                },
             }
         }
 </script>
@@ -333,5 +859,10 @@
         z-index: 1050; /* Ensure it's on top of other elements */
         max-width: 300px; /* Optional: Control width */
         padding: 15px; /* Add padding for better spacing within the alert */
+    }
+
+    .thumb-size{
+        width: 50px;
+        height: 50px;
     }
 </style>

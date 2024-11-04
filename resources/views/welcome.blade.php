@@ -13,7 +13,6 @@
         <!-- CSS files -->
 
         <!-- <link href="tabler/libs/plyr/dist/plyr.css?1692870487" rel="stylesheet"/> -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.8/dist/plyr.css">
         <!-- <link href="tabler/css/tabler.min.css?1692870487" rel="stylesheet"/> -->
         <link href="tabler/css/tabler.css" rel="stylesheet"/>
         <link href="tabler/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>

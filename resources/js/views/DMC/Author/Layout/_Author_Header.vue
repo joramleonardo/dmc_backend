@@ -50,8 +50,11 @@
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
                 
-                <a href="./settings.html" class="dropdown-item">Settings</a>
-                <a href="./sign-in.html" class="dropdown-item">Logout</a>
+                <!-- <a href="./sign-in.html" class="dropdown-item">Settings</a> -->
+                <router-link to="/login" class="nav-link">
+                  
+                  <a class="dropdown-item">Logout</a>
+                </router-link>
               </div>
             </div>
           </div>
