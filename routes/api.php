@@ -60,6 +60,8 @@ Route::post('addAlbumTags', [AssetsController::class, 'addAlbumTags']);
 Route::post('addAlbumStatus', [AssetsController::class, 'addAlbumStatus']);
 
 Route::post('addPhotoData', [AssetsController::class, 'addPhotoData']);
+Route::post('addPhotoTags', [AssetsController::class, 'addPhotoTags']);
+Route::post('addVideoTags', [AssetsController::class, 'addVideoTags']);
 Route::post('addVideoData', [AssetsController::class, 'addVideoData']);
 
 Route::get('getAllListEvents', [AssetsController::class, 'getAllListEvents']);
@@ -73,17 +75,26 @@ Route::get('getAllListUnpublished', [AssetsController::class, 'getAllListUnpubli
 Route::get('getAllListPhoto', [AssetsController::class, 'getAllListPhoto']);
 Route::post('/getEventDetails/{album_id}', [AssetsController::class, 'getEventDetails']);
 Route::post('/getListPhoto_selected/{album_id}', [AssetsController::class, 'getListPhoto_selected']);
+Route::post('/getPhotoDetails/{id}', [AssetsController::class, 'getPhotoDetails']);
+Route::post('/getVideoDetails/{id}', [AssetsController::class, 'getVideoDetails']);
+
 Route::post('/getAlbumID/{id}', [AssetsController::class, 'getAlbumID']);
 Route::post('/getListVideo_selected/{album_id}', [AssetsController::class, 'getListVideo_selected']);
-Route::post('/getTags_selected/{album_id}', [AssetsController::class, 'getTags_selected']);
+Route::post('/getAlbumTags_selected/{album_id}', [AssetsController::class, 'getAlbumTags_selected']);
+Route::post('/getPhotoTags_selected/{photo_id}', [AssetsController::class, 'getPhotoTags_selected']);
+Route::post('/getVideoTags_selected/{video_id}', [AssetsController::class, 'getVideoTags_selected']);
 Route::get('getAllListVideo', [AssetsController::class, 'getAllListVideo']);
 Route::post('/getAlbumStatus/{album_id}', [AssetsController::class, 'getAlbumStatus']);
 
 Route::get('countAlbumEntry', [AssetsController::class, 'countAlbumEntry']);
 Route::post('/countAlbumPhotoEntry/{album_id}', [AssetsController::class, 'countAlbumPhotoEntry']);
-Route::post('/checkTagsExists/{album_id}/{tag_name}', [AssetsController::class, 'checkTagsExists']);
+Route::post('/countAlbumVideoEntry/{album_id}', [AssetsController::class, 'countAlbumVideoEntry']);
+Route::post('/checkAlbumTagsExists/{album_id}/{tag_name}', [AssetsController::class, 'checkAlbumTagsExists']);
 
 // Route::post('/countEntry/{date}', 'TicketController@countEntry');
 
 
-Route::post('/updateAlbum/{id}', [AssetsController::class, 'updateAlbum']);
+Route::post('/updateAlbum/{albumID}', [AssetsController::class, 'updateAlbum']);
+Route::post('/updatePhoto/{photo_id}', [AssetsController::class, 'updatePhoto']);
+Route::post('/updateVideo/{photo_id}', [AssetsController::class, 'updateVideo']);
+Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);

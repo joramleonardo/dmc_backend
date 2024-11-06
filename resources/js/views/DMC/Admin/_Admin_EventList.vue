@@ -807,7 +807,7 @@
                         this.photo_length = this.list_photo.length;
                         // console.log(this.photo_length);
     
-                        const response_albumTags = await assets_service.getTags_selected(a);
+                        const response_albumTags = await assets_service.getAlbumTags_selected(a);
                         this.list_albumTags = response_albumTags.data;
                         // console.log(this.list_albumTags);
                         

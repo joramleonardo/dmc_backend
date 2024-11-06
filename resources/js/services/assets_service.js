@@ -17,6 +17,14 @@ export function addPhotoData(data){
     return httpFile().post('/addPhotoData', data);
 }
 
+export function addPhotoTags(data){
+    return httpFile().post('/addPhotoTags', data);
+}
+
+export function addVideoTags(data){
+    return httpFile().post('/addVideoTags', data);
+}
+
 export function addVideoData(data){
     return httpFile().post('/addVideoData', data);
 }
@@ -67,8 +75,12 @@ export function countAlbumPhotoEntry(album_id){
     return httpFile().post(`/countAlbumPhotoEntry/${album_id}`);
 }
 
-export function checkTagsExists(album_id, tag_name){
-    return httpFile().post(`/checkTagsExists/${album_id}/${tag_name}`);
+export function countAlbumVideoEntry(album_id){
+    return httpFile().post(`/countAlbumVideoEntry/${album_id}`);
+}
+
+export function checkAlbumTagsExists(album_id, tag_name){
+    return httpFile().post(`/checkAlbumTagsExists/${album_id}/${tag_name}`);
 }
 
 export function getEventDetails(album_id){
@@ -79,6 +91,14 @@ export function getListPhoto_selected(album_id){
     return httpFile().post(`/getListPhoto_selected/${album_id}`);
 }
 
+export function getPhotoDetails(id){
+    return httpFile().post(`/getPhotoDetails/${id}`);
+}
+
+export function getVideoDetails(id){
+    return httpFile().post(`/getVideoDetails/${id}`);
+}
+
 export function getAlbumID(id){
     return httpFile().post(`/getAlbumID/${id}`);
 }
@@ -87,10 +107,30 @@ export function getListVideo_selected(album_id){
     return httpFile().post(`/getListVideo_selected/${album_id}`);
 }
 
-export function getTags_selected(album_id){
-    return httpFile().post(`/getTags_selected/${album_id}`);
+export function getAlbumTags_selected(album_id){
+    return httpFile().post(`/getAlbumTags_selected/${album_id}`);
 }
 
-export function updateAlbum(id, data){
-    return httpFile().post(`updateAlbum/${id}`, data);
+export function getPhotoTags_selected(photo_id){
+    return httpFile().post(`/getPhotoTags_selected/${photo_id}`);
+}
+
+export function getVideoTags_selected(video_id){
+    return httpFile().post(`/getVideoTags_selected/${video_id}`);
+}
+
+export function updateAlbum(albumID, data){
+    return httpFile().post(`updateAlbum/${albumID}`, data);
+}
+
+export function updateAlbumStatus(albumID, data){
+    return httpFile().post(`updateAlbumStatus/${albumID}`, data);
+}
+
+export function updatePhoto(photo_id, data){
+    return httpFile().post(`updatePhoto/${photo_id}`, data);
+}
+
+export function updateVideo(photo_id, data){
+    return httpFile().post(`updateVideo/${photo_id}`, data);
 }

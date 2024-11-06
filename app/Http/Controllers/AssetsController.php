@@ -12,7 +12,9 @@ use App\Album;
 use App\AlbumTags;
 use App\AlbumStatus;
 use App\Photo;
+use App\PhotoTags;
 use App\Video;
+use App\VideoTags;
 
 class AssetsController extends Controller
 {
@@ -36,6 +38,22 @@ class AssetsController extends Controller
         $data = new AlbumTags();
         $data->album_id = $request->album_id;
         $data->album_tagName = $request->album_tagName;
+        
+        $data->save();
+    }
+
+    public function addPhotoTags(Request $request){
+        $data = new PhotoTags();
+        $data->photo_id = $request->photo_id;
+        $data->photo_tagName = $request->photo_tagName;
+        
+        $data->save();
+    }
+
+    public function addVideoTags(Request $request){
+        $data = new VideoTags();
+        $data->video_id = $request->video_id;
+        $data->video_tagName = $request->video_tagName;
         
         $data->save();
     }
@@ -78,15 +96,16 @@ class AssetsController extends Controller
 
             $data = new Video(); 
             $data->album_id = $item['album_id'];
-            // $data->video_id = $item['video_id'];
+            $data->video_id = $item['video_id'];
             $data->video_link = $item['video_link'];
             $data->video_youtubeID = $item['video_youtubeID'];
+            $data->video_videographer = $item['video_videographer'];
+            $data->video_type = $item['video_type'];
+            $data->video_duration = $item['video_duration'];
             $data->video_title = $item['video_title'];
             $data->video_category = $item['video_category'];
-            $data->video_duration = $item['video_duration'];
-            $data->video_type = $item['video_type'];
             $data->video_description = $item['video_description'];
-            $data->video_videographer = $item['video_videographer'];
+            $data->video_tags = $item['video_tags'];
 
             $data->save();
         }
@@ -105,24 +124,22 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
 
-    public function checkTagsExists(Request $request, $album_id, $tag_name){
+    public function countAlbumVideoEntry(Request $request, $album_id){
+        $data = Video::where('album_id', $album_id)
+                            ->count();
+        return response()->json($data, 200);
+    }
+
+    public function checkAlbumTagsExists(Request $request, $album_id, $tag_name){
         // Check if the tag exists
         $exists = AlbumTags::where('album_id', $album_id)
                             ->where('album_tagName', $tag_name)->exists();
 
         if ($exists) {
-            // Tag already exists
             return response()->json(['message' => 'exists']);
         } else {
-            // Tag does not exist
-            // Proceed to create the tag or other actions
-            // Tag::create(['tag_name' => $tagName]);
             return response()->json(['message' => 'none']);
         }
-
-        // $data = AlbumTags::where('tbl_album_tags.album_id', $album_id)
-        //                     ->count();
-        // return response()->json($data, 200);
     }
     
 
@@ -137,15 +154,17 @@ class AssetsController extends Controller
                             ->get('*');
     
         return response()->json($data, 200);
-}
+    }
 
     public function getAllListEvents(Request $request){
-            $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                    ->orderBy('tbl_album.created_at', 'desc')
-                    ->get('*');
-        
-            return response()->json($data, 200);
+        $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+                ->orderBy('tbl_album.created_at', 'desc')
+                ->get('*');
+
+        return response()->json($data, 200);
     }
+
+
 
     public function getAllListDraft(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
@@ -194,7 +213,7 @@ class AssetsController extends Controller
 
 
     public function getEventDetails(Request $request, $album_id){
-              $data = Assets::where('tbl_album.id', $album_id)
+              $data = Assets::where('album_id', $album_id)
                     ->get('*');
         return response()->json($data, 200);
     }
@@ -206,10 +225,23 @@ class AssetsController extends Controller
 
     public function getListPhoto_selected(Request $request, $album_id){
         // return $request;
-              $data = Photo::where('tbl_photo.album_id', $album_id)
+              $data = Photo::where('album_id', $album_id)
                     ->get('*');
         return response()->json($data, 200);
     }
+    
+    public function getPhotoDetails(Request $request, $id){
+            $data = Photo::where('id', $id)
+                ->get('*');
+    return response()->json($data, 200);
+    }
+    
+    public function getVideoDetails(Request $request, $id){
+            $data = Video::where('id', $id)
+                ->get('*');
+    return response()->json($data, 200);
+    }
+
     public function getAlbumID(Request $request, $id){
         // return $request;
               $data = Assets::where('id', $id)
@@ -217,15 +249,27 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
 
-    public function getTags_selected(Request $request, $album_id){
+    public function getAlbumTags_selected(Request $request, $album_id){
               $data = AlbumTags::where('tbl_album_tags.album_id', $album_id)
+                    ->get('*');
+        return response()->json($data, 200);
+    }
+
+    public function getPhotoTags_selected(Request $request, $photo_id){
+              $data = PhotoTags::where('photo_id', $photo_id)
+                    ->get('*');
+        return response()->json($data, 200);
+    }
+
+    public function getVideoTags_selected(Request $request, $video_id){
+              $data = VideoTags::where('video_id', $video_id)
                     ->get('*');
         return response()->json($data, 200);
     }
 
     public function getListVideo_selected(Request $request, $album_id){
         // return $request;
-              $data = Video::where('tbl_video.album_id', $album_id)
+              $data = Video::where('album_id', $album_id)
                     ->get('*');
         return response()->json($data, 200);
     }
@@ -235,9 +279,9 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
     
-    public function updateAlbum(Request $request, $id)
+    public function updateAlbum(Request $request, $albumID)
     {
-        $data = Assets::where('id', $id)->first();
+        $data = Assets::where('album_id', $albumID)->first();
 
         //IN PROGRESS UPDATE
         $data->event_title = $request->event_title;
@@ -248,6 +292,44 @@ class AssetsController extends Controller
         $data->event_category = $request->event_category;
         $data->event_sector = $request->event_sector;
         $data->event_tags = $request->event_tags;
+        $data->save();
+    }
+    
+    public function updatePhoto(Request $request, $photo_id)
+    {
+        $data = Photo::where('id', $photo_id)->first();
+
+        //UPDATE
+        $data->photo_title = $request->photo_title;
+        $data->photo_description = $request->photo_description;
+        $data->photo_photographer = $request->photo_photographer;
+        $data->photo_category = $request->photo_category;
+        $data->photo_tags = $request->photo_tags;
+        $data->save();
+    }
+    
+    public function updateVideo(Request $request, $photo_id)
+    {
+        $data = Video::where('id', $photo_id)->first();
+
+       
+        //UPDATE
+        $data->video_title = $request->video_title;
+        $data->video_description = $request->video_description;
+        $data->video_videographer = $request->video_videographer;
+        $data->video_category = $request->video_category;
+        $data->video_duration = $request->video_duration;
+        $data->video_type = $request->video_type;
+        $data->video_tags = $request->video_tags;
+        $data->save();
+    }
+    
+    public function updateAlbumStatus(Request $request, $album_id)
+    {
+        $data = AlbumStatus::where('album_id', $album_id)->first();
+
+        //UPDATE
+        $data->album_status = $request->album_status;
         $data->save();
     }
 }

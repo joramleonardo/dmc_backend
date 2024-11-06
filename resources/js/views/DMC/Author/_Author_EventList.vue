@@ -361,11 +361,20 @@
                                                             <tr v-for="(event, index) in list_photo" :key="index">
                                                                 <td><span class="text-secondary">001401</span></td>
                                                                 <td>
-                                                                    <a data-fslightbox="gallery" :href='`/storage/images/${event.photo_fileName}`'>
-                                                                        <div class="img-responsive img-responsive-1x1 rounded border" 
-                                                                        :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }">
+                                                                    <!-- <a :href='`/storage/images/${event.photo_fileName}`' data-fslightbox="gallery">
+                                                                        <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }"
+                                                                              class="img-responsive img-responsive-1x1 rounded border" >
+                                                                        </div>
+                                                                    </a> -->
+
+                                                                    <!-- Lightbox gallery link -->
+                                                                    <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
+                                                                        <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
                                                                         </div>
                                                                     </a>
+                                                                    <!-- <a :href='`/storage/images/${event.photo_fileName}`' data-fslightbox="gallery">
+                                                                        <img :src='`/storage/images/${event.photo_fileName}`' alt="Thumbnail 1">
+                                                                    </a> -->
                                                                 </td>
                                                                 <td>{{event.photo_title}}</td>
                                                                 <td>{{event.photo_description}}</td>
@@ -864,6 +873,7 @@
             
         
             export default {
+                
                 data() {
                     return {
                         infoModal: {
@@ -889,6 +899,7 @@
                         totalRows_published: '',
                         totalRows_unpublished: '',
                         buttonValue: '',
+                        tabIndex: 0,
                         tabIndex_photo: 0,
                         infoModal: {
                             id: 'info-modal',
@@ -1041,17 +1052,53 @@
                     
                 },
                 mounted(){
+                    // this.initializeLightbox();
+
+                    setTimeout(() => {
+                        this.initializeFsLightbox();
+                    }, 2500); // Adjust delay if needed
+                                        
+                    
                     this.loadDraftList();
                     this.loadForReviewList();
                     this.loadForRevisionList();
                     this.loadPublishedList();
                     this.loadUnpublishedList();
+
                 },
                 methods: {
+                    initializeFsLightbox() {
+                        if (typeof refreshFsLightbox === 'function') {
+                            refreshFsLightbox();
+                            console.log("FS Lightbox initialized automatically after delay");
+                        } else {
+                            console.error("FS Lightbox is not available; check CDN loading");
+                        }
+                    },
+                    initLightbox() {
+                        if (typeof refreshFsLightbox === 'function') {
+                            refreshFsLightbox();
+                            console.log("FS Lightbox initialized on click");
+                        } else {
+                            console.error("FS Lightbox is not available; check CDN loading");
+                        }
+                        },
+                    initializeLightbox() {
+
+                        // Call refreshFsLightbox with a delay to ensure rendering
+                        setTimeout(() => {
+                        if (typeof refreshFsLightbox === 'function') {
+                            refreshFsLightbox();
+                            console.log("FS Lightbox initialized in this component");
+                        } else {
+                            console.error("FS Lightbox is not available; check CDN loading");
+                        }
+                        }, 1000); // Adjust delay if necessary
+                    },
                     edit_eventInformation: async function(data) {
                         this.data_eventInformation = {...data}
 
-                        const response = await assets_service.getTags_selected(this.data_eventInformation.album_id);
+                        const response = await assets_service.getAlbumTags_selected(this.data_eventInformation.album_id);
                         this.album_tags = response.data.map(item => item.album_tagName);
                         console.log(this.album_tags);
                         
@@ -1172,7 +1219,7 @@
                         this.photo_length = this.list_photo.length;
                         // console.log(this.photo_length);
     
-                        const response_albumTags = await assets_service.getTags_selected(a);
+                        const response_albumTags = await assets_service.getAlbumTags_selected(a);
                         this.list_albumTags = response_albumTags.data;
                         // console.log(this.list_albumTags);
                         
@@ -1217,7 +1264,14 @@
     
                         }
                     },
+                },
+                watch: {
+                    // Watch for changes in images or data and reinitialize FS Lightbox
+                    images(newImages) {
+                    this.initializeLightbox();
+                    }
                 }
+                
             }
         </script>
         
