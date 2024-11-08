@@ -155,7 +155,6 @@
 	text-align: center;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 
 	/* Support: IE <= 11 */
@@ -1647,23 +1646,11 @@ a.ui-button:active,
 }
 
 .fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
-          animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
 }
 
 .fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
-          animation: fa-spin 1s infinite steps(8);
-}
-
-@-webkit-keyframes fa-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  animation: fa-spin 1s infinite steps(8);
 }
 
 @keyframes fa-spin {
@@ -8267,8 +8254,7 @@ body {
 
 .panel {
   display: none;
-  -webkit-animation: fadein 0.8s;
-          animation: fadein 0.8s;
+  animation: fadein 0.8s;
 }
 
 .panel-title {

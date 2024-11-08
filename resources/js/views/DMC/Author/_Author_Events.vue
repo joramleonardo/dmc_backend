@@ -1,108 +1,48 @@
 <template>
     <div>
-        <div class="page-header d-print-none">
-            <div class="tabler-container-xl">
-                <div class="row g-2 align-items-center">
-                    <div class="col">
-                        <h2 class="page-title">
-                            Events
-                        </h2>
-                    </div>
-                    <div class="col-auto ms-auto d-print-none">
-                        <div class="d-flex">
-                            <b-button size="sm" @click="addAlbumInfo()" class="mr-1" variant="primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                                    Add Event
-                            </b-button>
+        
+        <div id="_spinner">
+            <div class="text-center mt-5">
+                <b-spinner label="Busy"></b-spinner>
+            </div>
+        </div>
+        <div id="_body" style="display: none">
+            <div class="page-header d-print-none">
+                <div class="tabler-container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                List of DOST Events
+                            </h2>
+                        </div>
+                        <div class="col-auto ms-auto d-print-none">
+                            <div class="d-flex">
+                                <b-button size="sm" @click="addAlbumInfo()" class="mr-1" variant="primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                                        Add Event
+                                </b-button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="page-body">
-            <div class="tabler-container-xl">
-                <div class="row row-cards">
-                    <div class="col-lg-12">
-                        <div >
-                            <b-tabs card>
-                                <b-tab active>
-                                    <template #title>
-                                        All 
-                                        <span v-if="totalRows_allEvents != 0">
-                                            <b-badge variant="primary">{{totalRows_allEvents}}</b-badge>
-                                        </span>
-                                        <span v-else>
-                                            <b-badge variant="secondary">0</b-badge>
-                                        </span>
-                                    </template>
-                                    <div class="row row-cards" v-if="totalRows_allEvents == 0">
-                                        <div class="col-sm-6 col-lg-4" >
-                                            <div class="row row-cards">
-                                                <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row row-cards" v-else>
-                                        <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_allEvents" :key="index">
-                                            <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}"  target="_blank" style="text-decoration: none;">
-                                                <div class="card card-sm">
-                                                    <a class="d-block">
-                                                        <img src="images/no_img.jpg" class="card-img-top">
-                                                    </a>
-                                                    <div class="card-body">
-                                                        <div class="d-flex align-items-center">
-                                                            <div style="font-size: 12px; font-weight: 600;">
-                                                                <div>{{event.event_title}}</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex align-items-center">
-                                                            <div style="margin-top: 1%;">
-                                                                <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                    <span class="badge bg-azure text-azure-fg">Draft</span>
-                                                                </div>
-                                                                <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                    <span class="badge bg-orange text-orange-fg">Under Review</span>
-                                                                </div>
-                                                                <div v-if="event.album_status === 'Published' ">
-                                                                    <span class="badge bg-green text-green-fg">Published</span>
-                                                                </div>
-                                                                <div v-if="event.album_status === 'Unpublished' ">
-                                                                    <span class="badge bg-red text-red-fg">Unpublished</span>
-                                                                </div>
-                                                                <div v-if="event.album_status === 'For Revision' ">
-                                                                    <span class="badge bg-yellow text-yellow-fg">For Revision</span>
-                                                                </div>
-                                                            </div>
-                                                            <!-- <div class="ms-auto">
-                                                                <a class="text-secondary">
-                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
-                                                                    467
-                                                                </a>
-                                                                <a class="ms-3 text-secondary">
-                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
-                                                                    67
-                                                                </a>
-                                                            </div> -->
-                                                        </div>
-                                                    </div>
-                                                </div>                           
-                                            </router-link>
-                                        </div>
-                                    </div>
-                                </b-tab>
-                                <b-tab>
-                                    <template #title>
-                                        Drafts 
-                                        <span v-if="totalRows_draft != 0">
-                                            <b-badge variant="danger">{{totalRows_draft}}</b-badge>
-                                        </span>
-                                        <span v-else>
-                                            <b-badge variant="secondary">0</b-badge>
-                                        </span>
-                                    </template>
-                                    <div class="row row-cards" v-if="totalRows_draft == 0">
+            <div class="page-body">
+                <div class="tabler-container-xl">
+                    <div class="row row-cards">
+                        <div class="col-lg-12">
+                            <div >
+                                <b-tabs card>
+                                    <b-tab active>
+                                        <template #title>
+                                            All 
+                                            <span v-if="totalRows_allEvents != 0">
+                                                <b-badge variant="primary">{{totalRows_allEvents}}</b-badge>
+                                            </span>
+                                            <span v-else>
+                                                <b-badge variant="secondary">0</b-badge>
+                                            </span>
+                                        </template>
+                                        <div class="row row-cards" v-if="totalRows_allEvents == 0">
                                             <div class="col-sm-6 col-lg-4" >
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
@@ -110,10 +50,86 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                    <div class="row row-cards" v-else>
+                                        </div>
+                                        <div class="row row-cards" v-else>
+                                            <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_allEvents" :key="index">
+                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
+                                                    <div class="card card-sm">
+                                                        <a class="d-block">
+                                                            <img src="images/no_img.jpg" class="card-img-top">
+                                                        </a>
+                                                        <div class="card-body">
+                                                            <div class="d-flex align-items-center">
+                                                                <div style="font-size: 12px; font-weight: 600;">
+                                                                    <div>{{event.event_title}}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex align-items-center">
+                                                                <div style="margin-top: 1%;">
+                                                                    <div v-if="event.album_status === 'Saved as Draft' ">
+                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Submitted for Review' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Under Review' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Comment' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Revision' ">
+                                                                        <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Unpublished' ">
+                                                                        <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Published' ">
+                                                                        <span class="badge bg-green text-green-fg">Published</span>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="ms-auto">
+                                                                    <a class="text-secondary">
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                                                        467
+                                                                    </a>
+                                                                    <a class="ms-3 text-secondary">
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                                                        67
+                                                                    </a>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>                           
+                                                </router-link>
+                                            </div>
+                                        </div>
+                                    </b-tab>
+                                    <b-tab>
+                                        <template #title>
+                                            Drafts 
+                                            <span v-if="totalRows_draft != 0">
+                                                <b-badge variant="danger">{{totalRows_draft}}</b-badge>
+                                            </span>
+                                            <span v-else>
+                                                <b-badge variant="secondary">0</b-badge>
+                                            </span>
+                                        </template>
+                                        <div class="row row-cards" v-if="totalRows_draft == 0">
+                                                <div class="col-sm-6 col-lg-4" >
+                                                    <div class="row row-cards">
+                                                        <div class="h3 m-0">
+                                                            NO DATA AVAILAVLE 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_draft" :key="index">
-                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}"  target="_blank" style="text-decoration: none;">
+                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
                                                         <a class="d-block">
                                                             <img src="images/no_img.jpg" class="card-img-top">
@@ -127,19 +143,28 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div style="margin-top: 1%;">
                                                                     <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                        <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Under Review' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Comment' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Revision' ">
+                                                                        <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Unpublished' ">
+                                                                        <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Published' ">
                                                                         <span class="badge bg-green text-green-fg">Published</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'Unpublished' ">
-                                                                        <span class="badge bg-red text-red-fg">Unpublished</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'For Revision' ">
-                                                                        <span class="badge bg-yellow text-yellow-fg">For Revision</span>
                                                                     </div>
                                                                 </div>
                                                                 <!-- <div class="ms-auto">
@@ -157,30 +182,30 @@
                                                     </div>                           
                                                 </router-link>
                                             </div>
-                                    </div>
-                                </b-tab>
-                                <b-tab >
-                                    <template #title>
-                                        Submitted for Review 
-                                        <span v-if="totalRows_forReview != 0">
-                                            <b-badge variant="danger">{{totalRows_forReview}}</b-badge>
-                                        </span>
-                                        <span v-else>
-                                            <b-badge variant="secondary">0</b-badge>
-                                        </span>
-                                    </template>
-                                    <div class="row row-cards" v-if="totalRows_forReview == 0">
-                                            <div class="col-sm-6 col-lg-4" >
-                                                <div class="row row-cards">
-                                                    <div class="h3 m-0">
-                                                        NO DATA AVAILAVLE 
+                                        </div>
+                                    </b-tab>
+                                    <b-tab >
+                                        <template #title>
+                                            Submitted for Review 
+                                            <span v-if="totalRows_forReview != 0">
+                                                <b-badge variant="danger">{{totalRows_forReview}}</b-badge>
+                                            </span>
+                                            <span v-else>
+                                                <b-badge variant="secondary">0</b-badge>
+                                            </span>
+                                        </template>
+                                        <div class="row row-cards" v-if="totalRows_forReview == 0">
+                                                <div class="col-sm-6 col-lg-4" >
+                                                    <div class="row row-cards">
+                                                        <div class="h3 m-0">
+                                                            NO DATA AVAILAVLE 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                    </div>
-                                    <div class="row row-cards" v-else>
+                                        </div>
+                                        <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_forReview" :key="index">
-                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}"  target="_blank" style="text-decoration: none;">
+                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
                                                         <a class="d-block">
                                                             <img src="images/no_img.jpg" class="card-img-top">
@@ -194,19 +219,28 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div style="margin-top: 1%;">
                                                                     <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                        <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Under Review' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Comment' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Revision' ">
+                                                                        <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Unpublished' ">
+                                                                        <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Published' ">
                                                                         <span class="badge bg-green text-green-fg">Published</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'Unpublished' ">
-                                                                        <span class="badge bg-red text-red-fg">Unpublished</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'For Revision' ">
-                                                                        <span class="badge bg-yellow text-yellow-fg">For Revision</span>
                                                                     </div>
                                                                 </div>
                                                                 <!-- <div class="ms-auto">
@@ -224,30 +258,30 @@
                                                     </div>                           
                                                 </router-link>
                                             </div>
-                                    </div>
-                                </b-tab>
-                                <b-tab >
-                                    <template #title>
-                                        To Be Revised 
-                                        <span v-if="totalRows_forRevision != 0">
-                                            <b-badge variant="danger">{{totalRows_forRevision}}</b-badge>
-                                        </span>
-                                        <span v-else>
-                                            <b-badge variant="secondary">0</b-badge>
-                                        </span>
-                                    </template>
-                                    <div class="row row-cards" v-if="totalRows_forRevision == 0">
-                                            <div class="col-sm-6 col-lg-4" >
-                                                <div class="row row-cards">
-                                                    <div class="h3 m-0">
-                                                        NO DATA AVAILAVLE 
+                                        </div>
+                                    </b-tab>
+                                    <b-tab >
+                                        <template #title>
+                                            To Be Revised 
+                                            <span v-if="totalRows_forRevision != 0">
+                                                <b-badge variant="danger">{{totalRows_forRevision}}</b-badge>
+                                            </span>
+                                            <span v-else>
+                                                <b-badge variant="secondary">0</b-badge>
+                                            </span>
+                                        </template>
+                                        <div class="row row-cards" v-if="totalRows_forRevision == 0">
+                                                <div class="col-sm-6 col-lg-4" >
+                                                    <div class="row row-cards">
+                                                        <div class="h3 m-0">
+                                                            NO DATA AVAILAVLE 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                    </div>
-                                    <div class="row row-cards" v-else>
+                                        </div>
+                                        <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_forRevision" :key="index">
-                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}"  target="_blank" style="text-decoration: none;">
+                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
                                                         <a class="d-block">
                                                             <img src="images/no_img.jpg" class="card-img-top">
@@ -261,19 +295,28 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div style="margin-top: 1%;">
                                                                     <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                        <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Under Review' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Comment' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Revision' ">
+                                                                        <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Unpublished' ">
+                                                                        <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Published' ">
                                                                         <span class="badge bg-green text-green-fg">Published</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'Unpublished' ">
-                                                                        <span class="badge bg-red text-red-fg">Unpublished</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'For Revision' ">
-                                                                        <span class="badge bg-yellow text-yellow-fg">For Revision</span>
                                                                     </div>
                                                                 </div>
                                                                 <!-- <div class="ms-auto">
@@ -291,19 +334,19 @@
                                                     </div>                           
                                                 </router-link>
                                             </div>
-                                    </div>
-                                </b-tab>
-                                <b-tab >
-                                    <template #title>
-                                        Unpublished 
-                                        <span v-if="totalRows_unpublished != 0">
-                                            <b-badge variant="warning">{{totalRows_unpublished}}</b-badge>
-                                        </span>
-                                        <span v-else>
-                                            <b-badge variant="secondary">0</b-badge>
-                                        </span>
-                                    </template>
-                                    <div class="row row-cards" v-if="totalRows_unpublished == 0">
+                                        </div>
+                                    </b-tab>
+                                    <b-tab >
+                                        <template #title>
+                                            Unpublished 
+                                            <span v-if="totalRows_unpublished != 0">
+                                                <b-badge variant="warning">{{totalRows_unpublished}}</b-badge>
+                                            </span>
+                                            <span v-else>
+                                                <b-badge variant="secondary">0</b-badge>
+                                            </span>
+                                        </template>
+                                        <div class="row row-cards" v-if="totalRows_unpublished == 0">
                                             <div class="col-sm-6 col-lg-4" >
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
@@ -311,10 +354,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                    <div class="row row-cards" v-else>
+                                        </div>
+                                        <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_unpublished" :key="index">
-                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}"  target="_blank" style="text-decoration: none;">
+                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
                                                         <a class="d-block">
                                                             <img src="images/no_img.jpg" class="card-img-top">
@@ -328,19 +371,28 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div style="margin-top: 1%;">
                                                                     <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                        <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Under Review' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Comment' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Revision' ">
+                                                                        <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Unpublished' ">
+                                                                        <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Published' ">
                                                                         <span class="badge bg-green text-green-fg">Published</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'Unpublished' ">
-                                                                        <span class="badge bg-red text-red-fg">Unpublished</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'For Revision' ">
-                                                                        <span class="badge bg-yellow text-yellow-fg">For Revision</span>
                                                                     </div>
                                                                 </div>
                                                                 <!-- <div class="ms-auto">
@@ -358,20 +410,20 @@
                                                     </div>                           
                                                 </router-link>
                                             </div>
-                                    </div>
-                                </b-tab>
-                                <b-tab >
-                                    <template #title>
-                                        Published 
-                                        <span v-if="totalRows_published != 0">
-                                            <b-badge variant="success">{{totalRows_published}}</b-badge>
-                                        </span>
-                                        <span v-else>
-                                            <b-badge variant="secondary">0</b-badge>
-                                        </span>
-                                        
-                                    </template>
-                                    <div class="row row-cards" v-if="totalRows_published == 0">
+                                        </div>
+                                    </b-tab>
+                                    <b-tab >
+                                        <template #title>
+                                            Published 
+                                            <span v-if="totalRows_published != 0">
+                                                <b-badge variant="success">{{totalRows_published}}</b-badge>
+                                            </span>
+                                            <span v-else>
+                                                <b-badge variant="secondary">0</b-badge>
+                                            </span>
+                                            
+                                        </template>
+                                        <div class="row row-cards" v-if="totalRows_published == 0">
                                             <div class="col-sm-6 col-lg-4" >
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
@@ -379,10 +431,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                    <div class="row row-cards" v-else>
+                                        </div>
+                                        <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_published" :key="index">
-                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}"  target="_blank" style="text-decoration: none;">
+                                                <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
                                                         <a class="d-block">
                                                             <img src="images/no_img.jpg" class="card-img-top">
@@ -396,19 +448,28 @@
                                                             <div class="d-flex align-items-center">
                                                                 <div style="margin-top: 1%;">
                                                                     <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                        <span class="badge bg-azure text-azure-fg">Draft</span>
+                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Under Review</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Under Review' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Comment' ">
+                                                                        <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'For Revision' ">
+                                                                        <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                    </div>
+                                                                    <div v-if="event.album_status === 'Unpublished' ">
+                                                                        <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Published' ">
                                                                         <span class="badge bg-green text-green-fg">Published</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'Unpublished' ">
-                                                                        <span class="badge bg-red text-red-fg">Unpublished</span>
-                                                                    </div>
-                                                                    <div v-if="event.album_status === 'For Revision' ">
-                                                                        <span class="badge bg-yellow text-yellow-fg">For Revision</span>
                                                                     </div>
                                                                 </div>
                                                                 <!-- <div class="ms-auto">
@@ -426,17 +487,18 @@
                                                     </div>                           
                                                 </router-link>
                                             </div>
-                                    </div>
-                                </b-tab>
-                            </b-tabs>
+                                        </div>
+                                    </b-tab>
+                                </b-tabs>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <b-modal id="modal_addAlbumInfo" ref="modal_addAlbumInfo"  title="Event Information" size="lg" centered ok-only >
+        <b-modal id="modal_addAlbumInfo" ref="modal_addAlbumInfo"  title="Event Information" size="lg" centered hide-footer>
             
             <div class="card" id="createEventForm" >
                 <div class="card-header">
@@ -453,7 +515,7 @@
                         <div class="col-md-12">
                             <div class="mb-3 mb-0">
                             <label class="form-label"><span style="color: red;">* </span>Short Description:</label>
-                            <textarea class="form-control" v-model="ticketData.eventDescription" rows="2" placeholder="Short description here.."></textarea>
+                            <textarea class="form-control" v-model="ticketData.eventDescription" rows="2" placeholder="Short description here.." required></textarea>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
@@ -478,7 +540,7 @@
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Category:</label>
                                 <div class="col">
-                                    <select class="form-select" v-model="selected_category_album">
+                                    <select class="form-select" v-model="selected_category_album" required>
                                         <option selected disabled>Please select category</option>
                                         <option value="1">Anniversary</option>
                                         <option value="2">Awarding Ceremonies</option>
@@ -506,7 +568,7 @@
                             <div class="mb-3">
                                 <label class="form-label"><span style="color: red;">* </span>Sector:</label>
                                 <div class="col">
-                                    <select class="form-select" v-model="selected_sector">
+                                    <select class="form-select" v-model="selected_sector" required>
                                         <option selected disabled>Please select sector</option>
                                         <option value="1">Collegial and Scientific Bodies</option>
                                         <option value="2">Regional Offices and S&T Provincial Centers</option>
@@ -520,29 +582,18 @@
                         <div class="col-md-12" style="color: black !important">
                             <div class="mb-3" style="color: black !important">
                                 <label class="form-label"><span style="color: red;">* </span>Tags:</label>
-                                <b-form-tags style="background-color: #151F2C !important" required input-id="tags-basic" name="tags" v-model="ticketData.eventTags" placeholder="Add new tags separated by enter key..."></b-form-tags>
+                                <b-form-tags required input-id="tags-basic" name="tags" v-model="ticketData.eventTags" placeholder="Add new tags separated by enter key..."></b-form-tags>
                                 
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <b-button variant="warning" value="1" @click="createTicket_external(1)">Save as Draft</b-button>
-                    <!-- <b-button variant="primary" value="2" @click="createTicket_external(2)">Submit to Publisher</b-button> -->
-                    <!-- <b-button variant="danger" >Reset</b-button> -->
+                    <b-button variant="warning" value="1" @click="saveEvent()">Save as Draft</b-button>
                 </div>
             </div>
         </b-modal>
 
-        <b-modal id="modal_savedSuccessfully" ref="modal_savedSuccessfully" centered title="Success" hide-footer no-close-on-backdrop
-            :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
-            <div>
-                <h5>Album was created successfully!</h5>
-            </div>
-            <div>
-                <b-button class="mt-3" variant="primary" @click="reloadPage()">Okay</b-button>
-            </div>
-        </b-modal>
 
     </div>
 </template>
@@ -559,6 +610,7 @@
                     displayName: '',
                     buttonValue: '',
                     albumStatus:'',
+                    eventTrackingStatus: '',
                     headerBG_requiredfields: 'danger',
                     headerText_requiredfields: 'light',
                     headerBG_ConfirmCreateAlbum: 'info',
@@ -746,6 +798,9 @@
                     id_albumVideo: '',
                     total_albumPhotos:'',
                     total_albumVideos: '',
+                    finalTime: '',
+                    finalDate: '',
+                    finalDateTime: '',
                 }
             },
             mounted(){
@@ -756,159 +811,24 @@
                 this.loadForRevisionList();
                 this.loadPublishedList();
                 this.loadUnpublishedList();
+
+                this.createDate();
             },
             methods: {
-                // open_requiredfields(){
-                //     this.$refs.modal_requiredfields.show()
-                // },
-                close_requiredfields(){
-                    this.$refs.modal_requiredfields.hide()
-                },
-                openConfirmCreateAlbum(val){
-                    this.buttonValue = val;
-                    console.log(this.buttonValue);
-                
-                    if (this.ticketData.eventTitle === undefined || 
-                        this.selected_category_album === null  ||  
-                        this.selected_sector === null  ||  
-                        this.ticketData.eventDescription === undefined  ||  
-                        this.selected_agency === null  ||  
-                        this.ticketData.eventDate === undefined  ||  
-                        this.ticketData.eventVenue === undefined  ||  
-                        this.ticketData.eventTags === undefined  ){
-
-                            this.$refs.modal_requiredfields.show()
-                    }
-                    else{
-                        this.$refs.modal_ConfirmCreateAlbum.show()
-                    }
-                },
-                hide_ConfirmCreateAlbum() {
-                    this.$refs.modal_ConfirmCreateAlbum.hide()
-                },
-                reloadPage() {
-                    this.$refs.modal_savedSuccessfully.hide();
-                    this.$refs.modal_addAlbumInfo.hide();
-                    this.loadAllEvents();
-                    this.loadDraftList();
-                    this.loadForReviewList();
-                    this.loadForRevisionList();
-                    this.loadPublishedList();
-                    this.loadUnpublishedList();
-                    // window.location.reload();
-                },
-                createTicket_external: async function(value) {
-
-                    if (value == "1"){
-                        this.albumStatus = "Saved as Draft"
-                    }
-                    else if (value == "2"){
-                        this.albumStatus = "Submitted for Review"
-                    }
-                    else if (value == "3"){
-                        this.albumStatus = "Published"
-                    }
-                    else if (value == "4"){
-                        this.albumStatus = "Unpublished"
-                    }
-                    else if (value == "5"){
-                        this.albumStatus = "For Revision"
-                    }
-
-                    console.log(this.albumStatus);
-
+                userData: async function(){
                     try{
-                        // Generate Album ID
-                        const const_1 = await assets_service.countAlbumEntry();
-                        let totalAlbumEntry = const_1.data;
-                        if (totalAlbumEntry == 0 ){
-                            this.album_id = "PA" + "2024" + "-0001";
-                        }
-                        else if (totalAlbumEntry > 0 && totalAlbumEntry < 10){
-                            let i = totalAlbumEntry + 1;
-                            this.album_id = "PA" + "2024" + "-000" + i;
-                        }
-                        else if (totalAlbumEntry >= 10){
-                            let i = totalAlbumEntry + 1;
-                            this.album_id = "PA" + "2024" + "-00" + i;
-                        }
-                        
-                        // Create an Album
-                        let formData_eventData = new FormData();
-                        formData_eventData.append('album_id', this.album_id);
-                        formData_eventData.append('event_title', this.ticketData.eventTitle);
-                        formData_eventData.append('event_category', this.selected_category_album);
-                        formData_eventData.append('event_sector', this.selected_sector);
-                        formData_eventData.append('event_description', this.ticketData.eventDescription);
-                        formData_eventData.append('event_organizingAgency', this.selected_agency);
-                        formData_eventData.append('event_date', this.ticketData.eventDate);
-                        formData_eventData.append('event_venue', this.ticketData.eventVenue);
-                        formData_eventData.append('event_tags', this.ticketData.eventTags);
-                        const response_eventData = await assets_service.addEventData(formData_eventData);
-                        
-                        // Save tags
-                        let formData_albumTags = new FormData();
-                        let tagList = [];
-                        tagList = this.ticketData.eventTags;
-
-                        for (let i = 0; i < tagList.length; i ++) {
-                            let tagName = tagList.slice(i, i+1);
-
-                            formData_albumTags.append('album_id', this.album_id);
-                            formData_albumTags.append('album_tagName', tagName);
-
-                            const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
-                        }
-
-                        
-                        // Save Album Status 
-                        let formData_albumStatus = new FormData();
-                        formData_albumStatus.append('album_id', this.album_id);
-                        formData_albumStatus.append('album_status', this.albumStatus);
-                        const response_albumStatusData = await assets_service.addAlbumStatus(formData_albumStatus);
-
-                        this.ticketData.eventTitle = '';
-                        this.ticketData.eventDescription = '';
-                        this.ticketData.eventDate = '';
-                        this.ticketData.eventVenue = '';
-                        this.selected_agency = '';
-                        this.selected_category_album = '';
-                        this.selected_sector = '';
-                        this.ticketData.eventTags = [];
-
-
-                    }catch (error) {
-                        
+                        const response = await auth_service.getUserData();
+                        this.displayName=response.data.user.name;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
                     }
-                    this.$refs.modal_savedSuccessfully.show()
                 },
-                changeStatus: async function (){
-
-                    if (this.buttonValue == "1"){
-                        this.albumStatus = "Saved as Draft"
-                    }
-                    else if (this.buttonValue == "2"){
-                        this.albumStatus = "Submitted for Review";
-                    }
-                    else if (this.buttonValue == "3"){
-                        this.albumStatus = "Published";
-                    }
-                    else if (this.buttonValue == "4"){
-                        this.albumStatus = "Unpublished";
-                    }
-                    else if (this.buttonValue == "5"){
-                        this.albumStatus = "For Revision";
-                    }
-
-                    try{
-                        
-                        let formData_albumStatus = new FormData();
-                        formData_albumStatus.append('album_id', this.album_id);
-                        formData_albumStatus.append('album_status', this.albumStatus);
-                        const response_albumStatusData = await assets_service.addAlbumStatus(formData_albumStatus);
-                    }catch(error){
-
-                    }
+                loadingPage: async function(){
+                    document.getElementById("_spinner").style.display = "none";
+                    document.getElementById("_body").style.display = "block";
                 },
                 loadAllEvents: async function() {
                     try{
@@ -923,11 +843,6 @@
                         });
                     }
                     this.getEventIds();
-                },
-                countAlbumPhotos() {
-                    this.id_albumPhoto = this.list_allEvents.map(event => event.album_id);
-                    this.total_albumPhotos = this.list_allEvents.map(event => event.album_id);
-                    
                 },
                 loadDraftList: async function() {
                     try{
@@ -988,41 +903,156 @@
                         time: 5000
                         });
                     }
+
+                    this.loadingPage();
                 },
-                countAlbumPhotoEntry: async function(){
-                    
-                        // const const_2 = assets_service.countAlbumPhotoEntry(this.album_id);
-                        // let totalAlbumPhotoEntry = const_1.data;
-                        // return totalAlbumPhotoEntry;
-                        return "hello";
-                        // if (totalAlbumPhotoEntry <= 9){
-                        //     let i = totalAlbumPhotoEntry++;
-                        //     this.photo_id_id = "PH2024-0000" + i;
-                        // }
-                        // else if (totalAlbumPhotoEntry > 9){
-                        //     let i = totalAlbumPhotoEntry++;
-                        //     this.photo_id_id = "PH2024-000" + i;
-                        // }
+                createDate(){
+                    const date = new Date();
+                    const months = [
+                        'January',
+                        'February',
+                        'March',
+                        'April',
+                        'May',
+                        'June',
+                        'July',
+                        'August',
+                        'September',
+                        'October',
+                        'November',
+                        'December'
+                        ];
+                    const monthIndex = date.getMonth()
+                    const monthName = months[monthIndex]
+                    let currentDay= String(date.getDate()).padStart(2, '0');
+                    let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+                    let currentYear = date.getFullYear();
+                    let getHours = date.getHours();
+                    let getMinutes = date.getMinutes();
+                    let getSeconds = date.getSeconds();
+                    let newformat = getHours >= 12 ? 'PM' : 'AM';
+                    getHours = getHours % 12;
+                    getHours = getHours ? getHours : 12;
+                    getMinutes = getMinutes < 10 ? '0' + getMinutes : getMinutes;
+                    this.finalTime = getHours + ":" + getMinutes + ":" + getSeconds + " " + newformat;
+                    this.finalDate = monthName + " " + currentDay + " " + currentYear;
+                    this.finalDateTime = monthName + " " + currentDay + " " + currentYear + " " + getHours + ":" + getMinutes + " " + newformat;
                 },
-                clearEntry(index){
-                    this.photo_tabs.splice(index,1);
+                saveEvent: async function() {
+
+                    if (this.ticketData.eventTitle === undefined || 
+                        this.selected_category_album === null  ||  
+                        this.selected_sector === null  ||  
+                        this.ticketData.eventDescription === undefined  ||  
+                        this.selected_agency === null  ||  
+                        this.ticketData.eventDate === undefined  ||  
+                        this.ticketData.eventVenue === undefined  ||  
+                        this.ticketData.eventTags === undefined  ){
+
+                            this.$toast.open({
+                                message: 'Required Fields!',
+                                type: 'error', // Options: 'success', 'info', 'error', 'default'
+                                position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                                duration: 5000, 
+                            });
+                    }
+                    else{
+                        
+                        // EVENT STATUS
+                        this.albumStatus = "Saved as Draft";
+
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Event Created";
+                        
+                        try{
+                            // GENERATE EVENT ID
+                            const const_1 = await assets_service.countAlbumEntry();
+                            let totalAlbumEntry = const_1.data;
+                            if (totalAlbumEntry == 0 ){
+                                this.album_id = "ET" + "2024" + "-0001";
+                            }
+                            else if (totalAlbumEntry > 0 && totalAlbumEntry < 10){
+                                let i = totalAlbumEntry + 1;
+                                this.album_id = "ET" + "2024" + "-000" + i;
+                            }
+                            else if (totalAlbumEntry >= 10){
+                                let i = totalAlbumEntry + 1;
+                                this.album_id = "ET" + "2024" + "-00" + i;
+                            }
+                            
+                            // CREATE EVENT
+                            let formData_eventData = new FormData();
+                                formData_eventData.append('album_id', this.album_id);
+                                formData_eventData.append('event_title', this.ticketData.eventTitle);
+                                formData_eventData.append('event_category', this.selected_category_album);
+                                formData_eventData.append('event_sector', this.selected_sector);
+                                formData_eventData.append('event_description', this.ticketData.eventDescription);
+                                formData_eventData.append('event_organizingAgency', this.selected_agency);
+                                formData_eventData.append('event_date', this.ticketData.eventDate);
+                                formData_eventData.append('event_venue', this.ticketData.eventVenue);
+                                formData_eventData.append('event_tags', this.ticketData.eventTags);
+                            const response_eventData = await assets_service.addEventData(formData_eventData);
+
+                            // SAVE EVENT TAGS
+                            let tagList = [];
+                            tagList = this.ticketData.eventTags;
+                            for (let i = 0; i < tagList.length; i ++) {
+                                let tagName = tagList.slice(i, i+1);
+                                let formData_albumTags = new FormData();
+                                    formData_albumTags.append('album_id', this.album_id);
+                                    formData_albumTags.append('album_tagName', tagName);
+                                const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
+                            }
+
+                            // CREATE EVENT TRACKING LOG
+                            let formData_eventTrackingLog = new FormData();
+                                formData_eventTrackingLog.append('album_id', this.album_id);
+                                formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                                formData_eventTrackingLog.append('date', this.finalDate);
+                                formData_eventTrackingLog.append('name_author', this.displayName);
+                            const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
+                            // CREATE EVENT STATUS
+                            let formData_albumStatus = new FormData();
+                                formData_albumStatus.append('album_id', this.album_id);
+                                formData_albumStatus.append('album_status', this.albumStatus);
+                            const response_albumStatusData = await assets_service.addAlbumStatus(formData_albumStatus);
+
+
+                        }catch (error) {
+                            this.$toast.open({
+                                message: 'An error occured!',
+                                type: 'error', // Options: 'success', 'info', 'error', 'default'
+                                position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                                duration: 5000, 
+                            });
+                        }
+
+                        this.ticketData.eventTitle = '';
+                        this.ticketData.eventDescription = '';
+                        this.ticketData.eventDate = '';
+                        this.ticketData.eventVenue = '';
+                        this.selected_agency = '';
+                        this.selected_category_album = '';
+                        this.selected_sector = '';
+                        this.ticketData.eventTags = [];
+
+                        this.$toast.open({
+                            message: 'Event was created successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
+                        
+                        this.loadAllEvents();
+                        this.loadDraftList();
+                        this.$refs.modal_addAlbumInfo.hide();
+
+                    }
                 },
                 addAlbumInfo() {
                     this.$refs['modal_addAlbumInfo'].show();
                 },
-                userData: async function(){
-                    try{
-
-                        
-                        const response = await auth_service.getUserData();
-                        this.displayName=response.data.user.name;
-                    } catch(error) {
-                        this.flashMessage.error({
-                        message: 'Some error occured! Please try again.',
-                        time: 5000
-                        });
-                    }
-                }
             }
         }
 </script>

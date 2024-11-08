@@ -5,6 +5,14 @@ export function addEventData(data){
     return httpFile().post('/addEventData', data);
 }
 
+export function addTrackingLog(data){
+    return httpFile().post('/addTrackingLog', data);
+}
+
+export function addComment(data){
+    return httpFile().post('/addComment', data);
+}
+
 export function addAlbumTags(data){
     return httpFile().post('/addAlbumTags', data);
 }
@@ -67,12 +75,24 @@ export function getAlbumStatus(album_id){
     return httpFile().post(`/getAlbumStatus/${album_id}`);
 }
 
+export function getTrackingLog(album_id){
+    return httpFile().post(`/getTrackingLog/${album_id}`);
+}
+
+export function getCommentLog(album_id){
+    return httpFile().post(`/getCommentLog/${album_id}`);
+}
+
 export function countAlbumEntry(){
     return http().get('/countAlbumEntry');
 }
 
 export function countAlbumPhotoEntry(album_id){
     return httpFile().post(`/countAlbumPhotoEntry/${album_id}`);
+}
+
+export function countAlbumComment(album_id){
+    return httpFile().post(`/countAlbumComment/${album_id}`);
 }
 
 export function countAlbumVideoEntry(album_id){
@@ -127,6 +147,7 @@ export function updateAlbumStatus(albumID, data){
     return httpFile().post(`updateAlbumStatus/${albumID}`, data);
 }
 
+
 export function updatePhoto(photo_id, data){
     return httpFile().post(`updatePhoto/${photo_id}`, data);
 }
@@ -134,3 +155,19 @@ export function updatePhoto(photo_id, data){
 export function updateVideo(photo_id, data){
     return httpFile().post(`updateVideo/${photo_id}`, data);
 }
+
+
+export function updateTrackingLog(albumID, data){
+    return httpFile().post(`updateTrackingLog/${albumID}`, data);
+}
+
+export function updateTrackingLog_publisher(albumID, data){
+    return httpFile().post(`updateTrackingLog_publisher/${albumID}`, data);
+}
+// export function updateEventTrackingLog_review(albumID, data){
+//     return httpFile().post(`updateEventTrackingLog_review/${albumID}`, data);
+// }
+
+// export function updateEventTrackingLog_forRevision(albumID, data){
+//     return httpFile().post(`updateEventTrackingLog_forRevision/${albumID}`, data);
+// }

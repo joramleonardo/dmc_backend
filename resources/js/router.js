@@ -17,6 +17,11 @@ import Author_Event_List from './views/DMC/Author/_Author_EventList.vue';
 import Author_Album_Page from './views/DMC/Author/_Author_AlbumPage.vue';
 
 
+import Publisher_Home from './views/DMC/Publisher/_Publisher_Home.vue';
+import Publisher_Events from './views/DMC/Publisher/_Publisher_Events.vue';
+import Publisher_Album_Page from './views/DMC/Publisher/_Publisher_AlbumPage.vue';
+
+
 import Photo_Add from './views/DMC/Admin/_Admin_EventAdd.vue';
 import Photo_List from './views/DMC/Admin/_Admin_EventAdd.vue';
 import Video_Add from './views/DMC/Admin/_Admin_EventAdd.vue';
@@ -90,6 +95,28 @@ const routes = [
                 name: 'author-event-list',
                 component: Author_Event_List,
             },
+        ],
+    },
+    {
+        path: '/publisher/home',
+        name: 'publisher-home',
+        component: Publisher_Home,
+        children: [
+            {
+                path: '/view-album/:id',
+                name: 'view-album',
+                component: Publisher_Album_Page
+            },
+            // {
+            //     path: '/publisher/home/dashboard',
+            //     name: 'publisher-home-dashboard',
+            //     component: Author_Dashboard,
+            // },
+            {
+                path: '/publisher/events',
+                name: 'publisher-events',
+                component: Publisher_Events,
+            }
         ],
     }
 ];

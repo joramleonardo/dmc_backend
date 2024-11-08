@@ -1,142 +1,33 @@
 <template>
     <div>
-        <div class="page-header d-print-none">
-            <div class="tabler-container-xl">
-                <div class="row g-2 align-items-center">
-                    <div class="col">
-                        <h2 class="page-title">
-                            <span style="color: gray;">Events > </span>{{data_eventInformation.event_title}}
-                        </h2>
-                        <div style="margin-top: 1%;">
-                            <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                <h5><span class="badge bg-azure text-azure-fg">Draft</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                <h5><span class="badge bg-orange text-orange-fg">Under Review</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Published' ">
-                                <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'For Revision' ">
-                                <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-auto ms-auto d-print-none">
-                        <div class="d-flex">
-                            <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                <b-button @click="showModal_uploadPhoto()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M14 14l1 -1c.67 -.644 1.45 -.824 2.182 -.54" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
-                                </b-button>
-                                <b-button @click="showModal_uploadVideo()" class="mr-1" variant="warning"  v-b-tooltip.hover title="Upload Video">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /><path d="M7 12l4 0" /><path d="M9 10l0 4" /></svg>    <!-- Upload Photo -->
-                                </b-button>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                <!-- <b-button @click="showModal_uploadPhoto()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo" disabled>
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3" /><path d="M3 3l18 18" /></svg>
-                                </b-button>
-                                <b-button @click="showModal_uploadVideo()" class="mr-1" variant="warning"  v-b-tooltip.hover title="Upload Video" disabled>
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M15 11v-1l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -.675 .946" /><path d="M10 6h3a2 2 0 0 1 2 2v3m0 4v1a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-8a2 2 0 0 1 2 -2h1" /></svg>
-                                </b-button> -->
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Published' ">
-                                <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'For Revision' ">
-                                <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
+        <div id="_spinner">
+            <div class="text-center mt-5">
+                <b-spinner label="Busy"></b-spinner>
             </div>
         </div>
-        <div class="page-body">
-            <div class="tabler-container-xl">
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                Event Information
-                                </h3>
-                                <div class="card-actions">
-                                    
-                                    <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                        <b-button @click="editAlbumInfo()" class="mr-1" variant="success" v-b-tooltip.hover title="Edit Event">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="100"  height="100"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                        </b-button>
-                                        <b-button @click="viewAlbumInfo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                        </b-button>
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                        
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Published' ">
-                                        <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                        <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'For Revision' ">
-                                        <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <dl class="row">
-                                    <dt class="col-5">Title:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_title}}</dd>
-
-                                    <dt class="col-5">Description:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_description}}</dd>
-
-                                    <dt class="col-5">Date:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_date}}</dd>
-
-                                    <dt class="col-5">Venue:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_venue}}</dd>
-
-                                    <dt class="col-5">Organizing Agency:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_organizingAgency}}</dd>
-
-                                    <dt class="col-5">Category:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_category}}</dd>
-
-                                    <dt class="col-5">Sector:</dt>
-                                    <dd class="col-7">{{data_eventInformation.event_sector}}</dd>
-
-                                    <dt class="col-5">Tags:</dt>
-                                    <dd class="col-7">
-                                        <span v-for="(event, index) in album_tags" :key="index">
-                                            <a class="badge badge-outline text-secondary fw-normal badge-pill">
-                                                {{event.album_tagName}}
-                                            </a>
-                                        </span>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="card-footer">
-                                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        <div id="_body" style="display: none">
+            <div class="page-header d-print-none">
+                <div class="tabler-container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                <router-link to="/author/events" class="nav-link" style="text-decoration: underline;"> 
+                                    EVENTS 
+                                </router-link>    
+                                > {{data_eventInformation.event_title}}
+                            </h2>
+                            <div style="margin-top: 1%;">
                                 <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                    <b-button value="2" @click="changeStatus(2)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                                        Submit to Publisher
-                                    </b-button>
+                                    <h5><span class="badge bg-azure text-azure-fg">Draft</span></h5>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                    <b-button value="2" class="mr-1" variant="warning"  disabled>
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                                        Event Under Review
-                                    </b-button>
+                                    <h5><span class="badge bg-orange text-orange-fg">Submitted to Publisher</span></h5>
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Under Review'">
+                                    <h5><span class="badge bg-indigo text-indigo-fg">Under Review</span></h5>
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Return to Author' ">
+                                    <h5><span class="badge bg-indigo text-indigo-fg">Under Review</span></h5>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Published' ">
                                     <h5><span class="badge bg-green text-green-fg">Published</span></h5>
@@ -147,112 +38,426 @@
                                 <div v-if="currentAlbumStatus === 'For Revision' ">
                                     <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-auto ms-auto d-print-none">
+                            <div class="d-flex">
+                                <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                    <b-button @click="showModal_uploadPhoto()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M14 14l1 -1c.67 -.644 1.45 -.824 2.182 -.54" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
+                                    </b-button>
+                                    <b-button @click="showModal_uploadVideo()" class="mr-1" variant="warning"  v-b-tooltip.hover title="Upload Video">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /><path d="M7 12l4 0" /><path d="M9 10l0 4" /></svg>    <!-- Upload Photo -->
+                                    </b-button>
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Published' ">
+                                    
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                    
+                                </div>
+                                <div v-if="currentAlbumStatus === 'For Revision' ">
+                                    <b-button @click="showModal_uploadPhoto()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M14 14l1 -1c.67 -.644 1.45 -.824 2.182 -.54" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
+                                    </b-button>
+                                    <b-button @click="showModal_uploadVideo()" class="mr-1" variant="warning"  v-b-tooltip.hover title="Upload Video">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /><path d="M7 12l4 0" /><path d="M9 10l0 4" /></svg>    <!-- Upload Photo -->
+                                    </b-button>
+                                </div>
                                 
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
-                                <li class="nav-item">
-                                    <a href="#tabs-home-7" class="nav-link active" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
-                                        Photos
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#tabs-profile-7" class="nav-link" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
-                                        Videos
-                                    </a>
-                                </li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <div class="tab-content">
-                                    <div class="tab-pane active show" id="tabs-home-7">
+                </div>
+            </div>
+            <div class="page-body">
+                <div class="tabler-container-xl">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card" id="Event_Information">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                    Event Information
+                                    </h3>
+                                    <div class="card-actions">
                                         
-                                        <div v-if="this.photo_length === 0">
-                                            <div class="row row-cards">
-                                                <div class="h3 m-0">
-                                                    NO PHOTO AVAILAVLE 
-                                                </div>
-                                            </div>
+                                        <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                            <b-button @click="editAlbumInfo()" class="mr-1" variant="success" v-b-tooltip.hover title="Edit Event">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="100"  height="100"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                            </b-button>
+                                            <b-button @click="viewAlbumInfo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                            </b-button>
                                         </div>
-                                        <div v-else>
-                                            <div class="row row-cards">
-                                                <div class="col-6" v-for="(event, index) in list_photo" :key="index">
-                                                    <div class="card placeholder-glow">
-                                                        <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
-                                                            <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
-                                                            </div>
-                                                        </a>
-                                                        <div class="ribbon ribbon-top">
-                                                            <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                                                <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
-                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                </b-button>
-                                                            </div>
-                                                            <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                                                
-                                                            </div>
-                                                            <div v-if="currentAlbumStatus === 'Published' ">
-                                                                <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                                            </div>
-                                                            <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                                                <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                                                            </div>
-                                                            <div v-if="currentAlbumStatus === 'For Revision' ">
-                                                                <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <dl class="row">
-                                                                <dt class="col-12 font-title-size">Title:</dt>
-                                                                <dd class="col-12">{{event.photo_title}}</dd>
-                                                                <dt class="col-12 font-title-size">Description:</dt>
-                                                                <dd class="col-12">{{event.photo_description}}</dd>
-                                                                <dt class="col-12 font-title-size">Photographer:</dt>
-                                                                <dd class="col-12">{{event.photo_photographer}}</dd>
-                                                                <dt class="col-12 font-title-size">Category:</dt>
-                                                                <dd class="col-12">{{event.photo_category}}</dd>
-                                                                <dt class="col-12 font-title-size">Tags:</dt>
-                                                                <dd class="col-12">
-                                                                    <span v-for="(tag, idx) in event.photo_tags.split(',')" :key="idx" class="tag-style">
-                                                                        <a class="badge badge-outline text-secondary fw-normal badge-pill">
-                                                                            {{tag}}
-                                                                        </a>
-                                                                    </span>
-                                                                </dd>
-                                                            </dl>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                            
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'Published' ">
+                                            <h5><span class="badge bg-green text-green-fg">Published</span></h5>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                            <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'For Revision' ">
+                                            <b-button @click="editAlbumInfo()" class="mr-1" variant="success" v-b-tooltip.hover title="Edit Event">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="100"  height="100"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                            </b-button>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-profile-7">
-                                            <span v-if="this.video_length === 0">
+                                </div>
+                                <div class="card-body">
+                                    <dl class="row">
+                                        <dt class="col-5">Title:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_title}}</dd>
+
+                                        <dt class="col-5">Description:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_description}}</dd>
+
+                                        <dt class="col-5">Date:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_date}}</dd>
+
+                                        <dt class="col-5">Venue:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_venue}}</dd>
+
+                                        <dt class="col-5">Organizing Agency:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_organizingAgency}}</dd>
+
+                                        <dt class="col-5">Category:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_category}}</dd>
+
+                                        <dt class="col-5">Sector:</dt>
+                                        <dd class="col-7">{{data_eventInformation.event_sector}}</dd>
+
+                                        <dt class="col-5">Tags:</dt>
+                                        <dd class="col-7">
+                                            <span v-for="(event, index) in album_tags" :key="index">
+                                                <a class="badge badge-outline text-secondary fw-normal badge-pill">
+                                                    {{event.album_tagName}}
+                                                </a>
+                                            </span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="card-footer">
+                                    <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                        <b-button value="2" @click="submitToPublisher(2)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                                            Submit to Publisher
+                                        </b-button>
+                                    </div>
+                                    <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                        
+                                    </div>
+                                    <div v-if="currentAlbumStatus === 'Published' ">
+                                        
+                                    </div>
+                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                        
+                                    </div>
+                                    <div v-if="currentAlbumStatus === 'For Revision' ">
+                                        <b-button value="2" @click="changeStatus(2)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                                            Resubmit to Publisher
+                                        </b-button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                            <div v-if="currentAlbumStatus === 'Return to Author' ">
+                                <div v-if="noOfComment === 0">
+                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                Comment Logs
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            No Comments Yet
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                Comment Logs
+                                            </h3>
+                                        </div>
+                                        <div class="card-body" v-for="(event, index) in list_commentLog" :key="index">
+                                            <span v-if="event.section_title === 'EVENT DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}</span>
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
+                                            <span v-if="event.section_title === 'PHOTO DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}: </span> {{event.section_id}}
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div v-if="currentAlbumStatus === 'For Revision' ">
+                                <div v-if="noOfComment === 0">
+                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                Comment Logs
+                                            </h3>
+                                        </div>
+                                        <div class="card-body">
+                                            No Comments Yet
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                Comment Logs
+                                            </h3>
+                                        </div>
+                                        <div class="card-body" v-for="(event, index) in list_commentLog" :key="index">
+                                            <span v-if="event.section_title === 'EVENT DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}</span>
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
+                                            <span v-if="event.section_title === 'PHOTO DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}: </span> {{event.section_id}}
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card" id="Event_Tracking_Log" style="margin-top: 15px">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        Event Tracking Log
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+                                                    <dt class="col-12" style="font-style: italic">----- PENDING FOR REVIEW -----</dt>
+
+                                                    
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                        
+                                        <div v-if="currentAlbumStatus === 'Under Review' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+                                                    <dt class="col-12" style="font-style: italic">----- UNDER REVIEW -----</dt>
+
+                                                    <dt class="col-5">Reviewer:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
+
+                                                    <dt class="col-5">Date:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_reviewedByPublisher}}</dd>
+
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'Return to Author' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+                                                    <dt class="col-12" style="font-style: italic">----- UNDER REVIEW -----</dt>
+
+                                                    <dt class="col-5">Reviewer:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
+
+                                                    <dt class="col-5">Date:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_reviewedByPublisher}}</dd>
+
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'For Revision' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+
+                                                    <dt class="col-12" style="font-style: italic"> ---------- DONE REVIEW ---------- </dt>
+
+                                                    <dt class="col-5">Reviewer:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
+
+                                                    <dt class="col-5">Date Reviewed:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_reviewedByPublisher}}</dd>
+                                                    
+                                                    <dt class="col-12" style="font-style: italic"> ---------- FOR REVISION ---------- </dt>
+
+                                                    <dt class="col-7">Date Returned for Revision:</dt>
+                                                    <dd class="col-5">{{trackingLog.date_returnedForRevision}}</dd>
+
+                                                </dl>
+                                            </pre>
+                                        </div>
+
+                                        <div v-if="currentAlbumStatus === 'Done Revision' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+
+                                                    <dt class="col-5">Date Returned:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_returnedForRevision}}</dd>
+
+                                                    <dt class="col-5">Reviewer:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
+
+                                                    <dt class="col-5">Date Revised:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_revisedByAuthor}}</dd>
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'Published' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+
+                                                    <dt class="col-5">Date Reviewed:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_returnedForRevision}}</dd>
+
+                                                    <dt class="col-5">Date Published:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_publishedByPublisher}}</dd>
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                        <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                            <pre style="color: white">
+                                                <dl class="row">
+                                                    <dt class="col-5">Author:</dt>
+                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+
+                                                    <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+
+                                                    <dt class="col-5">Date Submitted:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
+
+                                                    <dt class="col-5">Date Reviewed:</dt>
+                                                    <dd class="col-7">{{trackingLog.date_returnedForRevision}}</dd>
+
+                                                </dl>
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                                    <li class="nav-item">
+                                        <a href="#tabs-home-7" class="nav-link active" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" /><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" /></svg>
+                                            Photos
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#tabs-profile-7" class="nav-link" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/user -->
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /></svg>
+                                            Videos
+                                        </a>
+                                    </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="tabs-home-7">
+                                            
+                                            <div v-if="this.photo_length === 0">
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
-                                                        NO VIDEO AVAILAVLE 
+                                                        NO PHOTO AVAILAVLE 
                                                     </div>
                                                 </div>
-                                            </span>
-                                            <span v-else>
+                                            </div>
+                                            <div v-else>
                                                 <div class="row row-cards">
-                                                    <div class="col-6" v-for="(event, index) in list_video" :key="index">
+                                                    <div class="col-4" v-for="(event, index) in list_photo" :key="index">
                                                         <div class="card placeholder-glow">
-                                                            <div class="ratio ratio-4x3 card-img-top">
-                                                                <iframe width="420" height="315"
-                                                                    :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
-                                                                    
-                                                                </iframe>
-                                                            </div>
+                                                            <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
+                                                                <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
+                                                                </div>
+                                                            </a>
                                                             <div class="ribbon ribbon-top">
                                                                 <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                                                    <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
+                                                                    <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
                                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                     </b-button>
                                                                 </div>
@@ -266,26 +471,24 @@
                                                                     <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
                                                                 </div>
                                                                 <div v-if="currentAlbumStatus === 'For Revision' ">
-                                                                    <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
+                                                                    <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                    </b-button>
                                                                 </div>
                                                             </div>
                                                             <div class="card-body">
                                                                 <dl class="row">
-                                                                    <dt class="col-12 font-title-size">Title:</dt>
-                                                                    <dd class="col-12">{{event.video_title}}</dd>
+                                                                    <!-- <dt class="col-12 font-title-size">Title:</dt>
+                                                                    <dd class="col-12">{{event.photo_title}}</dd> -->
                                                                     <dt class="col-12 font-title-size">Description:</dt>
-                                                                    <dd class="col-12">{{event.video_description}}</dd>
-                                                                    <dt class="col-12 font-title-size">Videographer:</dt>
-                                                                    <dd class="col-12">{{event.video_videographer}}</dd>
+                                                                    <dd class="col-12">{{event.photo_description}}</dd>
+                                                                    <dt class="col-12 font-title-size">Photographer:</dt>
+                                                                    <dd class="col-12">{{event.photo_photographer}}</dd>
                                                                     <dt class="col-12 font-title-size">Category:</dt>
-                                                                    <dd class="col-12">{{event.video_category}}</dd>
-                                                                    <dt class="col-12 font-title-size">Duration:</dt>
-                                                                    <dd class="col-12">{{event.video_duration}}</dd>
-                                                                    <dt class="col-12 font-title-size">Video Type:</dt>
-                                                                    <dd class="col-12">{{event.video_type}}</dd>
+                                                                    <dd class="col-12">{{event.photo_category}}</dd>
                                                                     <dt class="col-12 font-title-size">Tags:</dt>
                                                                     <dd class="col-12">
-                                                                        <span v-for="(tag, idx) in event.video_tags.split(',')" :key="idx" class="tag-style">
+                                                                        <span v-for="(tag, idx) in event.photo_tags.split(',')" :key="idx" class="tag-style">
                                                                             <a class="badge badge-outline text-secondary fw-normal badge-pill">
                                                                                 {{tag}}
                                                                             </a>
@@ -296,16 +499,85 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </span>
-                                       
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tabs-profile-7">
+                                                <span v-if="this.video_length === 0">
+                                                    <div class="row row-cards">
+                                                        <div class="h3 m-0">
+                                                            NO VIDEO AVAILAVLE 
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                                <span v-else>
+                                                    <div class="row row-cards">
+                                                        <div class="col-6" v-for="(event, index) in list_video" :key="index">
+                                                            <div class="card placeholder-glow">
+                                                                <div class="ratio ratio-4x3 card-img-top">
+                                                                    <iframe width="420" height="315"
+                                                                        :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
+                                                                        
+                                                                    </iframe>
+                                                                </div>
+                                                                <div class="ribbon ribbon-top">
+                                                                    <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                                                        <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                        </b-button>
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                                                        
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'Published' ">
+                                                                        <h5><span class="badge bg-green text-green-fg">Published</span></h5>
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                                                        <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'For Revision' ">
+                                                                        <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                        </b-button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <dl class="row">
+                                                                        <dt class="col-12 font-title-size">Title:</dt>
+                                                                        <dd class="col-12">{{event.video_title}}</dd>
+                                                                        <dt class="col-12 font-title-size">Description:</dt>
+                                                                        <dd class="col-12">{{event.video_description}}</dd>
+                                                                        <dt class="col-12 font-title-size">Videographer:</dt>
+                                                                        <dd class="col-12">{{event.video_videographer}}</dd>
+                                                                        <dt class="col-12 font-title-size">Category:</dt>
+                                                                        <dd class="col-12">{{event.video_category}}</dd>
+                                                                        <dt class="col-12 font-title-size">Duration:</dt>
+                                                                        <dd class="col-12">{{event.video_duration}}</dd>
+                                                                        <dt class="col-12 font-title-size">Video Type:</dt>
+                                                                        <dd class="col-12">{{event.video_type}}</dd>
+                                                                        <dt class="col-12 font-title-size">Tags:</dt>
+                                                                        <dd class="col-12">
+                                                                            <span v-for="(tag, idx) in event.video_tags.split(',')" :key="idx" class="tag-style">
+                                                                                <a class="badge badge-outline text-secondary fw-normal badge-pill">
+                                                                                    {{tag}}
+                                                                                </a>
+                                                                            </span>
+                                                                        </dd>
+                                                                    </dl>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                
+                    
+                </div>
             </div>
         </div>
 
@@ -778,6 +1050,13 @@
                 <b-button variant="warning" value="1" @click="updateVideo()">Update</b-button>
             </template>
         </b-modal>
+
+        <b-modal id="modal_validatePhoto" ref="modal_validatePhoto"  title="Warning!" size="lg" centered hide-footer
+        :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
+            <div>
+                <h5>Add Photo before submitting!</h5>
+            </div>
+        </b-modal>
                             
     </div>
 </template>
@@ -790,6 +1069,8 @@
         export default {
             data() {
                 return {
+                    headerBG_savedSuccessfully: 'warning',
+                    headerText_savedSuccessfully: 'light',
                     event_id : this.$route.params.id,
                     albumID:[],
                     albumInfo:{},
@@ -887,7 +1168,19 @@
                     video_length: 0,
                     albumStatus: '',
                     currentAlbumStatus: '',
+                    trackingLog: '',
                     selected_category_album: null,
+                    finalTime: '',
+                    finalDate: '',
+                    finalDateTime: '',
+                    sectionID:'',
+                    sectionTitle:'',
+                    sectionComment: '',
+                    noOfComment: '',
+                    commentSection: '',
+                    list_commentLog: [],
+                    event_ID: '',
+
                 }
             },
             mounted(){
@@ -897,10 +1190,53 @@
                       
                 this.loadEventDetails();
                 this.loadAlbumStatus();
+                this.loadTrackingLog();
                 this.loadEventPhotos();
                 this.loadEventVideos();
+
+                this.createDate();
+                this.loadCommentLog();
+                
             },
             methods: {
+                createDate(){
+                    const date = new Date();
+                    const months = [
+                        'January',
+                        'February',
+                        'March',
+                        'April',
+                        'May',
+                        'June',
+                        'July',
+                        'August',
+                        'September',
+                        'October',
+                        'November',
+                        'December'
+                        ];
+                    const monthIndex = date.getMonth()
+                    const monthName = months[monthIndex]
+                    let currentDay= String(date.getDate()).padStart(2, '0');
+                    let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+                    let currentYear = date.getFullYear();
+                    let getHours = date.getHours();
+                    let getMinutes = date.getMinutes();
+                    let getSeconds = date.getSeconds();
+                    let newformat = getHours >= 12 ? 'PM' : 'AM';
+                    getHours = getHours % 12;
+                    getHours = getHours ? getHours : 12;
+                    getMinutes = getMinutes < 10 ? '0' + getMinutes : getMinutes;
+                    this.finalTime = getHours + ":" + getMinutes + ":" + getSeconds + " " + newformat;
+                    this.finalDate = monthName + " " + currentDay + " " + currentYear;
+                    this.finalDateTime = monthName + " " + currentDay + " " + currentYear + " " + getHours + ":" + getMinutes + " " + newformat;
+                },
+                loadCommentLog: async function (){
+                    const response_commentLog = await assets_service.getCommentLog(this.event_id);
+                    this.list_commentLog = response_commentLog.data;
+                    console.log("List of Comments");
+                    console.log(this.list_commentLog);
+                },
                 initializeFsLightbox() {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
@@ -926,6 +1262,11 @@
                         console.error("FS Lightbox is not available; check CDN loading");
                     }
                     }, 1000); 
+                },
+                loadTrackingLog: async function (){
+                    const response_trackingLog = await assets_service.getTrackingLog(this.event_id);
+                    this.trackingLog = response_trackingLog.data[0];
+                    console.log(this.trackingLog);
                 },
                 loadAlbumStatus: async function (){
                     const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
@@ -960,6 +1301,12 @@
                     const response_videoList = await assets_service.getListVideo_selected(this.event_id);
                     this.list_video = response_videoList.data;
                     this.video_length = this.list_video.length;
+
+                    this.loadPage();
+                },
+                loadPage: async function(){
+                    document.getElementById("_spinner").style.display = "none";
+                    document.getElementById("_body").style.display = "block";
                 },
                 editAlbumInfo: async function(data){
 
@@ -1053,6 +1400,7 @@
                         });
                         
                         const response_photoData = await assets_service.addPhotoData(formData_photoData);
+                            
 
                         // Save tags
                         let tagList = [];
@@ -1068,6 +1416,12 @@
                         }
 
                         this.loadEventPhotos();
+                        this.$toast.open({
+                            message: 'Photo was added successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                         this.$refs['modal_uploadPhoto'].hide();
                         this.photo_tabs.forEach((photoEntry, index) => {
                             photoEntry.photo_fileName = null;
@@ -1197,36 +1551,104 @@
                         console.log("An error occurred!");
                     }
                 },
-                changeStatus: async function (value){
-                    if (value == "1"){
-                        this.albumStatus = "Saved as Draft"
-                    }
-                    else if (value == "2"){
-                        this.albumStatus = "Submitted for Review";
-                    }
-                    else if (value == "3"){
-                        this.albumStatus = "Published";
-                    }
-                    else if (value == "4"){
-                        this.albumStatus = "Unpublished";
-                    }
-                    else if (value == "5"){
-                        this.albumStatus = "For Revision";
-                    }
+                getAlbumID: async function(){
+                    
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
                     this.data_eventInformation = response_eventDetails.data[0];
                     let albumID = this.data_eventInformation.album_id;
-                    
-                    try{
-                        let formData_albumStatus = new FormData();
-                        formData_albumStatus.append('album_status', this.albumStatus);
-                        const response_albumStatusData = await assets_service.updateAlbumStatus(albumID, formData_albumStatus);
+                },
+                submitToPublisher: async function(value){
+                    const response_countPhoto = await assets_service.countAlbumPhotoEntry(this.event_id);
+                    let photo = response_countPhoto.data;
+                    if (photo > 0){
+                        // EVENT STATUS
+                        this.albumStatus = "Submitted for Review";
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Pending for Review";
+                        
+                        try{
+                            // UPDATE EVENT STATUS
+                            let formData_albumStatus = new FormData();
+                            formData_albumStatus.append('album_status', this.albumStatus);
+                            const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
 
-                        this.loadAlbumStatus();
+                            // CREATE EVENT TRACKING LOG
+                            let formData_eventTrackingLog = new FormData();
+                                formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                                formData_eventTrackingLog.append('date', this.finalDate);
+                            const response_eventTrackingLog = await assets_service.updateTrackingLog(this.event_id, formData_eventTrackingLog);
 
-                    }catch(error){
+
+                            this.loadAlbumStatus();
+                            this.loadTrackingLog();
+                            this.$toast.open({
+                                message: 'Event was submitted to Publisher successfully!',
+                                type: 'success', // Options: 'success', 'info', 'error', 'default'
+                                position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                                duration: 5000, 
+                            });
+
+                        }catch(error){
+                            this.$toast.open({
+                                message: 'An error occured!',
+                                type: 'error', // Options: 'success', 'info', 'error', 'default'
+                                position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                                duration: 5000, 
+                            });
+                        }
 
                     }
+                    else{
+                        this.$toast.open({
+                            message: 'Add Photo before submitting!',
+                            type: 'error', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
+                    }
+                },
+                changeStatus: async function (value){
+                    const response_countPhoto = await assets_service.countAlbumPhotoEntry(this.event_id);
+                    let photo = response_countPhoto.data;
+                    if (photo > 0){
+                        if (value == "2"){
+                            this.albumStatus = "Submitted for Review";
+                        }
+                        else if (value == "3"){
+                            this.albumStatus = "Published";
+                        }
+                        else if (value == "4"){
+                            this.albumStatus = "Unpublished";
+                        }
+                        else if (value == "5"){
+                            this.albumStatus = "For Revision";
+                        }
+                        const response_eventDetails = await assets_service.getEventDetails(this.event_id);
+                        this.data_eventInformation = response_eventDetails.data[0];
+                        let albumID = this.data_eventInformation.album_id;
+                        
+                        try{
+                            let formData_albumStatus = new FormData();
+                            formData_albumStatus.append('album_status', this.albumStatus);
+                            const response_albumStatusData = await assets_service.updateAlbumStatus(albumID, formData_albumStatus);
+
+                            
+                            let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('date_submittedToPublisher', this.finalDate);
+                            const response_eventTrackingLog = await assets_service.updateEventTrackingLog(albumID, formData_eventTrackingLog);
+
+                            this.loadAlbumStatus();
+                            this.loadTrackingLog();
+
+                        }catch(error){
+
+                        }
+                    }
+                    else{
+                        this.$refs['modal_validatePhoto'].show();
+                    }
+
+                    
                 },
                 updatePhoto: async function() {
 

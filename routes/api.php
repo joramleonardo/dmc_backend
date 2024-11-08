@@ -56,6 +56,8 @@ Route::post('getUserData', [LoginController::class, 'getUserData']);
 
 // Route::post('addEventData', 'AssetsController@addEventData');
 Route::post('addEventData', [AssetsController::class, 'addEventData']);
+Route::post('addTrackingLog', [AssetsController::class, 'addTrackingLog']);
+Route::post('addComment', [AssetsController::class, 'addComment']);
 Route::post('addAlbumTags', [AssetsController::class, 'addAlbumTags']);
 Route::post('addAlbumStatus', [AssetsController::class, 'addAlbumStatus']);
 
@@ -85,9 +87,12 @@ Route::post('/getPhotoTags_selected/{photo_id}', [AssetsController::class, 'getP
 Route::post('/getVideoTags_selected/{video_id}', [AssetsController::class, 'getVideoTags_selected']);
 Route::get('getAllListVideo', [AssetsController::class, 'getAllListVideo']);
 Route::post('/getAlbumStatus/{album_id}', [AssetsController::class, 'getAlbumStatus']);
+Route::post('/getTrackingLog/{album_id}', [AssetsController::class, 'getTrackingLog']);
+Route::post('/getCommentLog/{album_id}', [AssetsController::class, 'getCommentLog']);
 
 Route::get('countAlbumEntry', [AssetsController::class, 'countAlbumEntry']);
 Route::post('/countAlbumPhotoEntry/{album_id}', [AssetsController::class, 'countAlbumPhotoEntry']);
+Route::post('/countAlbumComment/{album_id}', [AssetsController::class, 'countAlbumComment']);
 Route::post('/countAlbumVideoEntry/{album_id}', [AssetsController::class, 'countAlbumVideoEntry']);
 Route::post('/checkAlbumTagsExists/{album_id}/{tag_name}', [AssetsController::class, 'checkAlbumTagsExists']);
 
@@ -98,3 +103,8 @@ Route::post('/updateAlbum/{albumID}', [AssetsController::class, 'updateAlbum']);
 Route::post('/updatePhoto/{photo_id}', [AssetsController::class, 'updatePhoto']);
 Route::post('/updateVideo/{photo_id}', [AssetsController::class, 'updateVideo']);
 Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);
+
+Route::post('/updateTrackingLog/{albumID}', [AssetsController::class, 'updateTrackingLog']);
+Route::post('/updateTrackingLog_publisher/{albumID}', [AssetsController::class, 'updateTrackingLog_publisher']);
+// Route::post('/updateEventTrackingLog_review/{albumID}', [AssetsController::class, 'updateEventTrackingLog_review']);
+// Route::post('/updateEventTrackingLog_forRevision/{albumID}', [AssetsController::class, 'updateEventTrackingLog_forRevision']);
