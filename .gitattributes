@@ -3,4 +3,5 @@
 *.scss linguist-vendored
 *.js linguist-vendored
 CHANGELOG.md export-ignore
-*.vue linguist-language=JavaScript
+
+*.html linguist-language=vue

@@ -30,6 +30,12 @@
                     </div>
                     <div class="col-auto ms-auto d-print-none">
                         <div class="d-flex">
+                            <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                <b-button @click="changeStatus(3)" class="mr-1" variant="danger" >
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-refund"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" /></svg>
+                                    Review
+                                </b-button>
+                            </div>
                             <div v-if="currentAlbumStatus === 'Under Review' ">
                                 <b-button @click="changeStatus(8)" class="mr-1" variant="danger" >
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
@@ -763,10 +769,16 @@
                         this.albumStatus = "Submitted for Review";
                     }
                     else if (value == "3"){
-                        this.albumStatus = "Published";
+                    
+                        // EVENT STATUS
+                        this.albumStatus = "Under Review";
+
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Under Review";
+                        
                     }
                     else if (value == "4"){
-                        this.albumStatus = "Unpublished";
+                        this.albumStatus = "For Comment";
                     }
                     else if (value == "5"){
                         this.albumStatus = "For Revision";
@@ -779,12 +791,12 @@
                         this.albumStatus = "Done Revision";
                     }
                     else if (value == "7"){
-                        this.albumStatus = "Under Review";
+                        this.albumStatus = "Unpublished";
                         formData_eventTrackingLog.append('date_reviewedByPublisher', this.finalDate);
                         const response_eventTrackingLog = await assets_service.updateEventTrackingLog_review(albumID, formData_eventTrackingLog);
                     }
                     else if (value == "8"){
-                        this.albumStatus = "Return to Author";
+                        this.albumStatus = "Published";
                     }
 
                     let formData_albumStatus = new FormData();

@@ -37,8 +37,8 @@
                                                 
                                                 <b-button variant="info">Review</b-button>
                                             </router-link>                                     -->
-                                            <b-button @click="navigateToReview(row.item.album_id)" target="_blank" variant="info">
-                                                Review
+                                            <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                View Details
                                             </b-button>
                                         </template>
 
@@ -162,10 +162,6 @@
                     }
                 },
                 async reviewEventLink(album_id) {
-
-                    this.changeStatus(7,album_id);
-                    
-                    // Return the route object with album_id as a route parameter
                     return {
                         name: 'view-album', // Replace 'album' with the actual route name for the new page
                         params: { id: album_id }
@@ -173,44 +169,8 @@
                 },
                 async navigateToReview(album_id) {
                     const link = await this.reviewEventLink(album_id);
-                    // this.$router.push(link); // Navigate programmatically
-                    const url = this.$router.resolve(link).href; // Get the URL for the route
-                    window.open(url, '_blank'); // Open the URL in a new tab
+                    this.$router.push(link); 
                 },
-                changeStatus: async function (value,album_id){
-                    if (value == "1"){
-                        this.albumStatus = "Saved as Draft"
-                    }
-                    else if (value == "2"){
-                        this.albumStatus = "Submitted for Review";
-                    }
-                    else if (value == "3"){
-                        this.albumStatus = "Published";
-                    }
-                    else if (value == "4"){
-                        this.albumStatus = "Unpublished";
-                    }
-                    else if (value == "5"){
-                        this.albumStatus = "For Revision";
-                    }
-                    else if (value == "6"){
-                        this.albumStatus = "Done Revision";
-                    }
-                    else if (value == "7"){
-                        this.albumStatus = "Under Review";
-                    }
-
-                    let formData_albumStatus = new FormData();
-                    formData_albumStatus.append('album_status', this.albumStatus);
-                    const response_albumStatusData = await assets_service.updateAlbumStatus(album_id,formData_albumStatus);
-
-                    let formData_eventTrackingLog = new FormData();
-                    formData_eventTrackingLog.append('name_publisher', this.displayName);
-                    formData_eventTrackingLog.append('date_reviewedByPublisher', this.finalDate);
-                    const response_eventTrackingLog = await assets_service.updateEventTrackingLog_review(album_id, formData_eventTrackingLog);
-
-                    console.log(this.albumStatus);
-            }
 
             }
         }
