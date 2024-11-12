@@ -585,6 +585,7 @@
                     noOfComment: '',
                     commentSection: '',
                     list_commentLog: [],
+                    displayName: '',
                 }
             },
             mounted(){
@@ -592,6 +593,7 @@
                     this.initializeFsLightbox();
                 }, 2500); // Adjust delay if needed
                       
+                this.userData();
                 this.createDate();
                 this.loadTrackingLog();
                 this.loadEventDetails();
@@ -602,6 +604,19 @@
                 this.loadCommentLog();
             },
             methods: {
+                userData: async function(){
+                    try{
+
+                        
+                        const response = await auth_service.getUserData();
+                        this.displayName=response.data.user.name;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
                 createDate(){
                     const date = new Date();
                     const months = [
@@ -772,10 +787,19 @@
                     
                         // EVENT STATUS
                         this.albumStatus = "Under Review";
+                        // UPDATE EVENT STATUS
+                        let formData_albumStatus = new FormData();
+                        formData_albumStatus.append('album_status', this.albumStatus);
+                        const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
 
                         // EVENT TRACKING STATUS
                         this.eventTrackingStatus = "Under Review";
-                        
+                        // CREATE EVENT TRACKING LOG
+                        let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                            formData_eventTrackingLog.append('date', this.finalDate);
+                            formData_eventTrackingLog.append('name_publisher', this.displayName);
+                        const response_eventTrackingLog = await assets_service.updateTrackingLog_publisher(this.event_id, formData_eventTrackingLog);
                     }
                     else if (value == "4"){
                         this.albumStatus = "For Comment";
