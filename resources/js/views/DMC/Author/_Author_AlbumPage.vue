@@ -161,7 +161,7 @@
                                         
                                     </div>
                                     <div v-if="currentAlbumStatus === 'For Revision' ">
-                                        <b-button value="2" @click="changeStatus(2)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
+                                        <b-button value="2" @click="changeStatus(5)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                                             Resubmit to Publisher
                                         </b-button>
@@ -1322,16 +1322,6 @@
 
                     this.$refs['modal_albumInfo'].show();
                 },
-                // editPhotoInfo: async function(data){
-
-                //     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
-                //     this.data_eventInformation_update = response_eventDetails.data[0];
-                //     this.data_eventInformation_length = this.data_eventInformation_update.length;
-
-                //     const response = await assets_service.getPhotoTags_selected(this.event_id);
-                //     this.photo_tags_new = response.data.map(item => item.photo_tagName);
-
-                // },
                 showModal_uploadPhoto: async function(){
 
                     this.$refs['modal_uploadPhoto'].show();
@@ -1615,46 +1605,31 @@
                     }
                 },
                 changeStatus: async function (value){
-                    console.log("This is resubmit action");
-                    // const response_countPhoto = await assets_service.countAlbumPhotoEntry(this.event_id);
-                    // let photo = response_countPhoto.data;
-                    // if (photo > 0){
-                    //     if (value == "2"){
-                    //         this.albumStatus = "Submitted for Review";
-                    //     }
-                    //     else if (value == "3"){
-                    //         this.albumStatus = "Published";
-                    //     }
-                    //     else if (value == "4"){
-                    //         this.albumStatus = "Unpublished";
-                    //     }
-                    //     else if (value == "5"){
-                    //         this.albumStatus = "For Revision";
-                    //     }
-                    //     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
-                    //     this.data_eventInformation = response_eventDetails.data[0];
-                    //     let albumID = this.data_eventInformation.album_id;
-                        
-                    //     try{
-                    //         let formData_albumStatus = new FormData();
-                    //         formData_albumStatus.append('album_status', this.albumStatus);
-                    //         const response_albumStatusData = await assets_service.updateAlbumStatus(albumID, formData_albumStatus);
 
-                            
-                    //         let formData_eventTrackingLog = new FormData();
-                    //         formData_eventTrackingLog.append('date_submittedToPublisher', this.finalDate);
-                    //         const response_eventTrackingLog = await assets_service.updateEventTrackingLog(albumID, formData_eventTrackingLog);
+                    const response_eventDetails = await assets_service.getEventDetails(this.event_id);
+                    this.data_eventInformation = response_eventDetails.data[0];
+                    let albumID = this.data_eventInformation.album_id;
 
-                    //         this.loadAlbumStatus();
-                    //         this.loadTrackingLog();
+                    if (value == "5"){
+                        // EVENT STATUS
+                        this.albumStatus = "Done Revision";
+                        let formData_albumStatus = new FormData();
+                        formData_albumStatus.append('name_publisher', this.displayName);
+                        formData_albumStatus.append('album_status', this.albumStatus);
+                        const response_albumStatusData = await assets_service.updateAlbumStatus_withPublisher(this.event_id, formData_albumStatus);
 
-                    //     }catch(error){
-
-                    //     }
-                    // }
-                    // else{
-                    //     this.$refs['modal_validatePhoto'].show();
-                    // }
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Done Revision";
+                        let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('album_id', this.event_id);
+                            formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                            formData_eventTrackingLog.append('date', this.finalDateTime);
+                        const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+                    }
+                    this.loadEventDetails();
+                    this.loadAlbumStatus();
+                    this.loadTrackingLog();
+                    this.loadCommentLog();
 
                     
                 },

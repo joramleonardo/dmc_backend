@@ -43,6 +43,14 @@
                                                     View Details
                                                 </b-button>
                                             </template>
+                                            <template #cell(album_status)="row">
+                                                <div v-if="row.item.album_status === 'Submitted for Review'">
+                                                    For Review
+                                                </div>
+                                                <div v-if="row.item.album_status === 'Done Revision'">
+                                                    Revision for Review
+                                                </div>
+                                            </template>
 
                                         </b-table>
                                         
@@ -74,6 +82,14 @@
                                                     View Details
                                                 </b-button>
                                             </template>
+                                            <template #cell(album_status)="row">
+                                                <div v-if="row.item.album_status === 'Under Review'">
+                                                    Ongoing Review
+                                                </div>
+                                                <div v-if="row.item.album_status === 'For Comment'">
+                                                    Ongoing Review
+                                                </div>
+                                            </template>
 
                                         </b-table>
                                         
@@ -104,6 +120,11 @@
                                                 <b-button @click="navigateToReview(row.item.album_id)" variant="info">
                                                     View Details
                                                 </b-button>
+                                            </template>
+                                            <template #cell(album_status)="row">
+                                                <div v-if="row.item.album_status === 'For Revision'">
+                                                    Returned to Author
+                                                </div>
                                             </template>
                                         </b-table>
                                         
@@ -140,7 +161,7 @@
                                 </b-tab>
                                 <b-tab>
                                     <template #title>
-                                        Published 
+                                        Published
                                         <span v-if="totalRows_published != 0">
                                             <b-badge variant="success">{{totalRows_published}}</b-badge>
                                         </span>
@@ -192,6 +213,7 @@
                     fields_PENDING: [
                         { key: 'album_id', label: 'Album ID'},
                         { key: 'event_title', label: 'Event Title'},
+                        { key: 'album_status', label: 'Status'},
                         { key: 'actions', label: 'Action' }
                     ],
                     pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],

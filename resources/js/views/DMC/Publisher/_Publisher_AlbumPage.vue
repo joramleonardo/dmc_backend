@@ -24,7 +24,7 @@
                                 <span class="badge bg-red text-red-fg">Needs Revision</span>
                             </div>
                             <div v-if="currentAlbumStatus === 'Done Revision' ">
-                                <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                <span class="badge bg-orange text-orange-fg">Revision Done</span>
                             </div>
                             <div v-if="currentAlbumStatus === 'Unpublished' ">
                                 <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -37,6 +37,12 @@
                     <div class="col-auto ms-auto d-print-none">
                         <div class="d-flex">
                             <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                <b-button @click="changeStatus(3)" class="mr-1" variant="danger" >
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-refund"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" /></svg>
+                                    Review
+                                </b-button>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Done Revision' ">
                                 <b-button @click="changeStatus(3)" class="mr-1" variant="danger" >
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-refund"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" /></svg>
                                     Review
@@ -58,12 +64,12 @@
                                     Return for Revision
                                 </b-button>
                             </div>
-                            <div v-if="currentAlbumStatus === 'For Revision' ">
+                            <!-- <div v-if="currentAlbumStatus === 'For Revision' ">
                                 <b-button @click="changeStatus(4)" class="mr-1" variant="danger" >
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-refund"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" /></svg>
                                     Return for Revision
                                 </b-button>
-                            </div>
+                            </div> -->
                             <div v-if="currentAlbumStatus === 'Unpublished' ">
                                 <b-button @click="changeStatus(7)" class="mr-1" variant="info" >
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>

@@ -253,7 +253,8 @@ class AssetsController extends Controller
 
     public function getAllListForReview(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                    ->where('tbl_album_status.album_status', "Submitted for Review")
+                    // ->where('tbl_album_status.album_status', "Submitted for Review")
+                    ->whereIn('tbl_album_status.album_status', ["Submitted for Review", "Done Revision"])
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
         
