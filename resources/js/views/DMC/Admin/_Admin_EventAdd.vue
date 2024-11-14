@@ -616,28 +616,6 @@
                         
                         // Save Album Status 
                         
-                        
-                        let formData_albumStatus = new FormData();
-                        formData_albumStatus.append('album_id', this.album_id);
-                        formData_albumStatus.append('album_status', this.albumStatus);
-                        const response_albumStatusData = await assets_service.addAlbumStatus(formData_albumStatus);
-    
-                        // Generate Photo ID
-                        // const const_2 = await assets_service.countAlbumPhotoEntry('PA2024-0001');
-                        // let totalAlbumPhotoEntry = const_2.data;
-                        // console.log(const_2);
-    
-                        // const const_2 = await assets_service.countAlbumPhotoEntry('PA2024-0001');
-                        //     let totalAlbumPhotoEntry = const_1.data;
-                        //     if (totalAlbumPhotoEntry <= 9){
-                        //         let i = totalAlbumPhotoEntry++;
-                        //         this.photo_id_id = "PH2024-0000" + i;
-                        //     }
-                        //     else if (totalAlbumPhotoEntry > 9){
-                        //         let i = totalAlbumPhotoEntry++;
-                        //         this.photo_id_id = "PH2024-000" + i;
-                        //     }
-    
                         // Save Photos
                         let formData_photoData = new FormData();
     
@@ -719,10 +697,6 @@
     
                     try{
                         
-                        let formData_albumStatus = new FormData();
-                        formData_albumStatus.append('album_id', this.album_id);
-                        formData_albumStatus.append('album_status', this.albumStatus);
-                        const response_albumStatusData = await assets_service.addAlbumStatus(formData_albumStatus);
                     }catch(error){
     
                     }

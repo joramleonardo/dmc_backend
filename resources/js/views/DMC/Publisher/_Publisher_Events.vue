@@ -27,25 +27,146 @@
                                             <b-badge variant="secondary">0</b-badge>
                                         </span>
                                     </template>
-                                    <div class="row row-cards">
+                                    <div class="row row-cards" v-if="totalRows_forReview == 0">
+                                        <div class="col-sm-6 col-lg-4" >
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO DATA AVAILAVLE 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cards" v-else>
                                         <b-table :items="list_forReview" :fields="fields_PENDING" striped hover>
-
-                                            
-                                        <template #cell(actions)="row">
-                                            <!-- <router-link :to="reviewEventLink(row.item.album_id)" target="_blank" style="text-decoration: none;"> -->
-                                            <!-- <router-link :to="reviewEventLink(row.item.album_id)" target="_blank" style="text-decoration: none;">
-                                                
-                                                <b-button variant="info">Review</b-button>
-                                            </router-link>                                     -->
-                                            <b-button @click="navigateToReview(row.item.album_id)" variant="info">
-                                                View Details
-                                            </b-button>
-                                        </template>
+                                            <template #cell(actions)="row">
+                                                <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                    View Details
+                                                </b-button>
+                                            </template>
 
                                         </b-table>
                                         
                                     </div>
-                                 </b-tab>
+                                </b-tab>
+                                <b-tab>
+                                    <template #title>
+                                        Under Review
+                                        <span v-if="totalRows_underReview != 0">
+                                            <b-badge variant="danger">{{totalRows_underReview}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards" v-if="totalRows_underReview == 0">
+                                        <div class="col-sm-6 col-lg-4" >
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO DATA AVAILAVLE 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cards" v-else>
+                                        <b-table :items="list_underReview" :fields="fields_PENDING" striped hover>
+                                            <template #cell(actions)="row">
+                                                <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                    View Details
+                                                </b-button>
+                                            </template>
+
+                                        </b-table>
+                                        
+                                    </div>
+                                </b-tab>
+                                <b-tab>
+                                    <template #title>
+                                        For Revision 
+                                        <span v-if="totalRows_forRevision != 0">
+                                            <b-badge variant="danger">{{totalRows_forRevision}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards" v-if="totalRows_forRevision == 0">
+                                        <div class="col-sm-6 col-lg-4" >
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO DATA AVAILAVLE 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cards" v-else>
+                                        <b-table :items="list_forRevision" :fields="fields_PENDING" striped hover>
+                                            <template #cell(actions)="row">
+                                                <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                    View Details
+                                                </b-button>
+                                            </template>
+                                        </b-table>
+                                        
+                                    </div>
+                                </b-tab>
+                                <b-tab>
+                                    <template #title>
+                                        Unpublished
+                                        <span v-if="totalRows_unpublished != 0">
+                                            <b-badge variant="warning">{{totalRows_unpublished}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards" v-if="totalRows_unpublished == 0">
+                                        <div class="col-sm-6 col-lg-4" >
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO DATA AVAILAVLE 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cards" v-else>
+                                        <b-table :items="list_unpublished" :fields="fields_PENDING" striped hover>
+                                            <template #cell(actions)="row">
+                                                <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                    View Details
+                                                </b-button>
+                                            </template>
+                                        </b-table>
+                                    </div>
+                                </b-tab>
+                                <b-tab>
+                                    <template #title>
+                                        Published 
+                                        <span v-if="totalRows_published != 0">
+                                            <b-badge variant="success">{{totalRows_published}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards" v-if="totalRows_published == 0">
+                                        <div class="col-sm-6 col-lg-4" >
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO DATA AVAILAVLE 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cards" v-else>
+                                        <b-table :items="list_published" :fields="fields_PENDING" striped hover>
+                                            <template #cell(actions)="row">
+                                                <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                    View Details
+                                                </b-button>
+                                            </template>
+                                        </b-table>
+                                    </div>
+                                </b-tab>
                             </b-tabs>
 
                         </div>
@@ -83,10 +204,18 @@
                     sortBy: 'id',
                     sortDesc: true,
                     displayName: '',
-                    
                     forReview: [],
+                    forRevision: [],
                     list_forReview: [],
                     totalRows_forReview: '',
+                    list_underReview: [],
+                    totalRows_underReview: '',
+                    list_forRevision: [],
+                    totalRows_forRevision: '',
+                    list_unpublished: [],
+                    totalRows_unpublished: '',
+                    list_published: [],
+                    totalRows_published: '',
                     
                     finalTime: '',
                     finalDate: '',
@@ -101,6 +230,10 @@
                 this.userData();
                 this.createDate();
                 this.loadForReviewList();
+                this.loadUnderReviewList();
+                this.loadForRevisionList();
+                this.loadUnpublished();
+                this.loadPublished();
             },
             methods: {
                 userData: async function(){
@@ -154,6 +287,58 @@
                         this.list_forReview = response.data;
                         console.log(this.list_forReview);
                         this.totalRows_forReview= this.list_forReview.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadUnderReviewList: async function() {
+                    try{
+                        const response = await assets_service.getAllListUnderReview();
+                        this.list_underReview = response.data;
+                        console.log(this.list_underReview);
+                        this.totalRows_underReview= this.list_underReview.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadForRevisionList: async function() {
+                    try{
+                        const response = await assets_service.getAllListForRevision();
+                        this.list_forRevision = response.data;
+                        console.log(this.list_forRevision);
+                        this.totalRows_forRevision= this.list_forRevision.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadUnpublished: async function() {
+                    try{
+                        const response = await assets_service.getAllListUnpublished();
+                        this.list_unpublished = response.data;
+                        console.log(this.list_unpublished);
+                        this.totalRows_unpublished= this.list_unpublished.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadPublished: async function() {
+                    try{
+                        const response = await assets_service.getAllListPublished();
+                        this.list_published = response.data;
+                        console.log(this.list_published);
+                        this.totalRows_published= this.list_published.length;
                     } catch(error) {
                         this.flashMessage.error({
                         message: 'Some error occured! Please try again.',

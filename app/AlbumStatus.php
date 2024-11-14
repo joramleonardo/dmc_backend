@@ -10,6 +10,8 @@ class AlbumStatus extends Model
     protected $fillable = [
         'id', //1
         'aldum_id',
-        'album_status'
+        'album_status',
+        'name_author', 
+        'name_publisher', 
     ];
 }

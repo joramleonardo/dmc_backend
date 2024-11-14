@@ -9,22 +9,28 @@
                         </h2>
                         <div style="margin-top: 1%;">
                             <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                <h5><span class="badge bg-azure text-azure-fg">Draft</span></h5>
+                                <span class="badge bg-cyan text-cyan-fg">Draft</span>
                             </div>
-                            <div v-if="currentAlbumStatus === 'Under Review'">
-                                <h5><span class="badge bg-indigo text-indigo-fg">Under Review</span></h5>
+                            <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
                             </div>
-                            <div v-if="currentAlbumStatus === 'Return to Author' ">
-                                <h5><span class="badge bg-indigo text-indigo-fg">Under Review</span></h5>
+                            <div v-if="currentAlbumStatus === 'Under Review' ">
+                                <span class="badge bg-purple text-purple-fg">Under Review</span>
                             </div>
-                            <div v-if="currentAlbumStatus === 'Published' ">
-                                <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                            </div>
-                            <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
+                            <div v-if="currentAlbumStatus === 'For Comment' ">
+                                <span class="badge bg-purple text-purple-fg">Under Review</span>
                             </div>
                             <div v-if="currentAlbumStatus === 'For Revision' ">
-                                <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
+                                <span class="badge bg-red text-red-fg">Needs Revision</span>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Done Revision' ">
+                                <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Published' ">
+                                <span class="badge bg-green text-green-fg">Published</span>
                             </div>
                         </div>
                     </div>
@@ -41,18 +47,35 @@
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                     Revise
                                 </b-button>
-                                <b-button  @click="changeStatus(3)" class="mr-1" variant="success" >
+                                <b-button  @click="changeStatus(6)" class="mr-1" variant="success" >
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-dashed-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" /><path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" /><path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" /><path d="M8.56 20.31a9 9 0 0 0 3.44 .69" /><path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" /><path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" /><path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" /><path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" /><path d="M9 12l2 2l4 -4" /></svg>
-                                    Publish
+                                    Accept
                                 </b-button>
                             </div>
-                            <div v-if="currentAlbumStatus === 'Return to Author' ">
-                                <b-button @click="changeStatus(5)" class="mr-1" variant="danger" >
+                            <div v-if="currentAlbumStatus === 'For Comment' ">
+                                <b-button @click="changeStatus(4)" class="mr-1" variant="danger" >
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-refund"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" /></svg>
-                                    Return for revision
+                                    Return for Revision
                                 </b-button>
                             </div>
-                        
+                            <div v-if="currentAlbumStatus === 'For Revision' ">
+                                <b-button @click="changeStatus(4)" class="mr-1" variant="danger" >
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt-refund"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2" /><path d="M15 14v-2a2 2 0 0 0 -2 -2h-4l2 -2m0 4l-2 -2" /></svg>
+                                    Return for Revision
+                                </b-button>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                <b-button @click="changeStatus(7)" class="mr-1" variant="info" >
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                    Publish this Event
+                                </b-button>
+                            </div>
+                            <div v-if="currentAlbumStatus === 'Published' ">
+                                <b-button @click="changeStatus(6)" class="mr-1" variant="warning" >
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" /><path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" /><path d="M3 3l18 18" /></svg>
+                                    Unpublish this Event
+                                </b-button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,16 +92,7 @@
                                 Event Information
                                 </h3>
                                 <div class="card-actions">
-                                    
-                                    <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                        <b-button @click="editAlbumInfo()" class="mr-1" variant="success" v-b-tooltip.hover title="Edit Event">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="100"  height="100"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                        </b-button>
-                                        <b-button @click="viewAlbumInfo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                        </b-button>
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Return to Author' ">
+                                    <div v-if="currentAlbumStatus === 'For Comment' ">
                                         <b-button @click="leaveComment(data_eventInformation.album_id, 'EVENT DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                                         </b-button>
@@ -118,27 +132,9 @@
                                     </dd>
                                 </dl>
                             </div>
-                            <div class="card-footer">
-                                
-                                <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                </div>
-                                <div v-if="currentAlbumStatus === 'Under Review' ">
-                                    
-                                </div>
-                                <div v-if="currentAlbumStatus === 'Published' ">
-                                    
-                                </div>
-                                <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                    
-                                </div>
-                                <div v-if="currentAlbumStatus === 'For Revision' ">
-                                    
-                                </div>
-                                
-                            </div>
                         </div>
                         
-                        <div v-if="currentAlbumStatus === 'Return to Author' ">
+                        <div v-if="currentAlbumStatus === 'For Comment' ">
                             <div v-if="noOfComment === 0">
                                 <div class="card"  id="Comment Section"  style="margin-top: 15px">
                                     <div class="card-header">
@@ -175,6 +171,42 @@
                         </div>
                         
                         <div v-if="currentAlbumStatus === 'For Revision' ">
+                            <div v-if="noOfComment === 0">
+                                <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            Comment Logs
+                                        </h3>
+                                    </div>
+                                    <div class="card-body">
+                                        No Comments Yet
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            Comment Logs
+                                        </h3>
+                                    </div>
+                                    <div class="card-body" v-for="(event, index) in list_commentLog" :key="index">
+                                        <span v-if="event.section_title === 'EVENT DETAILS'">
+                                            <span style="font-weight: 700">{{event.section_title}}</span>
+                                            <br>
+                                            {{event.section_comment}}
+                                        </span>
+                                        <span v-if="event.section_title === 'PHOTO DETAILS'">
+                                            <span style="font-weight: 700">{{event.section_title}}: </span> {{event.section_id}}
+                                            <br>
+                                            {{event.section_comment}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div v-if="currentAlbumStatus === 'Done Revision' ">
                             <div v-if="noOfComment === 0">
                                 <div class="card"  id="Comment Section"  style="margin-top: 15px">
                                     <div class="card-header">
@@ -425,12 +457,7 @@
                                                             </div>
                                                         </a>
                                                         <div class="ribbon ribbon-top">
-                                                            <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                                                <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
-                                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                </b-button>
-                                                            </div>
-                                                            <div v-if="currentAlbumStatus === 'Return to Author' ">
+                                                            <div v-if="currentAlbumStatus === 'For Comment' ">
                                                                 <b-button @click="leaveComment(event.id, 'PHOTO DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
                                                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                                                                 </b-button>
@@ -480,12 +507,7 @@
                                                                 </iframe>
                                                             </div>
                                                             <div class="ribbon ribbon-top">
-                                                                <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                                                    <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                    </b-button>
-                                                                </div>
-                                                                <div v-if="currentAlbumStatus === 'Return to Author' ">
+                                                                <div v-if="currentAlbumStatus === 'For Comment' ">
                                                                     <b-button @click="leaveComment(event.id)" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
                                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                                                                     </b-button>
@@ -519,7 +541,6 @@
                                                     </div>
                                                 </div>
                                             </span>
-                                       
                                     </div>
                                 </div>
                             </div>
@@ -553,6 +574,7 @@
 <script type="text/javascript">
         
         import * as assets_service from '../../../services/assets_service.js';
+        import * as auth_service from '../../../services/auth_service.js';
 
         export default {
             data() {
@@ -772,82 +794,92 @@
 
                     
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
-                        this.data_eventInformation = response_eventDetails.data[0];
-                        let albumID = this.data_eventInformation.album_id;
+                    this.data_eventInformation = response_eventDetails.data[0];
+                    let albumID = this.data_eventInformation.album_id;
                     
-                    let formData_eventTrackingLog = new FormData();
 
-                    if (value == "1"){
-                        this.albumStatus = "Saved as Draft"
-                    }
-                    else if (value == "2"){
-                        this.albumStatus = "Submitted for Review";
-                    }
-                    else if (value == "3"){
+                    if (value == "3"){
                     
                         // EVENT STATUS
                         this.albumStatus = "Under Review";
-                        // UPDATE EVENT STATUS
+                        let formData_albumStatus = new FormData();
+                        formData_albumStatus.append('name_publisher', this.displayName);
+                        formData_albumStatus.append('album_status', this.albumStatus);
+                        const response_albumStatusData = await assets_service.updateAlbumStatus_withPublisher(this.event_id, formData_albumStatus);
+
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Under Review";
+                        let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('album_id', this.event_id);
+                            formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                            formData_eventTrackingLog.append('date', this.finalDateTime);
+                        const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
+                    }
+                    else if (value == "4"){
+                    
+                        // EVENT STATUS
+                        this.albumStatus = "For Revision";
                         let formData_albumStatus = new FormData();
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
 
                         // EVENT TRACKING STATUS
-                        this.eventTrackingStatus = "Under Review";
-                        // CREATE EVENT TRACKING LOG
+                        this.eventTrackingStatus = "For Revision";
                         let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('album_id', this.event_id);
                             formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
-                            formData_eventTrackingLog.append('date', this.finalDate);
-                            formData_eventTrackingLog.append('name_publisher', this.displayName);
-                        const response_eventTrackingLog = await assets_service.updateTrackingLog_publisher(this.event_id, formData_eventTrackingLog);
-                    }
-                    else if (value == "4"){
-                        this.albumStatus = "For Comment";
-                    }
-                    else if (value == "5"){
-                        this.albumStatus = "For Revision";
-                        
-                        formData_eventTrackingLog.append('date_returnedForRevision', this.finalDate);
-                        const response_eventTrackingLog = await assets_service.updateEventTrackingLog_forRevision(albumID, formData_eventTrackingLog);
-
+                            formData_eventTrackingLog.append('date', this.finalDateTime);
+                        const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
                     }
                     else if (value == "6"){
-                        this.albumStatus = "Done Revision";
+                    
+                        // EVENT STATUS
+                        this.albumStatus = "Unpublished";
+                        let formData_albumStatus = new FormData();
+                        formData_albumStatus.append('album_status', this.albumStatus);
+                        const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
+
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Unpublished";
+                        let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('album_id', this.event_id);
+                            formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                            formData_eventTrackingLog.append('date', this.finalDateTime);
+                        const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
                     }
                     else if (value == "7"){
-                        this.albumStatus = "Unpublished";
-                        formData_eventTrackingLog.append('date_reviewedByPublisher', this.finalDate);
-                        const response_eventTrackingLog = await assets_service.updateEventTrackingLog_review(albumID, formData_eventTrackingLog);
+                        
+                        // EVENT STATUS
+                        this.albumStatus = "Published";
+                        let formData_albumStatus = new FormData();
+                        formData_albumStatus.append('album_status', this.albumStatus);
+                        const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
+
+                        // EVENT TRACKING STATUS
+                        this.eventTrackingStatus = "Published";
+                        let formData_eventTrackingLog = new FormData();
+                            formData_eventTrackingLog.append('album_id', this.event_id);
+                            formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                            formData_eventTrackingLog.append('date', this.finalDateTime);
+                        const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
                     }
                     else if (value == "8"){
-                        this.albumStatus = "Published";
+                    
+                        // EVENT STATUS
+                        this.albumStatus = "For Comment";
+                        let formData_albumStatus = new FormData();
+                        formData_albumStatus.append('album_status', this.albumStatus);
+                        const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
                     }
 
-                    let formData_albumStatus = new FormData();
-                    formData_albumStatus.append('album_status', this.albumStatus);
-                    const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id,formData_albumStatus);
-                    console.log(this.albumStatus);
 
-                    
-                    
 
                     this.loadEventDetails();
                     this.loadAlbumStatus();
                     this.loadTrackingLog();
-                    // const response_eventDetails = await assets_service.getEventDetails(this.event_id);
-                    // this.data_eventInformation = response_eventDetails.data[0];
-                    // let albumID = this.data_eventInformation.album_id;
-                    
-                    // try{
-                    //     let formData_albumStatus = new FormData();
-                    //     formData_albumStatus.append('album_status', this.albumStatus);
-                    //     const response_albumStatusData = await assets_service.updateAlbumStatus(albumID, formData_albumStatus);
-
-                    //     this.loadAlbumStatus();
-
-                    // }catch(error){
-
-                    // }
                 }
             },
             computed: {

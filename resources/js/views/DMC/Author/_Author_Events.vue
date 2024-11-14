@@ -1008,15 +1008,15 @@
                             let formData_eventTrackingLog = new FormData();
                                 formData_eventTrackingLog.append('album_id', this.album_id);
                                 formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
-                                formData_eventTrackingLog.append('date', this.finalDate);
-                                formData_eventTrackingLog.append('name_author', this.displayName);
+                                formData_eventTrackingLog.append('date', this.finalDateTime);
                             const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
 
                             // CREATE EVENT STATUS
                             let formData_albumStatus = new FormData();
                                 formData_albumStatus.append('album_id', this.album_id);
                                 formData_albumStatus.append('album_status', this.albumStatus);
-                            const response_albumStatusData = await assets_service.addAlbumStatus(formData_albumStatus);
+                                formData_albumStatus.append('name_author', this.displayName);
+                            const response_albumStatusData = await assets_service.addAlbumStatus_withAuthor(formData_albumStatus);
 
 
                         }catch (error) {

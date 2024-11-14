@@ -5,20 +5,12 @@ export function addEventData(data){
     return httpFile().post('/addEventData', data);
 }
 
-export function addTrackingLog(data){
-    return httpFile().post('/addTrackingLog', data);
-}
-
 export function addComment(data){
     return httpFile().post('/addComment', data);
 }
 
 export function addAlbumTags(data){
     return httpFile().post('/addAlbumTags', data);
-}
-
-export function addAlbumStatus(data){
-    return httpFile().post('/addAlbumStatus', data);
 }
 
 export function addPhotoData(data){
@@ -46,12 +38,16 @@ export function getAllListDraft(){
     return http().get('/getAllListDraft');
 }
 
-export function getAllListForRevision(){
-    return http().get('/getAllListForRevision');
-}
-
 export function getAllListForReview(){
     return http().get('/getAllListForReview');
+}
+
+export function getAllListUnderReview(){
+    return http().get('/getAllListUnderReview');
+}
+
+export function getAllListForRevision(){
+    return http().get('/getAllListForRevision');
 }
 
 export function getAllListPublished(){
@@ -143,10 +139,6 @@ export function updateAlbum(albumID, data){
     return httpFile().post(`updateAlbum/${albumID}`, data);
 }
 
-export function updateAlbumStatus(albumID, data){
-    return httpFile().post(`updateAlbumStatus/${albumID}`, data);
-}
-
 
 export function updatePhoto(photo_id, data){
     return httpFile().post(`updatePhoto/${photo_id}`, data);
@@ -157,17 +149,21 @@ export function updateVideo(photo_id, data){
 }
 
 
-export function updateTrackingLog(albumID, data){
-    return httpFile().post(`updateTrackingLog/${albumID}`, data);
+
+
+
+export function addTrackingLog(data){
+    return httpFile().post('/addTrackingLog', data);
 }
 
-export function updateTrackingLog_publisher(albumID, data){
-    return httpFile().post(`updateTrackingLog_publisher/${albumID}`, data);
+export function addAlbumStatus_withAuthor(data){
+    return httpFile().post('/addAlbumStatus_withAuthor', data);
 }
-// export function updateEventTrackingLog_review(albumID, data){
-//     return httpFile().post(`updateEventTrackingLog_review/${albumID}`, data);
-// }
 
-// export function updateEventTrackingLog_forRevision(albumID, data){
-//     return httpFile().post(`updateEventTrackingLog_forRevision/${albumID}`, data);
-// }
+export function updateAlbumStatus(albumID, data){
+    return httpFile().post(`updateAlbumStatus/${albumID}`, data);
+}
+
+export function updateAlbumStatus_withPublisher(albumID, data){
+    return httpFile().post(`updateAlbumStatus_withPublisher/${albumID}`, data);
+}

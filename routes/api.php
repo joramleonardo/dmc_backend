@@ -56,10 +56,8 @@ Route::post('getUserData', [LoginController::class, 'getUserData']);
 
 // Route::post('addEventData', 'AssetsController@addEventData');
 Route::post('addEventData', [AssetsController::class, 'addEventData']);
-Route::post('addTrackingLog', [AssetsController::class, 'addTrackingLog']);
 Route::post('addComment', [AssetsController::class, 'addComment']);
 Route::post('addAlbumTags', [AssetsController::class, 'addAlbumTags']);
-Route::post('addAlbumStatus', [AssetsController::class, 'addAlbumStatus']);
 
 Route::post('addPhotoData', [AssetsController::class, 'addPhotoData']);
 Route::post('addPhotoTags', [AssetsController::class, 'addPhotoTags']);
@@ -68,8 +66,9 @@ Route::post('addVideoData', [AssetsController::class, 'addVideoData']);
 
 Route::get('getAllListEvents', [AssetsController::class, 'getAllListEvents']);
 Route::get('getAllListDraft', [AssetsController::class, 'getAllListDraft']);
-Route::get('getAllListForRevision', [AssetsController::class, 'getAllListForRevision']);
+Route::get('getAllListUnderReview', [AssetsController::class, 'getAllListUnderReview']);
 Route::get('getAllListForReview', [AssetsController::class, 'getAllListForReview']);
+Route::get('getAllListForRevision', [AssetsController::class, 'getAllListForRevision']);
 Route::get('getAllListPublished', [AssetsController::class, 'getAllListPublished']);
 Route::get('getAllListUnpublished', [AssetsController::class, 'getAllListUnpublished']);
 
@@ -102,9 +101,13 @@ Route::post('/checkAlbumTagsExists/{album_id}/{tag_name}', [AssetsController::cl
 Route::post('/updateAlbum/{albumID}', [AssetsController::class, 'updateAlbum']);
 Route::post('/updatePhoto/{photo_id}', [AssetsController::class, 'updatePhoto']);
 Route::post('/updateVideo/{photo_id}', [AssetsController::class, 'updateVideo']);
-Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);
 
 Route::post('/updateTrackingLog/{albumID}', [AssetsController::class, 'updateTrackingLog']);
 Route::post('/updateTrackingLog_publisher/{albumID}', [AssetsController::class, 'updateTrackingLog_publisher']);
-// Route::post('/updateEventTrackingLog_review/{albumID}', [AssetsController::class, 'updateEventTrackingLog_review']);
-// Route::post('/updateEventTrackingLog_forRevision/{albumID}', [AssetsController::class, 'updateEventTrackingLog_forRevision']);
+
+
+Route::post('addTrackingLog', [AssetsController::class, 'addTrackingLog']);
+Route::post('addAlbumStatus_withAuthor', [AssetsController::class, 'addAlbumStatus_withAuthor']);
+
+Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);
+Route::post('/updateAlbumStatus_withPublisher/{albumID}', [AssetsController::class, 'updateAlbumStatus_withPublisher']);

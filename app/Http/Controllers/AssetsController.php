@@ -50,10 +50,36 @@ class AssetsController extends Controller
         $data->album_id = $request->album_id;
         $data->activity = $request->activity;
         $data->date = $request->date;
-        $data->name_author = $request->name_author;
  
         $data->save();
     }
+
+    public function addAlbumStatus_withAuthor(Request $request){
+        $data = new AlbumStatus();
+        $data->album_id = $request->album_id;
+        $data->album_status = $request->album_status;
+        $data->name_author = $request->name_author;
+        
+        $data->save();
+    }
+    
+    public function updateAlbumStatus(Request $request, $album_id){
+        $data = AlbumStatus::where('album_id', $album_id)->first();
+
+        //UPDATE
+        $data->album_status = $request->album_status;
+        $data->save();
+    }
+    
+    public function updateAlbumStatus_withPublisher(Request $request, $album_id){
+        $data = AlbumStatus::where('album_id', $album_id)->first();
+
+        //UPDATE
+        $data->album_status = $request->album_status;
+        $data->name_publisher = $request->name_publisher;
+        $data->save();
+    }
+
 
     public function addComment(Request $request){
         $data = new Comment(); 
@@ -85,14 +111,6 @@ class AssetsController extends Controller
         $data = new VideoTags();
         $data->video_id = $request->video_id;
         $data->video_tagName = $request->video_tagName;
-        
-        $data->save();
-    }
-
-    public function addAlbumStatus(Request $request){
-        $data = new AlbumStatus();
-        $data->album_id = $request->album_id;
-        $data->album_status = $request->album_status;
         
         $data->save();
     }
@@ -222,9 +240,11 @@ class AssetsController extends Controller
             return response()->json($data, 200);
     }
 
-    public function getAllListForRevision(Request $request){
+    public function getAllListUnderReview(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                    ->where('tbl_album_status.album_status', "For Revision")
+                    // ->where('tbl_album_status.album_status', "Under Review")
+                    // ->where('tbl_album_status.album_status', "For Comment")
+                    ->whereIn('tbl_album_status.album_status', ["Under Review", "For Comment"])
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
         
@@ -240,9 +260,9 @@ class AssetsController extends Controller
             return response()->json($data, 200);
     }
 
-    public function getAllListPublished(Request $request){
+    public function getAllListForRevision(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                    ->where('tbl_album_status.album_status', "Published")
+                    ->where('tbl_album_status.album_status', "For Revision")
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
         
@@ -252,6 +272,15 @@ class AssetsController extends Controller
     public function getAllListUnpublished(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
                     ->where('tbl_album_status.album_status', "Unpublished")
+                    ->orderBy('tbl_album.created_at', 'desc')
+                    ->get('*');
+        
+            return response()->json($data, 200);
+    }
+
+    public function getAllListPublished(Request $request){
+            $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+                    ->where('tbl_album_status.album_status', "Published")
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
         
@@ -366,69 +395,4 @@ class AssetsController extends Controller
         $data->video_tags = $request->video_tags;
         $data->save();
     }
-    
-    public function updateAlbumStatus(Request $request, $album_id){
-        $data = AlbumStatus::where('album_id', $album_id)->first();
-
-        //UPDATE
-        $data->album_status = $request->album_status;
-        $data->save();
-    }
-    
-    // public function updateEventTrackingLog(Request $request, $album_id){
-    //     $data = EventTrackingLog::where('album_id', $album_id)->first();
-
-    //     //UPDATE
-    //     $data->name_publisher = $request->name_publisher;
-    //     $data->date_submittedToPublisher = $request->date_submittedToPublisher;
-    //     $data->date_reviewedByPublisher = $request->date_reviewedByPublisher;
-    //     $data->date_returnedForRevision = $request->date_returnedForRevision;
-    //     $data->date_revisedByAuthor = $request->date_revisedByAuthor;
-    //     $data->date_publishedByPublisher = $request->date_publishedByPublisher;
-    //     $data->date_unpublishedByPublisher = $request->date_unpublishedByPublisher;
-    //     $data->save();
-    // }
-    
-    // public function updateEventTrackingLog_review(Request $request, $album_id){
-    //     $data = EventTrackingLog::where('album_id', $album_id)->first();
-
-    //     //UPDATE
-    //     $data->name_publisher = $request->name_publisher;
-    //     $data->date_reviewedByPublisher = $request->date_reviewedByPublisher;
-    //     $data->save();
-    // }
-    
-    // public function updateEventTrackingLog_forRevision(Request $request, $album_id){
-    //     $data = EventTrackingLog::where('album_id', $album_id)->first();
-
-    //     //UPDATE
-    //     $data->date_returnedForRevision = $request->date_returnedForRevision;
-    //     $data->save();
-    // }
-    
-    public function updateTrackingLog(Request $request, $album_id){
-        $data = EventTrackingLog::where('album_id', $album_id)->first();
-
-        //UPDATE
-        $data->activity = $request->activity;
-        $data->date = $request->date;
-        $data->save();
-    }
-    
-    public function updateTrackingLog_publisher(Request $request, $album_id){
-        $data = EventTrackingLog::where('album_id', $album_id)->first();
-
-        //UPDATE
-        $data->activity = $request->activity;
-        $data->date = $request->date;
-        $data->name_publisher = $request->name_publisher;
-        $data->save();
-    }
-
-    // 'id', //1
-    //     'album_id',
-    //     'activity', 
-    //     'date', 
-    //     'name_author', 
-    //     'name_publisher', 
 }

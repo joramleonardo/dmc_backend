@@ -18,25 +18,28 @@
                             </h2>
                             <div style="margin-top: 1%;">
                                 <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                    <h5><span class="badge bg-azure text-azure-fg">Draft</span></h5>
+                                    <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                    <h5><span class="badge bg-orange text-orange-fg">Submitted to Publisher</span></h5>
+                                    <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
                                 </div>
-                                <div v-if="currentAlbumStatus === 'Under Review'">
-                                    <h5><span class="badge bg-indigo text-indigo-fg">Under Review</span></h5>
+                                <div v-if="currentAlbumStatus === 'Under Review' ">
+                                    <span class="badge bg-purple text-purple-fg">Under Review</span>
                                 </div>
-                                <div v-if="currentAlbumStatus === 'Return to Author' ">
-                                    <h5><span class="badge bg-indigo text-indigo-fg">Under Review</span></h5>
-                                </div>
-                                <div v-if="currentAlbumStatus === 'Published' ">
-                                    <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                </div>
-                                <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                    <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
+                                <div v-if="currentAlbumStatus === 'For Comment' ">
+                                    <span class="badge bg-purple text-purple-fg">Under Review</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'For Revision' ">
-                                    <h5><span class="badge bg-yellow text-yellow-fg">For Revision</span></h5>
+                                    <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Done Revision' ">
+                                    <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                    <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
+                                </div>
+                                <div v-if="currentAlbumStatus === 'Published' ">
+                                    <span class="badge bg-green text-green-fg">Published</span>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +146,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                        <b-button value="2" @click="submitToPublisher(2)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
+                                        <b-button value="2" @click="submitToPublisher()" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                                             Submit to Publisher
                                         </b-button>
@@ -1557,9 +1560,10 @@
                     this.data_eventInformation = response_eventDetails.data[0];
                     let albumID = this.data_eventInformation.album_id;
                 },
-                submitToPublisher: async function(value){
+                submitToPublisher: async function(){
                     const response_countPhoto = await assets_service.countAlbumPhotoEntry(this.event_id);
                     let photo = response_countPhoto.data;
+
                     if (photo > 0){
                         // EVENT STATUS
                         this.albumStatus = "Submitted for Review";
@@ -1567,16 +1571,19 @@
                         this.eventTrackingStatus = "Pending for Review";
                         
                         try{
+
+                            // CREATE EVENT TRACKING LOG
+                            let formData_eventTrackingLog = new FormData();
+                                formData_eventTrackingLog.append('album_id', this.event_id);
+                                formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
+                                formData_eventTrackingLog.append('date', this.finalDateTime);
+                            const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
                             // UPDATE EVENT STATUS
                             let formData_albumStatus = new FormData();
                             formData_albumStatus.append('album_status', this.albumStatus);
                             const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
 
-                            // CREATE EVENT TRACKING LOG
-                            let formData_eventTrackingLog = new FormData();
-                                formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
-                                formData_eventTrackingLog.append('date', this.finalDate);
-                            const response_eventTrackingLog = await assets_service.updateTrackingLog(this.event_id, formData_eventTrackingLog);
 
 
                             this.loadAlbumStatus();
@@ -1608,45 +1615,46 @@
                     }
                 },
                 changeStatus: async function (value){
-                    const response_countPhoto = await assets_service.countAlbumPhotoEntry(this.event_id);
-                    let photo = response_countPhoto.data;
-                    if (photo > 0){
-                        if (value == "2"){
-                            this.albumStatus = "Submitted for Review";
-                        }
-                        else if (value == "3"){
-                            this.albumStatus = "Published";
-                        }
-                        else if (value == "4"){
-                            this.albumStatus = "Unpublished";
-                        }
-                        else if (value == "5"){
-                            this.albumStatus = "For Revision";
-                        }
-                        const response_eventDetails = await assets_service.getEventDetails(this.event_id);
-                        this.data_eventInformation = response_eventDetails.data[0];
-                        let albumID = this.data_eventInformation.album_id;
+                    console.log("This is resubmit action");
+                    // const response_countPhoto = await assets_service.countAlbumPhotoEntry(this.event_id);
+                    // let photo = response_countPhoto.data;
+                    // if (photo > 0){
+                    //     if (value == "2"){
+                    //         this.albumStatus = "Submitted for Review";
+                    //     }
+                    //     else if (value == "3"){
+                    //         this.albumStatus = "Published";
+                    //     }
+                    //     else if (value == "4"){
+                    //         this.albumStatus = "Unpublished";
+                    //     }
+                    //     else if (value == "5"){
+                    //         this.albumStatus = "For Revision";
+                    //     }
+                    //     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
+                    //     this.data_eventInformation = response_eventDetails.data[0];
+                    //     let albumID = this.data_eventInformation.album_id;
                         
-                        try{
-                            let formData_albumStatus = new FormData();
-                            formData_albumStatus.append('album_status', this.albumStatus);
-                            const response_albumStatusData = await assets_service.updateAlbumStatus(albumID, formData_albumStatus);
+                    //     try{
+                    //         let formData_albumStatus = new FormData();
+                    //         formData_albumStatus.append('album_status', this.albumStatus);
+                    //         const response_albumStatusData = await assets_service.updateAlbumStatus(albumID, formData_albumStatus);
 
                             
-                            let formData_eventTrackingLog = new FormData();
-                            formData_eventTrackingLog.append('date_submittedToPublisher', this.finalDate);
-                            const response_eventTrackingLog = await assets_service.updateEventTrackingLog(albumID, formData_eventTrackingLog);
+                    //         let formData_eventTrackingLog = new FormData();
+                    //         formData_eventTrackingLog.append('date_submittedToPublisher', this.finalDate);
+                    //         const response_eventTrackingLog = await assets_service.updateEventTrackingLog(albumID, formData_eventTrackingLog);
 
-                            this.loadAlbumStatus();
-                            this.loadTrackingLog();
+                    //         this.loadAlbumStatus();
+                    //         this.loadTrackingLog();
 
-                        }catch(error){
+                    //     }catch(error){
 
-                        }
-                    }
-                    else{
-                        this.$refs['modal_validatePhoto'].show();
-                    }
+                    //     }
+                    // }
+                    // else{
+                    //     this.$refs['modal_validatePhoto'].show();
+                    // }
 
                     
                 },

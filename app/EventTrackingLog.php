@@ -12,8 +12,8 @@ class EventTrackingLog extends Model
         'album_id',
         'activity', 
         'date', 
-        'name_author', 
-        'name_publisher', 
+        // 'name_author', 
+        // 'name_publisher', 
     ];
 
     // protected $table = "tbl_event_tracking_log";
