@@ -210,9 +210,18 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
 
+    // public function getTrackingLog(Request $request, $album_id){
+    //     $data = EventTrackingLog::where('album_id', $album_id)
+    //                         ->get('*');
+    
+    //     return response()->json($data, 200);
+    // }
+
     public function getTrackingLog(Request $request, $album_id){
-        $data = EventTrackingLog::where('album_id', $album_id)
-                            ->get('*');
+        // $data = EventTrackingLog::where('album_id', $album_id)
+        $data = EventTrackingLog::join('tbl_album_status','tbl_tracking_event_log.album_id', '=', 'tbl_album_status.album_id')
+                                ->where('tbl_album_status.album_id', $album_id)
+                                ->get('*');
     
         return response()->json($data, 200);
     }

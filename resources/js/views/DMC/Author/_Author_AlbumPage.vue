@@ -257,8 +257,15 @@
                                                     <dt class="col-5">Author:</dt>
                                                     <dd class="col-7">{{trackingLog.name_author}}</dd>
 
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
+                                                    <!-- <dt class="col-5">Date Created:</dt>
+                                                    <dd class="col-7">{{trackingLog.date}}</dd> -->
+
+                                                    <!-- <div v-for="(event, index) in trackingLog" :key="index"></div>
+                                                    <dt class="col-5">{{event.activity}}: </dt>
+                                                    <dd class="col-7">{{event.date}}</dd> -->
+
+                                                    <dt class="col-5">{{trackingLog.activity}}: </dt>
+                                                    <dd class="col-7">{{trackingLog.date}}</dd>
 
                                                 </dl>
                                             </pre>
@@ -1237,32 +1244,31 @@
                 loadCommentLog: async function (){
                     const response_commentLog = await assets_service.getCommentLog(this.event_id);
                     this.list_commentLog = response_commentLog.data;
-                    console.log("List of Comments");
-                    console.log(this.list_commentLog);
+                    
                 },
                 initializeFsLightbox() {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
-                        console.log("FS Lightbox initialized automatically after delay");
+                        // console.log("FS Lightbox initialized automatically after delay");
                     } else {
-                        console.error("FS Lightbox is not available; check CDN loading");
+                        // console.error("FS Lightbox is not available; check CDN loading");
                     }
                 },
                 initLightbox() {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
-                        console.log("FS Lightbox initialized on click");
+                        // console.log("FS Lightbox initialized on click");
                     } else {
-                        console.error("FS Lightbox is not available; check CDN loading");
+                        // console.error("FS Lightbox is not available; check CDN loading");
                     }
                     },
                 initializeLightbox() {
                     setTimeout(() => {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
-                        console.log("FS Lightbox initialized in this component");
+                        // console.log("FS Lightbox initialized in this component");
                     } else {
-                        console.error("FS Lightbox is not available; check CDN loading");
+                        // console.error("FS Lightbox is not available; check CDN loading");
                     }
                     }, 1000); 
                 },
@@ -1284,8 +1290,6 @@
                     const response = await assets_service.getAlbumTags_selected(this.event_id);
                     this.album_tags = response.data;
 
-                    // const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
-                    // this.currentAlbumStatus = response_statusAlbum.data[0].album_status;
                 },
                 loadEventPhotos: async function(){
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
