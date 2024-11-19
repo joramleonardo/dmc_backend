@@ -12,7 +12,7 @@
                         <div class="col">
                             <h2 class="page-title">
                                 <router-link to="/author/events" class="nav-link" style="text-decoration: underline;"> 
-                                    EVENTS 
+                                    EVENTS wwww
                                 </router-link>    
                                 > {{data_eventInformation.event_title}}
                             </h2>
