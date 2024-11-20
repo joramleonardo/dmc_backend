@@ -12,7 +12,7 @@
                         <div class="col">
                             <h2 class="page-title">
                                 <router-link to="/author/events" class="nav-link" style="text-decoration: underline;"> 
-                                    EVENTS wwww
+                                    EVENTS 
                                 </router-link>    
                                 > {{data_eventInformation.event_title}}
                             </h2>
@@ -32,7 +32,7 @@
                                 <div v-if="currentAlbumStatus === 'For Revision' ">
                                     <span class="badge bg-red text-red-fg">Needs Revision</span>
                                 </div>
-                                <div v-if="currentAlbumStatus === 'Done Revision' ">
+                                <div v-if="currentAlbumStatus === 'Revision For Review' ">
                                     <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Unpublished' ">
@@ -95,15 +95,6 @@
                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                             </b-button>
                                         </div>
-                                        <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                            
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'Published' ">
-                                            <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                            <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                                        </div>
                                         <div v-if="currentAlbumStatus === 'For Revision' ">
                                             <b-button @click="editAlbumInfo()" class="mr-1" variant="success" v-b-tooltip.hover title="Edit Event">
                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="100"  height="100"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
@@ -150,15 +141,6 @@
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-send"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14l11 -11" /><path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                                             Submit to Publisher
                                         </b-button>
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                        
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Published' ">
-                                        
-                                    </div>
-                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                        
                                     </div>
                                     <div v-if="currentAlbumStatus === 'For Revision' ">
                                         <b-button value="2" @click="changeStatus(5)" class="mr-1" variant="warning" v-b-tooltip.hover title="Submit for Review">
@@ -250,179 +232,24 @@
                                     </h3>
                                 </div>
                                 <div class="card-body">
-                                    <div>
-                                        <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
+                                    <pre style="color: white">
+                                        <dl class="row" v-for="(list, index) in transformedTrackingLog" :key="index">
+                                            <!-- Display the Author only once -->
+                                            <template v-if="index === 0">
+                                                <dt class="col-5">Author:</dt>
+                                                <dd class="col-7">{{ list.name_author }}</dd>
+                                            </template>
 
-                                                    <!-- <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date}}</dd> -->
+                                            <dt class="col-5">{{ list.activity }}:</dt>
+                                            <dd class="col-7">{{ list.date }}</dd>
 
-                                                    <!-- <div v-for="(event, index) in trackingLog" :key="index"></div>
-                                                    <dt class="col-5">{{event.activity}}: </dt>
-                                                    <dd class="col-7">{{event.date}}</dd> -->
-
-                                                    <dt class="col-5">{{trackingLog.activity}}: </dt>
-                                                    <dd class="col-7">{{trackingLog.date}}</dd>
-
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-                                                    <dt class="col-12" style="font-style: italic">----- PENDING FOR REVIEW -----</dt>
-
-                                                    
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                        
-                                        <div v-if="currentAlbumStatus === 'Under Review' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-                                                    <dt class="col-12" style="font-style: italic">----- UNDER REVIEW -----</dt>
-
-                                                    <dt class="col-5">Reviewer:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
-
-                                                    <dt class="col-5">Date:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_reviewedByPublisher}}</dd>
-
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'Return to Author' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-                                                    <dt class="col-12" style="font-style: italic">----- UNDER REVIEW -----</dt>
-
-                                                    <dt class="col-5">Reviewer:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
-
-                                                    <dt class="col-5">Date:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_reviewedByPublisher}}</dd>
-
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'For Revision' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-
-                                                    <dt class="col-12" style="font-style: italic"> ---------- DONE REVIEW ---------- </dt>
-
-                                                    <dt class="col-5">Reviewer:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
-
-                                                    <dt class="col-5">Date Reviewed:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_reviewedByPublisher}}</dd>
-                                                    
-                                                    <dt class="col-12" style="font-style: italic"> ---------- FOR REVISION ---------- </dt>
-
-                                                    <dt class="col-7">Date Returned for Revision:</dt>
-                                                    <dd class="col-5">{{trackingLog.date_returnedForRevision}}</dd>
-
-                                                </dl>
-                                            </pre>
-                                        </div>
-
-                                        <div v-if="currentAlbumStatus === 'Done Revision' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-
-                                                    <dt class="col-5">Date Returned:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_returnedForRevision}}</dd>
-
-                                                    <dt class="col-5">Reviewer:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_publisher}}</dd>
-
-                                                    <dt class="col-5">Date Revised:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_revisedByAuthor}}</dd>
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'Published' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-
-                                                    <dt class="col-5">Date Reviewed:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_returnedForRevision}}</dd>
-
-                                                    <dt class="col-5">Date Published:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_publishedByPublisher}}</dd>
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                        <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                            <pre style="color: white">
-                                                <dl class="row">
-                                                    <dt class="col-5">Author:</dt>
-                                                    <dd class="col-7">{{trackingLog.name_author}}</dd>
-
-                                                    <dt class="col-5">Date Created:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_created}}</dd>
-
-                                                    <dt class="col-5">Date Submitted:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_submittedToPublisher}}</dd>
-
-                                                    <dt class="col-5">Date Reviewed:</dt>
-                                                    <dd class="col-7">{{trackingLog.date_returnedForRevision}}</dd>
-
-                                                </dl>
-                                            </pre>
-                                        </div>
-                                    </div>
+                                            <!-- Display the Publisher only once when "Under Review" is displayed for the first time -->
+                                            <template v-if="list.activity === 'Under Review' && !firstUnderReviewShown">
+                                                <dt class="col-5">Publisher:</dt>
+                                                <dd class="col-7">{{ list.name_publisher }}</dd>
+                                            </template>
+                                        </dl>
+                                    </pre>
                                 </div>
                             </div>
 
@@ -694,29 +521,34 @@
                         <b-tabs card v-model="tabIndex_photo">
                             <b-tab v-for="(photoEntry, i) in photo_tabs" :key="'dyn-tab-' + i" :title="'Photo ' + (i+1)">
                                 <div class="row">
-                                    <div class="col-md-6 col-lg-6 mb-0">
+                                    <div class="col-md-12 col-lg-12 mb-0">
                                         <b-form-group >   
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Select Photo:</label>
                                             <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="photoEntry.photo_fileName">
                                             </b-form-file>
                                         </b-form-group> 
                                     </div>
+                                    <!-- <div class="col-md-6 col-lg-6 mb-0">
+                                        
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photographer:</label>
+                                            <b-form-input  v-model="photoEntry.photo_photographer" placeholder="Enter Photographer..."   ></b-form-input>
+                                        </b-form-group> 
+                                    </div> -->
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6 col-lg-6 mb-0">
+                                        <!-- <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Title:</label>
+                                            <b-form-input v-model="photoEntry.photo_title" placeholder="Enter Title..."   ></b-form-input>
+                                        </b-form-group>  -->
                                         
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photographer:</label>
                                             <b-form-input  v-model="photoEntry.photo_photographer" placeholder="Enter Photographer..."   ></b-form-input>
                                         </b-form-group> 
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8 col-lg-8 mb-0">
-                                        <b-form-group class="group" id="form_externalEventDate">
-                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Title:</label>
-                                            <b-form-input v-model="photoEntry.photo_title" placeholder="Enter Title..."   ></b-form-input>
-                                        </b-form-group> 
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 mb-0">
+                                    <div class="col-md-6 col-lg-6 mb-0">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
                                             <div class="col">
                                                 <select class="form-select" v-model="selected_category_album">
@@ -1077,6 +909,7 @@
         import * as auth_service from '../../../services/auth_service.js';
 
         export default {
+            
             data() {
                 return {
                     headerBG_savedSuccessfully: 'warning',
@@ -1178,7 +1011,6 @@
                     video_length: 0,
                     albumStatus: '',
                     currentAlbumStatus: '',
-                    trackingLog: '',
                     selected_category_album: null,
                     finalTime: '',
                     finalDate: '',
@@ -1190,7 +1022,8 @@
                     commentSection: '',
                     list_commentLog: [],
                     event_ID: '',
-
+                    trackingLog: [], // Initialize as an empty array
+                    firstUnderReviewShown: false,
                 }
             },
             mounted(){
@@ -1274,7 +1107,7 @@
                 },
                 loadTrackingLog: async function (){
                     const response_trackingLog = await assets_service.getTrackingLog(this.event_id);
-                    this.trackingLog = response_trackingLog.data[0];
+                    this.trackingLog = response_trackingLog.data;
                     console.log(this.trackingLog);
                 },
                 loadAlbumStatus: async function (){
@@ -1387,7 +1220,7 @@
                             formData_photoData.append(`photo_form[${index}][album_id]`, this.data_eventInformation.album_id);
                             formData_photoData.append(`photo_form[${index}][photo_id]`, this.photo_id );
                             formData_photoData.append(`photo_form[${index}][photo_fileName]`, photoEntry.photo_fileName);
-                            formData_photoData.append(`photo_form[${index}][photo_title]`, photoEntry.photo_title);
+                            //formData_photoData.append(`photo_form[${index}][photo_title]`, photoEntry.photo_title);
                             formData_photoData.append(`photo_form[${index}][photo_category]`, this.selected_category_album);
                             formData_photoData.append(`photo_form[${index}][photo_description]`, photoEntry.photo_description);
                             formData_photoData.append(`photo_form[${index}][photo_photographer]`, photoEntry.photo_photographer);
@@ -1616,14 +1449,14 @@
 
                     if (value == "5"){
                         // EVENT STATUS
-                        this.albumStatus = "Done Revision";
+                        this.albumStatus = "Revision For Review";
                         let formData_albumStatus = new FormData();
                         formData_albumStatus.append('name_publisher', this.displayName);
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus_withPublisher(this.event_id, formData_albumStatus);
 
                         // EVENT TRACKING STATUS
-                        this.eventTrackingStatus = "Done Revision";
+                        this.eventTrackingStatus = "Revision For Review";
                         let formData_eventTrackingLog = new FormData();
                             formData_eventTrackingLog.append('album_id', this.event_id);
                             formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
@@ -1781,8 +1614,25 @@
                         // Set the tags as an array
                         this.data_videoInformation_update.video_tags = newTags;
                     }
-                }
-            }
+                },
+                transformedTrackingLog() {
+                    return this.trackingLog.map(item => {
+                        return {
+                        ...item,
+                        activity: item.activity === 'Pending for Review' ? 'For Review' : item.activity,
+                        };
+                    });
+                },
+            },
+            watch: {
+                // Reset the "Under Review" flag whenever the tracking log updates
+                trackingLog: {
+                    immediate: true,
+                    handler() {
+                        this.firstUnderReviewShown = false;
+                    },
+                },
+            },
 
         }
 </script>

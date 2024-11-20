@@ -81,7 +81,7 @@
                                                                     <div v-if="event.album_status === 'For Revision' ">
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
-                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                    <div v-if="event.album_status === 'Revision For Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
@@ -157,7 +157,7 @@
                                                                     <div v-if="event.album_status === 'For Revision' ">
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
-                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                    <div v-if="event.album_status === 'Revision For Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
@@ -233,7 +233,7 @@
                                                                     <div v-if="event.album_status === 'For Revision' ">
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
-                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                    <div v-if="event.album_status === 'Revision For Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
@@ -309,7 +309,7 @@
                                                                     <div v-if="event.album_status === 'For Revision' ">
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
-                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                    <div v-if="event.album_status === 'Revision For Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
@@ -385,7 +385,7 @@
                                                                     <div v-if="event.album_status === 'For Revision' ">
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
-                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                    <div v-if="event.album_status === 'Revision For Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
@@ -462,7 +462,7 @@
                                                                     <div v-if="event.album_status === 'For Revision' ">
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
-                                                                    <div v-if="event.album_status === 'Done Revision' ">
+                                                                    <div v-if="event.album_status === 'Revision For Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
@@ -498,7 +498,7 @@
             </div>
         </div>
 
-        <b-modal id="modal_addAlbumInfo" ref="modal_addAlbumInfo"  title="Event Information" size="lg" centered hide-footer>
+        <b-modal id="modal_addAlbumInfo" ref="modal_addAlbumInfo"  title="Event Information" size="xl" centered hide-footer>
             
             <div class="card" id="createEventForm" >
                 <div class="card-header">

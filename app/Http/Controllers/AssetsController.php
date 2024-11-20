@@ -129,7 +129,7 @@ class AssetsController extends Controller
                     $data->album_id = $item['album_id'];
                     $data->photo_id = $item['photo_id'];
                     $data->photo_fileName = $file_newName;
-                    $data->photo_title = $item['photo_title'];
+                    // $data->photo_title = $item['photo_title'];
                     $data->photo_category = $item['photo_category'];
                     $data->photo_description = $item['photo_description'];
                     $data->photo_photographer = $item['photo_photographer'];

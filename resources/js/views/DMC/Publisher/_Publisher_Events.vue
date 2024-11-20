@@ -47,7 +47,7 @@
                                                 <div v-if="row.item.album_status === 'Submitted for Review'">
                                                     For Review
                                                 </div>
-                                                <div v-if="row.item.album_status === 'Done Revision'">
+                                                <div v-if="row.item.album_status === 'Revision For Review'">
                                                     Revision for Review
                                                 </div>
                                             </template>
