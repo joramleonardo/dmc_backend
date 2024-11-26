@@ -288,14 +288,26 @@
                                                 <div class="row row-cards">
                                                     <div class="col-4" v-for="(event, index) in list_photo" :key="index">
                                                         <div class="card placeholder-glow">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">
+                                                                    {{event.photo_id}}
+                                                                </h3>
+                                                            </div>
                                                             <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
+                                                                <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
+                                                                </div>
+                                                            </a>
+                                                            <!-- <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
                                                                 <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
                                                                 </div>
                                                             </a>
                                                             <div class="ribbon ribbon-top">
                                                                 <div v-if="currentAlbumStatus === 'Saved as Draft' ">
                                                                     <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                    </b-button>
+                                                                    <b-button @click="viewAlbumInfo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
+                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                                                     </b-button>
                                                                 </div>
                                                                 <div v-if="currentAlbumStatus === 'Submitted for Review' ">
@@ -312,7 +324,7 @@
                                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                     </b-button>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="card-body">
                                                                 <dl class="row">
                                                                     <!-- <dt class="col-12 font-title-size">Title:</dt>
@@ -332,6 +344,33 @@
                                                                         </span>
                                                                     </dd>
                                                                 </dl>
+                                                            </div>
+                                                            
+                                                            <div class="card-footer">
+
+                                                                    <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                                                        <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                        </b-button>
+                                                                        <b-button @click="viewAlbumInfo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                                                        </b-button>
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'Submitted for Review' ">
+                                                                        
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'Published' ">
+                                                                        <h5><span class="badge bg-green text-green-fg">Published</span></h5>
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
+                                                                        <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
+                                                                    </div>
+                                                                    <div v-if="currentAlbumStatus === 'For Revision' ">
+                                                                        <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                        </b-button>
+                                                                    </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -549,8 +588,10 @@
                                         </b-form-group> 
                                     </div>
                                     <div class="col-md-6 col-lg-6 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
-                                            <div class="col">
+                                            <b-form-select v-model="photoEntry.selected_supportType" :options="options_supportType"></b-form-select>
+                                            <!-- <div class="col">
                                                 <select class="form-select" v-model="selected_category_album">
                                                     <option selected disabled>Please select photo category</option>
                                                     <option value="1">Anniversary</option>
@@ -572,7 +613,8 @@
                                                     <option value="17">Scientific Meeting</option>
                                                     <option value="18">Training/Seminar</option>
                                                 </select>
-                                            </div>
+                                            </div> -->
+                                        </b-form-group> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -912,6 +954,29 @@
             
             data() {
                 return {
+                    
+                    selected_supportType: 'Please select photo category',
+                    options_supportType: [
+                        { value: null, text: 'Please select photo category', disabled: true },
+                        { value: 'Anniversary', text: 'Anniversary' },
+                        { value: 'Awarding Ceremonies', text: 'Awarding Ceremonies' },
+                        { value: 'Building Inauguration', text: 'Building Inauguration' },
+                        { value: 'Conference', text: 'Conference' },
+                        { value: 'Convention', text: 'Convention' },
+                        { value: 'Exhibits', text: 'Exhibits' },
+                        { value: 'Forum', text: 'Forum' },
+                        { value: 'MOA Signing', text: 'MOA Signing' },
+                        { value: 'MOU Signing', text: 'MOU Signing' },
+                        { value: 'NSTW', text: 'NSTW' },
+                        { value: 'NYSTIF', text: 'NYSTIF' },
+                        { value: 'Program Launch', text: 'Program Launch' },
+                        { value: 'Project Launch', text: 'Project Launch' },
+                        { value: 'Project Visit', text: 'Project Visit' },
+                        { value: 'RSTW', text: 'RSTW' },
+                        { value: 'Scholarship', text: 'Scholarship' },
+                        { value: 'Scientific Meeting', text: 'Scientific Meeting' },
+                        { value: 'Training/Seminar', text: 'Training/Seminar' }
+                    ],
                     headerBG_savedSuccessfully: 'warning',
                     headerText_savedSuccessfully: 'light',
                     event_id : this.$route.params.id,
@@ -939,7 +1004,7 @@
                             photo_fileName: null,
                             photo_personInvolved: '',
                             photo_title: '',
-                            photo_category: '',
+                            selected_supportType: '',
                             photo_description: '',
                             photo_photographer: ''
                         }
@@ -1205,10 +1270,7 @@
                             let count_newPhoto = index+1;
                             let totalPhotoEntry = response_countAlbumPhoto.data;
                             let count_finalPhoto = count_newPhoto + totalPhotoEntry;
-                            if (totalPhotoEntry == 0 ){
-                                this.photo_id = "PH2024-00001";
-                            }
-                            else if (totalPhotoEntry > 0 && totalPhotoEntry <= 9 ){
+                            if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
                                 this.photo_id = "PH2024-0000" + i;
                             }
@@ -1221,7 +1283,7 @@
                             formData_photoData.append(`photo_form[${index}][photo_id]`, this.photo_id );
                             formData_photoData.append(`photo_form[${index}][photo_fileName]`, photoEntry.photo_fileName);
                             //formData_photoData.append(`photo_form[${index}][photo_title]`, photoEntry.photo_title);
-                            formData_photoData.append(`photo_form[${index}][photo_category]`, this.selected_category_album);
+                            formData_photoData.append(`photo_form[${index}][photo_category]`, photoEntry.selected_supportType);
                             formData_photoData.append(`photo_form[${index}][photo_description]`, photoEntry.photo_description);
                             formData_photoData.append(`photo_form[${index}][photo_photographer]`, photoEntry.photo_photographer);
                             formData_photoData.append(`photo_form[${index}][photo_tags]`, photoEntry.photo_tags);
@@ -1257,7 +1319,7 @@
                             photoEntry.photo_fileName = null;
                             photoEntry.photo_title = '';
                             photoEntry.photo_photographer = '';
-                            photoEntry.category_photo = '';
+                            photoEntry.selected_supportType = '';
                             photoEntry.photo_description = '';
                             photoEntry.photo_tags = '';
                         });
@@ -1571,10 +1633,10 @@
                             photo_fileName: null,
                             photo_personInvolved: '',
                             photo_title: '',
-                            photo_category: '',
+                            selected_supportType: '',
+                            
                             photo_description: '',
                             photo_photographer: '',
-                            photo_photographer: ''
                         })
                     this.tabIndex_photo = this.photo_tabs.length+2;
                     

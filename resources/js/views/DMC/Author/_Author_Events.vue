@@ -560,6 +560,7 @@
                                         <option value="16">Scholarship</option>
                                         <option value="17">Scientific Meeting</option>
                                         <option value="18">Training/Seminar</option>
+                                        <option value="19">Others...</option>
                                     </select>
                                 </div>
                             </div>
@@ -575,6 +576,7 @@
                                         <option value="3">Research and Development Institutes</option>
                                         <option value="4">Scientific and Technological Services</option>
                                         <option value="5">Sectoral Planning Councils</option>
+                                        <option value="6">Others...</option>
                                     </select>
                                 </div>
                             </div>
