@@ -104,29 +104,29 @@
                                 </div>
                                 <div class="card-body">
                                     <dl class="row">
-                                        <dt class="col-5">Title:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_title}}</dd>
+                                        <dt class="col-5 font-title-size">TITLE:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_title}}</dd>
 
-                                        <dt class="col-5">Description:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_description}}</dd>
+                                        <dt class="col-5 font-title-size">DESCRIPTION:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_description}}</dd>
 
-                                        <dt class="col-5">Date:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_date}}</dd>
+                                        <dt class="col-5 font-title-size">DATE:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_date}}</dd>
 
-                                        <dt class="col-5">Venue:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_venue}}</dd>
+                                        <dt class="col-5 font-title-size">VENUE:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_venue}}</dd>
 
-                                        <dt class="col-5">Organizing Agency:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_organizingAgency}}</dd>
+                                        <dt class="col-5 font-title-size">ORGANIZING AGENCY:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_organizingAgency}}</dd>
 
-                                        <dt class="col-5">Category:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_category}}</dd>
+                                        <dt class="col-5 font-title-size">CATEGORY:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_category}}</dd>
 
-                                        <dt class="col-5">Sector:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_sector}}</dd>
+                                        <dt class="col-5 font-title-size">SECTOR:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_sector}}</dd>
 
-                                        <dt class="col-5">Tags:</dt>
-                                        <dd class="col-7">
+                                        <dt class="col-5 font-title-size">TAGS:</dt>
+                                        <dd class="col-7 font-body-size">
                                             <span v-for="(event, index) in album_tags" :key="index">
                                                 <a class="badge badge-outline text-secondary fw-normal badge-pill">
                                                     {{event.album_tagName}}
@@ -289,9 +289,9 @@
                                                     <div class="col-4" v-for="(event, index) in list_photo" :key="index">
                                                         <div class="card placeholder-glow">
                                                             <div class="card-header">
-                                                                <h3 class="card-title">
+                                                                <h5 class="card-title photo-video-font-title-size">
                                                                     {{event.photo_id}}
-                                                                </h3>
+                                                                </h5>
                                                             </div>
                                                             <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
                                                                 <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
@@ -329,14 +329,14 @@
                                                                 <dl class="row">
                                                                     <!-- <dt class="col-12 font-title-size">Title:</dt>
                                                                     <dd class="col-12">{{event.photo_title}}</dd> -->
-                                                                    <dt class="col-12 font-title-size">Description:</dt>
-                                                                    <dd class="col-12">{{event.photo_description}}</dd>
-                                                                    <dt class="col-12 font-title-size">Photographer:</dt>
-                                                                    <dd class="col-12">{{event.photo_photographer}}</dd>
-                                                                    <dt class="col-12 font-title-size">Category:</dt>
-                                                                    <dd class="col-12">{{event.photo_category}}</dd>
-                                                                    <dt class="col-12 font-title-size">Tags:</dt>
-                                                                    <dd class="col-12">
+                                                                    <dt class="col-12 font-title-size">DESCRIPTION:</dt>
+                                                                    <dd class="col-12 font-body-size">{{event.photo_description}}</dd>
+                                                                    <dt class="col-12 font-title-size">PHOTOGRAPHER:</dt>
+                                                                    <dd class="col-12 font-body-size">{{event.photo_photographer}}</dd>
+                                                                    <dt class="col-12 font-title-size">CATEGORY:</dt>
+                                                                    <dd class="col-12 font-body-size">{{event.photo_category}}</dd>
+                                                                    <dt class="col-12 font-title-size">TAGS:</dt>
+                                                                    <dd class="col-12 font-body-size">
                                                                         <span v-for="(tag, idx) in event.photo_tags.split(',')" :key="idx" class="tag-style">
                                                                             <a class="badge badge-outline text-secondary fw-normal badge-pill">
                                                                                 {{tag}}
@@ -590,7 +590,7 @@
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
-                                            <b-form-select v-model="photoEntry.selected_supportType" :options="options_supportType"></b-form-select>
+                                            <b-form-select v-model="photoEntry.selected_photo_category" :options="options_photo_categoryList"></b-form-select>
                                             <!-- <div class="col">
                                                 <select class="form-select" v-model="selected_category_album">
                                                     <option selected disabled>Please select photo category</option>
@@ -671,16 +671,22 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-8 col-lg-8 mb-0">
-                                        <b-form-group class="group" id="form_externalEventDate">
+                                    <div class="col-md-6 col-lg-6 mb-0">
+                                        <!-- <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Title:</label>
                                             <b-form-input v-model="videoEntry.video_title" placeholder="Enter Title..."   ></b-form-input>
+                                        </b-form-group>  -->
+                                        <b-form-group class="group" id="form_externalEventDate">
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Videographer:</label>
+                                            <b-form-input  v-model="videoEntry.video_videographer" placeholder="Enter Photographer..."   ></b-form-input>
                                         </b-form-group> 
                                     </div>
-                                    <div class="col-md-4 col-lg-4 mb-0">
-                                        <!-- <b-form-group class="group" id="form_externalEventDate"> -->
+                                    <div class="col-md-6 col-lg-6 mb-0">
+                                        <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
-                                            <div class="col">
+                                            
+                                            <b-form-select v-model="videoEntry.selected_video_category" :options="options_video_categoryList"></b-form-select>
+                                            <!-- <div class="col">
                                                 <select class="form-select" v-model="selected_category_video">
                                                     <option selected disabled>Please select video category</option>
                                                     <option value="1">Anniversaries</option>
@@ -699,25 +705,19 @@
                                                     <option value="14">Speeches</option>
                                                     <option value="15">Others</option>
                                                 </select>
-                                            </div>
-                                            <!-- <b-form-select id="input-3" v-model="videoEntry.video_category" :options="options_category_video"   ></b-form-select>
-                                        </b-form-group>  -->
+                                            </div> -->
+                                            <!-- <b-form-select id="input-3" v-model="videoEntry.video_category" :options="options_category_video"   ></b-form-select>-->
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
-                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Videographer:</label>
-                                            <b-form-input  v-model="videoEntry.video_videographer" placeholder="Enter Photographer..."   ></b-form-input>
-                                        </b-form-group> 
-                                    </div>
-                                    <div class="col-md-3 col-lg-3 mb-0">
-                                        <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Type:</label>
                                             <b-form-select id="input-3" v-model="videoEntry.video_type" :options="options_category_type"   ></b-form-select>
                                         </b-form-group> 
                                     </div>
-                                    <div class="col-md-3 col-lg-3 mb-0">
+                                    <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration (hh:mm:ss):</label>
                                             <b-form-timepicker
@@ -955,28 +955,49 @@
             data() {
                 return {
                     
-                    selected_supportType: 'Please select photo category',
-                    options_supportType: [
+                    selected_photo_category: 'Please select photo category',
+                    options_photo_categoryList: [
                         { value: null, text: 'Please select photo category', disabled: true },
-                        { value: 'Anniversary', text: 'Anniversary' },
+                        { value: 'Assistant Secretaries', text: 'Assistant Secretaries' },
+                        { value: 'Deputy Directors', text: 'Deputy Directors' },
+                        { value: 'Directors', text: 'Directors' },
+                        { value: 'Executive Director', text: 'Executive Director' },
+                        { value: 'Group photo', text: 'Group photo' },
+                        { value: 'Launch/Events/Activities', text: 'Launch/Events/Activities' },
+                        { value: 'Lecturers/Resource Speaker', text: 'Lecturers/Resource Speaker' },
+                        { value: 'MOA/MOU signing', text: 'MOA/MOU signing' },
+                        { value: 'Participants', text: 'Participants' },
+                        { value: 'Portraits', text: 'Portraits' },
+                        { value: 'Product/Service', text: 'Product/Service' },
+                        { value: 'Project visits', text: 'Project visits' },
+                        { value: 'Project/Program activities', text: 'Project/Program activities' },
+                        { value: 'Regional Directors', text: 'Regional Directors' },
+                        { value: 'Secretaries', text: 'Secretaries' },
+                        { value: 'Service Directors', text: 'Service Directors' },
+                        { value: 'Undersecretaries', text: 'Undersecretaries' },
+                        { value: 'Others...', text: 'Others...' },
+                    ],
+                    
+                    selected_video_category: 'Please select video category',
+                    options_video_categoryList: [
+                        { value: null, text: 'Please select video category', disabled: true },
+                        { value: 'Anniversaries', text: 'Anniversaries' },
                         { value: 'Awarding Ceremonies', text: 'Awarding Ceremonies' },
-                        { value: 'Building Inauguration', text: 'Building Inauguration' },
-                        { value: 'Conference', text: 'Conference' },
-                        { value: 'Convention', text: 'Convention' },
+                        { value: 'Competition/ Contests', text: 'Competition/ Contests' },
                         { value: 'Exhibits', text: 'Exhibits' },
-                        { value: 'Forum', text: 'Forum' },
-                        { value: 'MOA Signing', text: 'MOA Signing' },
-                        { value: 'MOU Signing', text: 'MOU Signing' },
+                        { value: 'Lectures,Discussion,Seminar,Training', text: 'Lectures,Discussion,Seminar,Training' },
+                        { value: 'MOA/MOU signing', text: 'MOA/MOU signing' },
                         { value: 'NSTW', text: 'NSTW' },
                         { value: 'NYSTIF', text: 'NYSTIF' },
                         { value: 'Program Launch', text: 'Program Launch' },
                         { value: 'Project Launch', text: 'Project Launch' },
-                        { value: 'Project Visit', text: 'Project Visit' },
+                        { value: 'Project/Program activities', text: 'Project/Program activities' },
                         { value: 'RSTW', text: 'RSTW' },
-                        { value: 'Scholarship', text: 'Scholarship' },
-                        { value: 'Scientific Meeting', text: 'Scientific Meeting' },
-                        { value: 'Training/Seminar', text: 'Training/Seminar' }
+                        { value: 'Same day edits', text: 'Same day edits' },
+                        { value: 'Speeches', text: 'Speeches' },
+                        { value: 'Others...', text: 'Others...' },
                     ],
+
                     headerBG_savedSuccessfully: 'warning',
                     headerText_savedSuccessfully: 'light',
                     event_id : this.$route.params.id,
@@ -1004,7 +1025,7 @@
                             photo_fileName: null,
                             photo_personInvolved: '',
                             photo_title: '',
-                            selected_supportType: '',
+                            selected_photo_category: '',
                             photo_description: '',
                             photo_photographer: ''
                         }
@@ -1283,7 +1304,7 @@
                             formData_photoData.append(`photo_form[${index}][photo_id]`, this.photo_id );
                             formData_photoData.append(`photo_form[${index}][photo_fileName]`, photoEntry.photo_fileName);
                             //formData_photoData.append(`photo_form[${index}][photo_title]`, photoEntry.photo_title);
-                            formData_photoData.append(`photo_form[${index}][photo_category]`, photoEntry.selected_supportType);
+                            formData_photoData.append(`photo_form[${index}][photo_category]`, photoEntry.selected_photo_category);
                             formData_photoData.append(`photo_form[${index}][photo_description]`, photoEntry.photo_description);
                             formData_photoData.append(`photo_form[${index}][photo_photographer]`, photoEntry.photo_photographer);
                             formData_photoData.append(`photo_form[${index}][photo_tags]`, photoEntry.photo_tags);
@@ -1319,7 +1340,7 @@
                             photoEntry.photo_fileName = null;
                             photoEntry.photo_title = '';
                             photoEntry.photo_photographer = '';
-                            photoEntry.selected_supportType = '';
+                            photoEntry.selected_photo_category = '';
                             photoEntry.photo_description = '';
                             photoEntry.photo_tags = '';
                         });
@@ -1361,12 +1382,11 @@
                             formData_videoData.append(`video_form[${index}][video_id]`, this.video_id );
                             formData_videoData.append(`video_form[${index}][video_link]`, videoEntry.video_link);
                             formData_videoData.append(`video_form[${index}][video_youtubeID]`, urlID);
-                            formData_videoData.append(`video_form[${index}][video_title]`, videoEntry.video_title);
-                            formData_videoData.append(`video_form[${index}][video_category]`, this.selected_category_video);
-                            formData_videoData.append(`video_form[${index}][video_duration]`, videoEntry.video_duration);
-                            formData_videoData.append(`video_form[${index}][video_type]`, videoEntry.video_type);
-                            formData_videoData.append(`video_form[${index}][video_description]`, videoEntry.video_description);
                             formData_videoData.append(`video_form[${index}][video_videographer]`, videoEntry.video_videographer);
+                            formData_videoData.append(`video_form[${index}][video_category]`, videoEntry.selected_video_category);
+                            formData_videoData.append(`video_form[${index}][video_type]`, videoEntry.video_type);
+                            formData_videoData.append(`video_form[${index}][video_duration]`, videoEntry.video_duration);
+                            formData_videoData.append(`video_form[${index}][video_description]`, videoEntry.video_description);
                             formData_videoData.append(`video_form[${index}][video_tags]`, videoEntry.video_tags);
                             
                             console.log("aaa");
@@ -1391,10 +1411,12 @@
                         this.$refs['modal_uploadVideo'].hide();
                         this.vidClip_tabs.forEach((videoEntry, index) => {
                             videoEntry.video_link = '';
-                            videoEntry.video_title = '';
                             videoEntry.video_videographer = '';
-                            videoEntry.video_category = '';
+                            videoEntry.selected_video_category = '';
+                            videoEntry.video_type = '';
+                            videoEntry.video_duration = '';
                             videoEntry.video_description = '';
+                            videoEntry.video_tags = '';
                             
                         });
                     }catch(error){}
@@ -1631,24 +1653,24 @@
                 photo_newTab() {
                     this.photo_tabs.push({
                             photo_fileName: null,
-                            photo_personInvolved: '',
                             photo_title: '',
-                            selected_supportType: '',
-                            
-                            photo_description: '',
                             photo_photographer: '',
+                            selected_photo_category: '',
+                            photo_description: '',
+                            photo_tags: '',
                         })
                     this.tabIndex_photo = this.photo_tabs.length+2;
                     
                 },
                 vidClip_newTab() {
                     this.vidClip_tabs.push({
-                            video_fileName: null,
-                            video_personInvolved: '',
-                            video_title: '',
-                            video_category: '',
+                            video_link: '',
+                            video_videographer: '',
+                            selected_video_category: '',
+                            video_type: '',
+                            video_duration: '',
                             video_description: '',
-                            video_photographer: ''
+                            video_tags: '',
                         })
                 },
             },
@@ -1715,7 +1737,15 @@
     }
 
     .font-title-size{
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 700;
+    }
+
+    .font-body-size{
+        font-size: 12px;
+    }
+
+    .photo-video-font-title-size{
+        font-size: 14px;
     }
 </style>
