@@ -32,18 +32,10 @@ class AssetsController extends Controller
         $data->event_date = $request->event_date;
         $data->event_venue = $request->event_venue;
         $data->event_tags = $request->event_tags;
+        $data->is_deleted = $request->is_deleted;
         
         $data->save();
     }
-
-    // public function addEventTrackingLog(Request $request){
-    //     $data = new EventTrackingLog(); 
-    //     $data->album_id = $request->album_id;
-    //     $data->name_author = $request->name_author;
-    //     $data->date_created = $request->date_created;
-        
-    //     $data->save();
-    // }
 
     public function addTrackingLog(Request $request){
         $data = new EventTrackingLog(); 
@@ -210,13 +202,6 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
 
-    // public function getTrackingLog(Request $request, $album_id){
-    //     $data = EventTrackingLog::where('album_id', $album_id)
-    //                         ->get('*');
-    
-    //     return response()->json($data, 200);
-    // }
-
     public function getTrackingLog(Request $request, $album_id){
         // $data = EventTrackingLog::where('album_id', $album_id)
         $data = EventTrackingLog::join('tbl_album_status','tbl_tracking_event_log.album_id', '=', 'tbl_album_status.album_id')
@@ -232,17 +217,68 @@ class AssetsController extends Controller
         return response()->json($data, 200);
     }
 
-    public function getAllListEvents(Request $request){
-        $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                ->orderBy('tbl_album.created_at', 'desc')
-                ->get('*');
+    // public function getAllListEvents(Request $request){
+    //     $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+    //             ->where('tbl_album.is_deleted', "0")
+    //             ->orderBy('tbl_album.created_at', 'desc')
+    //             ->get('*');
 
+    //     return response()->json($data, 200);
+    // }
+
+    // public function getAllListEvents(Request $request){
+    //     $data = DB::table('tbl_album')
+    //             ->join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+    //             ->join('tbl_photo','tbl_album.album_id', '=', 'tbl_photo.album_id')
+    //             ->where('tbl_album.is_deleted', "0")
+    //             ->orderBy('tbl_album.created_at', 'desc')
+    //             ->groupBy('tbl_album.album_id')
+    //             ->get('*');
+
+    //     return response()->json($data, 200);
+    // }
+
+    // public function getAllListEvents(Request $request) {
+    //     $data = DB::table('tbl_album')
+    //         ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
+    //         ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
+    //         ->where('tbl_album.is_deleted', "0")
+    //         ->orderBy('tbl_album.created_at', 'desc')
+    //         ->groupBy('tbl_album.album_id') 
+    //         ->get([
+    //             'tbl_album.*',
+    //             'tbl_album_status.*',
+    //             DB::raw('GROUP_CONCAT(tbl_photo.photo_fileName SEPARATOR ",") as photo_fileNames')
+    //         ]);
+    
+    //     return response()->json($data, 200);
+    // }
+
+    public function getAllListEvents(Request $request) {
+        $data = DB::table('tbl_album')
+            ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
+            ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
+            ->where('tbl_album.is_deleted', "0")
+            ->whereNotNull('tbl_album.album_id') // Ensures rows exist
+            ->orderBy('tbl_album.created_at', 'desc')
+            ->groupBy('tbl_album.album_id') // Grouping by album_id
+            ->get([
+                'tbl_album.*',
+                'tbl_album_status.*',
+                DB::raw('(SELECT tbl_photo.photo_fileName 
+                          FROM tbl_photo 
+                          WHERE tbl_photo.album_id = tbl_album.album_id 
+                          ORDER BY tbl_photo.created_at ASC 
+                          LIMIT 1) as first_photo_fileName') // Subquery for the first photo
+            ]);
+    
         return response()->json($data, 200);
     }
 
     public function getAllListDraft(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
                     ->where('tbl_album_status.album_status', "Saved as Draft")
+                    ->where('tbl_album.is_deleted', "0")
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
         
@@ -251,8 +287,7 @@ class AssetsController extends Controller
 
     public function getAllListUnderReview(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                    // ->where('tbl_album_status.album_status', "Under Review")
-                    // ->where('tbl_album_status.album_status', "For Comment")
+                    ->where('tbl_album.is_deleted', "0")
                     ->whereIn('tbl_album_status.album_status', ["Under Review", "For Comment"])
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
@@ -263,6 +298,7 @@ class AssetsController extends Controller
     public function getAllListForReview(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
                     // ->where('tbl_album_status.album_status', "Submitted for Review")
+                    ->where('tbl_album.is_deleted', "0")
                     ->whereIn('tbl_album_status.album_status', ["Submitted for Review", "Done Revision"])
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
@@ -272,6 +308,7 @@ class AssetsController extends Controller
 
     public function getAllListForRevision(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+                    ->where('tbl_album.is_deleted', "0")
                     ->where('tbl_album_status.album_status', "For Revision")
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
@@ -281,6 +318,7 @@ class AssetsController extends Controller
 
     public function getAllListUnpublished(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+                    ->where('tbl_album.is_deleted', "0")
                     ->where('tbl_album_status.album_status', "Unpublished")
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
@@ -290,6 +328,7 @@ class AssetsController extends Controller
 
     public function getAllListPublished(Request $request){
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+                    ->where('tbl_album.is_deleted', "0")
                     ->where('tbl_album_status.album_status', "Published")
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
@@ -362,6 +401,13 @@ class AssetsController extends Controller
     public function getAllListVideo(Request $request){
               $data = Video::get('*');
         return response()->json($data, 200);
+    }
+    
+    public function deleteAlbum(Request $request, $albumID){
+        $data = Assets::where('album_id', $albumID)->first();
+
+        $data->is_deleted = $request->is_deleted;
+        $data->save();
     }
     
     public function updateAlbum(Request $request, $albumID){

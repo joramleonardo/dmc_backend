@@ -135,10 +135,16 @@ export function getVideoTags_selected(video_id){
     return httpFile().post(`/getVideoTags_selected/${video_id}`);
 }
 
+
+
+export function deleteAlbum(albumID, data){
+    return httpFile().post(`deleteAlbum/${albumID}`, data);
+}
+
+
 export function updateAlbum(albumID, data){
     return httpFile().post(`updateAlbum/${albumID}`, data);
 }
-
 
 export function updatePhoto(photo_id, data){
     return httpFile().post(`updatePhoto/${photo_id}`, data);

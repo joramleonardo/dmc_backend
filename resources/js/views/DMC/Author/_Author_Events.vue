@@ -55,8 +55,12 @@
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_allEvents" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
-                                                        <a class="d-block">
+                                                        <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
+                                                             
+                                                        </a>
+                                                        <a class="d-block" v-else>
+                                                            <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
                                                         </a>
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
@@ -101,6 +105,10 @@
                                                                         67
                                                                     </a>
                                                                 </div> -->
+                                                            </div>
+                                                            <div class="d-flex align-items-center">
+                                                                {{event.first_photo_fileName}}
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>                           
@@ -803,6 +811,10 @@
                     finalTime: '',
                     finalDate: '',
                     finalDateTime: '',
+                    list_photo: '',
+                    photo_length: '',
+                    thumbnail: [],
+                    albumID: '',
                 }
             },
             mounted(){
@@ -837,6 +849,30 @@
                         const response_allEvents = await assets_service.getAllListEvents();
                         this.list_allEvents = response_allEvents.data;
                         this.totalRows_allEvents = this.list_allEvents.length;
+                        console.log(this.list_allEvents);
+                        console.log("hello");
+                        // for(let i=0; i < this.totalRows_allEvents; i++ ){
+                        //     console.log("aa");
+                        //     this.albumID = this.list_allEvents[i].album_id;
+                        //     console.log(this.albumID);
+                        //     const response_photoList = await assets_service.getListPhoto_selected(this.albumID);
+                        //     this.list_photo = response_photoList.data;
+                        //     this.photo_length = this.list_photo.length;
+                        //     this.thumbnail = this.list_photo[i].photo_fileName;
+                        //     console.log(this.thumbnail);
+                            
+                        // }
+                            
+                            console.log("vv");
+
+                        // for (let i = 0; i < tagList.length; i ++) {
+                        //     let tagName = tagList.slice(i, i+1);
+                        //     let formData_albumTags = new FormData();
+                        //         formData_albumTags.append('album_id', this.album_id);
+                        //         formData_albumTags.append('album_tagName', tagName);
+                        //     const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
+                        // }
+                        
 
                     } catch(error) {
                         this.flashMessage.error({
@@ -993,6 +1029,7 @@
                                 formData_eventData.append('event_date', this.ticketData.eventDate);
                                 formData_eventData.append('event_venue', this.ticketData.eventVenue);
                                 formData_eventData.append('event_tags', this.ticketData.eventTags);
+                                formData_eventData.append('is_deleted', "0");
                             const response_eventData = await assets_service.addEventData(formData_eventData);
 
                             // SAVE EVENT TAGS

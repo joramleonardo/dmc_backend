@@ -98,6 +98,8 @@ Route::post('/checkAlbumTagsExists/{album_id}/{tag_name}', [AssetsController::cl
 // Route::post('/countEntry/{date}', 'TicketController@countEntry');
 
 
+Route::post('/deleteAlbum/{albumID}', [AssetsController::class, 'deleteAlbum']);
+
 Route::post('/updateAlbum/{albumID}', [AssetsController::class, 'updateAlbum']);
 Route::post('/updatePhoto/{photo_id}', [AssetsController::class, 'updatePhoto']);
 Route::post('/updateVideo/{photo_id}', [AssetsController::class, 'updateVideo']);
