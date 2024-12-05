@@ -18,28 +18,28 @@
                             </h2>
                             <div style="margin-top: 1%;">
                                 <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                    <span class="badge bg-cyan text-cyan-fg">Draft</span>
+                                    <span class="status badge bg-cyan text-cyan-fg">Draft</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                    <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                    <span class="status badge bg-orange text-orange-fg">Submitted to Publisher</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Under Review' ">
-                                    <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                    <span class="status badge bg-purple text-purple-fg">Under Review</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'For Comment' ">
-                                    <span class="badge bg-purple text-purple-fg">Under Review</span>
+                                    <span class="status badge bg-purple text-purple-fg">Under Review</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'For Revision' ">
-                                    <span class="badge bg-red text-red-fg">Needs Revision</span>
+                                    <span class="status badge bg-red text-red-fg">Needs Revision</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Revision For Review' ">
-                                    <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                    <span class="status badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                    <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
+                                    <span class="status badge bg-yellow text-yellow-fg">Unpublished</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Published' ">
-                                    <span class="badge bg-green text-green-fg">Published</span>
+                                    <span class="status badge bg-green text-green-fg">Published</span>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                 <div class="tabler-container-xl">
                     <div class="row g-4">
                         <div class="col-md-4">
-                            <div class="card" id="Event_Information">
+                            <div class="card event-cardd" id="Event_Information">
                                 <div class="card-header">
                                     <h3 class="card-title">
                                     Event Information
@@ -154,7 +154,7 @@
                             
                             <div v-if="currentAlbumStatus === 'Return to Author' ">
                                 <div v-if="noOfComment === 0">
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -166,7 +166,7 @@
                                     </div>
                                 </div>
                                 <div v-else>
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -190,7 +190,7 @@
                             
                             <div v-if="currentAlbumStatus === 'For Revision' ">
                                 <div v-if="noOfComment === 0">
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -202,7 +202,7 @@
                                     </div>
                                 </div>
                                 <div v-else>
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -224,7 +224,7 @@
                                 </div>
                             </div>
                             
-                            <div class="card" id="Event_Tracking_Log" style="margin-top: 15px">
+                            <div class="card event-cardd" id="Event_Tracking_Log" style="margin-top: 15px">
                                 <div class="card-header">
                                     <h3 class="card-title">
                                         Event Tracking Log
@@ -253,7 +253,7 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="card">
+                            <div class="card event-cardd">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
                                     <li class="nav-item">
@@ -283,7 +283,7 @@
                                             <div v-else>
                                                 <div class="row row-cards">
                                                     <div class="col-4" v-for="(event, index) in list_photo" :key="index">
-                                                        <div class="card placeholder-glow">
+                                                        <div class="card event-cardd placeholder-glow">
                                                             <div class="card-header">
                                                                 <h5 class="card-title photo-video-font-title-size">
                                                                     {{event.photo_id}}
@@ -293,38 +293,8 @@
                                                                 <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
                                                                 </div>
                                                             </a>
-                                                            <!-- <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
-                                                                <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
-                                                                </div>
-                                                            </a>
-                                                            <div class="ribbon ribbon-top">
-                                                                <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                                                    <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                    </b-button>
-                                                                    <b-button @click="viewAlbumInfo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                                    </b-button>
-                                                                </div>
-                                                                <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                                                    
-                                                                </div>
-                                                                <div v-if="currentAlbumStatus === 'Published' ">
-                                                                    <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                                                </div>
-                                                                <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                                                    <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                                                                </div>
-                                                                <div v-if="currentAlbumStatus === 'For Revision' ">
-                                                                    <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
-                                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                    </b-button>
-                                                                </div>
-                                                            </div> -->
                                                             <div class="card-body">
                                                                 <dl class="row">
-                                                                    <!-- <dt class="col-12 font-title-size">Title:</dt>
-                                                                    <dd class="col-12">{{event.photo_title}}</dd> -->
                                                                     <dt class="col-12 font-title-size">DESCRIPTION:</dt>
                                                                     <dd class="col-12 font-body-size">{{event.photo_description}}</dd>
                                                                     <dt class="col-12 font-title-size">PHOTOGRAPHER:</dt>
@@ -341,9 +311,7 @@
                                                                     </dd>
                                                                 </dl>
                                                             </div>
-                                                            
                                                             <div class="card-footer">
-
                                                                     <div v-if="currentAlbumStatus === 'Saved as Draft' ">
                                                                         <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
@@ -352,21 +320,11 @@
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                                                         </b-button>
                                                                     </div>
-                                                                    <!-- <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                                                        
-                                                                    </div>
-                                                                    <div v-if="currentAlbumStatus === 'Published' ">
-                                                                        <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                                                    </div>
-                                                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                                                        <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                                                                    </div> -->
                                                                     <div v-if="currentAlbumStatus === 'For Revision' ">
                                                                         <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                         </b-button>
                                                                     </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -384,50 +342,32 @@
                                                 <span v-else>
                                                     <div class="row row-cards">
                                                         <div class="col-6" v-for="(event, index) in list_video" :key="index">
-                                                            <div class="card placeholder-glow">
+                                                            <div class="card event-cardd placeholder-glow">
+                                                                <div class="card-header">
+                                                                    <h5 class="card-title photo-video-font-title-size">
+                                                                        {{event.video_id}}
+                                                                    </h5>
+                                                                </div>
                                                                 <div class="ratio ratio-4x3 card-img-top">
                                                                     <iframe width="420" height="315"
                                                                         :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
                                                                         
                                                                     </iframe>
                                                                 </div>
-                                                                <div class="ribbon ribbon-top">
-                                                                    <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                                                        <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
-                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                        </b-button>
-                                                                    </div>
-                                                                    <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                                                        
-                                                                    </div>
-                                                                    <div v-if="currentAlbumStatus === 'Published' ">
-                                                                        <h5><span class="badge bg-green text-green-fg">Published</span></h5>
-                                                                    </div>
-                                                                    <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                                                        <h5><span class="badge bg-red text-red-fg">Unpublished</span></h5>
-                                                                    </div>
-                                                                    <div v-if="currentAlbumStatus === 'For Revision' ">
-                                                                        <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
-                                                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                                                        </b-button>
-                                                                    </div>
-                                                                </div>
                                                                 <div class="card-body">
                                                                     <dl class="row">
-                                                                        <dt class="col-12 font-title-size">Title:</dt>
-                                                                        <dd class="col-12">{{event.video_title}}</dd>
-                                                                        <dt class="col-12 font-title-size">Description:</dt>
-                                                                        <dd class="col-12">{{event.video_description}}</dd>
-                                                                        <dt class="col-12 font-title-size">Videographer:</dt>
-                                                                        <dd class="col-12">{{event.video_videographer}}</dd>
-                                                                        <dt class="col-12 font-title-size">Category:</dt>
-                                                                        <dd class="col-12">{{event.video_category}}</dd>
-                                                                        <dt class="col-12 font-title-size">Duration:</dt>
-                                                                        <dd class="col-12">{{event.video_duration}}</dd>
-                                                                        <dt class="col-12 font-title-size">Video Type:</dt>
-                                                                        <dd class="col-12">{{event.video_type}}</dd>
-                                                                        <dt class="col-12 font-title-size">Tags:</dt>
-                                                                        <dd class="col-12">
+                                                                        <dt class="col-12 font-title-size">DESCRIPTION:</dt>
+                                                                        <dd class="col-12 font-body-size">{{event.video_description}}</dd>
+                                                                        <dt class="col-12 font-title-size">VIDEOGRAPHER:</dt>
+                                                                        <dd class="col-12 font-body-size">{{event.video_videographer}}</dd>
+                                                                        <dt class="col-12 font-title-size">CATEGORY:</dt>
+                                                                        <dd class="col-12 font-body-size">{{event.video_category}}</dd>
+                                                                        <dt class="col-12 font-title-size">DURATION:</dt>
+                                                                        <dd class="col-12 font-body-size">{{event.video_duration}}</dd>
+                                                                        <dt class="col-12 font-title-size">VIDEO TYPE:</dt>
+                                                                        <dd class="col-12 font-body-size">{{event.video_type}}</dd>
+                                                                        <dt class="col-12 font-title-size">TAGS:</dt>
+                                                                        <dd class="col-12 font-body-size">
                                                                             <span v-for="(tag, idx) in event.video_tags.split(',')" :key="idx" class="tag-style">
                                                                                 <a class="badge badge-outline text-secondary fw-normal badge-pill">
                                                                                     {{tag}}
@@ -435,6 +375,22 @@
                                                                             </span>
                                                                         </dd>
                                                                     </dl>
+                                                                </div>
+                                                                <div class="card-footer">
+                                                                        
+                                                                        <div v-if="currentAlbumStatus === 'Saved as Draft' ">
+                                                                            <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
+                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                            </b-button>
+                                                                            <b-button @click="validate_delete_video()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
+                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                                                                            </b-button>
+                                                                        </div>
+                                                                        <div v-if="currentAlbumStatus === 'For Revision' ">
+                                                                            <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
+                                                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                                            </b-button>
+                                                                        </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -494,23 +450,25 @@
                                 <div class="col">
                                     <select class="form-select" v-model="data_eventInformation_update.event_category">
                                         <option selected disabled>Please select category</option>
-                                        <option value="1">Assistant Secretaries</option>
-                                        <option value="2">Deputy Directors</option>
-                                        <option value="3">Directors</option>
-                                        <option value="4">Executive Director</option>
-                                        <option value="5">Group photo</option>
-                                        <option value="6">Launch/ Events/Activities</option>
-                                        <option value="7">Lecturers/Resource Speaker</option>
-                                        <option value="8">MOA/MOU signing</option>
-                                        <option value="9">Participants</option>
-                                        <option value="10">Portraits</option>
-                                        <option value="11">Product/Service</option>
-                                        <option value="12">Project visits</option>
-                                        <option value="13">Project/Program activities</option>
-                                        <option value="14">Regional Directors</option>
-                                        <option value="15">Secretaries</option>
-                                        <option value="16">Service Directors</option>
-                                        <option value="17">Undersecretaries</option>
+                                        <option value="1">Anniversary</option>
+                                        <option value="2">Awarding Ceremonies</option>
+                                        <option value="3">Building Inauguration</option>
+                                        <option value="4">Conference</option>
+                                        <option value="5">Convention</option>
+                                        <option value="6">Exhibits</option>
+                                        <option value="7">Forum</option>
+                                        <option value="8">MOA Signing</option>
+                                        <option value="9">MOU Signing</option>
+                                        <option value="10">NSTW</option>
+                                        <option value="11">NYSTIF</option>
+                                        <option value="12">Program Launch</option>
+                                        <option value="13">Project Launch</option>
+                                        <option value="14">Project Visit</option>
+                                        <option value="15">RSTW</option>
+                                        <option value="16">Scholarship</option>
+                                        <option value="17">Scientific Meeting</option>
+                                        <option value="18">Training/Seminar</option>
+                                        <option value="19">Others...</option>
                                     </select>
                                 </div>
                             </div>
@@ -755,7 +713,7 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_updatePhoto" ref="modal_updatePhoto"  title="Update Photo Information" size="xl" centered>
+        <b-modal id="modal_updatePhoto" ref="modal_updatePhoto"  title="Edit Photo Information" size="xl" centered>
             <div class="card" id="createEventForm" >
                 <div class="card-header">
                     <h3 class="card-title">PHOTO INFORMATION</h3>
@@ -792,29 +750,7 @@
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
                                 <!-- <b-form-select id="input-3" v-model="data_photoInformation_update.photo_category" :options="options_category_photo"   ></b-form-select> -->
                                 <b-form-select v-model="data_photoInformation_update.photo_category" :options="options_photo_categoryList"></b-form-select>
-                                <!-- <div class="col">
-                                    <select class="form-select" v-model="data_photoInformation_update.photo_category">
-                                        <option selected disabled>Please select category</option>
-                                        <option value="1">Anniversary</option>
-                                        <option value="2">Awarding Ceremonies</option>
-                                        <option value="3">Building Inauguration</option>
-                                        <option value="4">Conference</option>
-                                        <option value="5">Convention</option>
-                                        <option value="6">Exhibits</option>
-                                        <option value="7">Forum</option>
-                                        <option value="8">MOA Signing</option>
-                                        <option value="9">MOU Signing</option>
-                                        <option value="10">NSTW</option>
-                                        <option value="11">NYSTIF</option>
-                                        <option value="12">Program Launch</option>
-                                        <option value="13">Project Launch</option>
-                                        <option value="14">Project Visit</option>
-                                        <option value="15">RSTW</option>
-                                        <option value="16">Scholarship</option>
-                                        <option value="17">Scientific Meeting</option>
-                                        <option value="18">Training/Seminar</option>
-                                    </select>
-                                </div> -->
+                                
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Tags:</label>
@@ -832,7 +768,7 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_updateVideo" ref="modal_updateVideo"  title="Update Video Information" size="xl" centered>
+        <b-modal id="modal_updateVideo" ref="modal_updateVideo"  title="Edit Video Information" size="xl" centered>
             <div class="card" id="createEventForm" >
                 <div class="card-header">
                     <h3 class="card-title">VIDEO INFORMATION</h3>
@@ -843,23 +779,13 @@
                             <b-form-group >   
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video:</label>
                                 <br>
-                                
-                                    <!-- <div class="img-responsive rounded border" 
-                                    :style="{ backgroundImage: `url('/storage/images/${data_photoInformation_update.photo_fileName}')` }">
-                                    </div> -->
-
-                                    <iframe width="500" height="315"
-                                        :src='`https://www.youtube.com/embed/`+`${data_videoInformation_update.video_youtubeID}`'>
-                                        
-                                    </iframe>
-                                
+                                <iframe width="500" height="315"
+                                    :src='`https://www.youtube.com/embed/`+`${data_videoInformation_update.video_youtubeID}`'>
+                                    
+                                </iframe>
                             </b-form-group> 
                         </div>
                         <div class="col-sm-6 col-md-6">
-                            <b-form-group class="group" id="form_externalEventDate">
-                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Title:</label>
-                                <b-form-input  v-model="data_videoInformation_update.video_title" placeholder="Enter Photographer..."   ></b-form-input>
-                            </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Description:</label>
                                 <b-form-textarea id="textarea" v-model="data_videoInformation_update.video_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
@@ -870,28 +796,7 @@
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
-                                <!-- <b-form-select id="input-3" v-model="data_videoInformation_update.photo_category" :options="options_category_photo"   ></b-form-select> -->
-                                
-                                <div class="col">
-                                    <select class="form-select" v-model="data_videoInformation_update.video_category">
-                                        <option selected disabled>Please select video category</option>
-                                        <option value="1">Anniversaries</option>
-                                        <option value="2">Awarding Ceremonies </option>
-                                        <option value="3">Competition/ Contests</option>
-                                        <option value="4">Exhibits</option>
-                                        <option value="5">Lectures, Discussion, Seminar, Training</option>
-                                        <option value="6">MOA/MOU signing</option>
-                                        <option value="7">NSTW</option>
-                                        <option value="8">NYSTIF</option>
-                                        <option value="9">Program Launch</option>
-                                        <option value="10">Project Launch</option>
-                                        <option value="11">Project/Program activities</option>
-                                        <option value="12">RSTW</option>
-                                        <option value="13">Same day edits</option>
-                                        <option value="14">Speeches</option>
-                                        <option value="15">Others</option>
-                                    </select>
-                                </div>
+                                <b-form-select v-model="data_videoInformation_update.selected_video_category" :options="options_video_categoryList"></b-form-select> 
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration:</label>
@@ -938,6 +843,17 @@
             <template #modal-footer>
                 <b-button variant="danger" value="1" @click="deletePhoto()">Yes</b-button>
                 <b-button variant="secondary" @click="$bvModal.hide('modal_validate_deletePhoto')">No</b-button>
+            </template>
+        </b-modal>
+
+        <b-modal id="modal_validate_deleteVideo" ref="modal_validate_deleteVideo"  title="Are you sure you want to delete this video?" size="lg" centered 
+        :header-bg-variant="headerBG_deleteWarning" :header-text-variant="headerText_savedSuccessfully">
+            <div>
+                Once deleted, video will be permanently removed.
+            </div>
+            <template #modal-footer>
+                <b-button variant="danger" value="1" @click="deleteVideo()">Yes</b-button>
+                <b-button variant="secondary" @click="$bvModal.hide('modal_validate_deleteVideo')">No</b-button>
             </template>
         </b-modal>
 
@@ -1076,12 +992,14 @@
                         { value: '14', text: 'Regional Directors' },
                         { value: '15', text: 'Secretaries' },
                         { value: '16', text: 'Service Directors' },
-                        { value: '17', text: 'Undersecretaries' }
+                        { value: '17', text: 'Undersecretaries' },
+                        { value: '18', text: 'Others...' }
                     ],
                     options_category_type: [
                         { value: null, text: 'Please select video type', disabled: true},
                         { value: '1', text: 'Full Video' },
-                        { value: '2', text: 'Video Clip' },
+                        { value: '2', text: 'Video Clip' },,
+                        { value: '3', text: 'Others...' }
                     ],
                     selected_category_video: null,
                     options_category_video: [
@@ -1100,7 +1018,7 @@
                         { value: '12', text: 'RSTW' },
                         { value: '13', text: 'Same day edits' },
                         { value: '14', text: 'Speeches' },
-                        { value: '15', text: 'Others' }
+                        { value: '15', text: 'Others...' }
                     ],
                     list_photo: [],
                     list_video: [],
@@ -1121,6 +1039,7 @@
                     event_ID: '',
                     trackingLog: [], // Initialize as an empty array
                     firstUnderReviewShown: false,
+                    result: '',
                 }
             },
             mounted(){
@@ -1304,11 +1223,11 @@
                             let count_finalPhoto = count_newPhoto + totalPhotoEntry;
                             if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
-                                this.photo_id = "PH2024-0000" + i;
+                                this.photo_id = "ETP" + "2024" + "-" + "000" + i  + "-" + i;
                             }
                             else if (totalPhotoEntry > 9){
                                 let i = count_finalPhoto;
-                                this.photo_id = "PH2024-00" + i;
+                                this.photo_id = "ETP" + "2024" + "-" + "00" + i  + "-" + i;
                             }
 
                             formData_photoData.append(`photo_form[${index}][album_id]`, this.data_eventInformation.album_id);
@@ -1373,17 +1292,25 @@
                             let count_newPhoto = index+1;
                             let totalPhotoEntry = response_countAlbumVideo.data;
                             let count_finalPhoto = count_newPhoto + totalPhotoEntry;
-                            if (totalPhotoEntry == 0 ){
-                                this.video_id = "VID" + "2024" + "-00001";
+
+                            const albumID = this.data_eventInformation.album_id;
+                            const match = albumID.match(/000(\d+)/);
+                            if (match) {
+                                this.result = match[1]; // "1"
+                                console.log(this.result); // Output: "1"
                             }
-                            else if (totalPhotoEntry > 0 && totalPhotoEntry <= 9 ){
+
+
+                            if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
-                                this.video_id = "VID" + "2024" + "-0000" + i;
+                                this.video_id = "ETV" + "2024" + "-" + "000" + this.result  + "-" + i;
                             }
                             else if (totalPhotoEntry > 9){
+                                
                                 let i = count_finalPhoto;
-                                this.video_id = "VID" + "2024" + "-00" + i;
+                                this.video_id = "ETV" + "2024" + "-" + "00" + this.result  + "-" + i;
                             }
+
 
                             let url = videoEntry.video_link;
                             let urlID = url.split("v=")[1].substring(0, 11)
@@ -1419,6 +1346,12 @@
                         }
 
                         this.loadEventVideos();
+                        this.$toast.open({
+                            message: 'Video was added successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                         this.$refs['modal_uploadVideo'].hide();
                         this.vidClip_tabs.forEach((videoEntry, index) => {
                             videoEntry.video_link = '';
@@ -1468,6 +1401,12 @@
                         }
 
                         this.loadEventDetails();
+                        this.$toast.open({
+                            message: 'Event Information was updated successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                         this.$refs['modal_albumInfo'].hide();
                         console.log("Event Information updated successfully!");
                         
@@ -1511,7 +1450,7 @@
                             this.loadAlbumStatus();
                             this.loadTrackingLog();
                             this.$toast.open({
-                                message: 'Event was submitted to Publisher successfully!',
+                                message: 'Submitted to Publisher successfully!',
                                 type: 'success', // Options: 'success', 'info', 'error', 'default'
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
                                 duration: 5000, 
@@ -1546,7 +1485,7 @@
                         // EVENT STATUS
                         this.albumStatus = "Revision For Review";
                         let formData_albumStatus = new FormData();
-                        formData_albumStatus.append('name_publisher', this.displayName);
+                        formData_albumStatus.append('name_publisher', "Khasian Romulo");
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus_withPublisher(this.event_id, formData_albumStatus);
 
@@ -1557,6 +1496,13 @@
                             formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
                             formData_eventTrackingLog.append('date', this.finalDateTime);
                         const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
+                        this.$toast.open({
+                            message: 'Resubmitted to Publisher successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                     }
                     this.loadEventDetails();
                     this.loadAlbumStatus();
@@ -1603,6 +1549,12 @@
                         // }
 
                         this.loadEventPhotos();
+                        this.$toast.open({
+                            message: 'Photo Information was updated successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                         this.$refs['modal_updatePhoto'].hide();
                         console.log("Photo Information updated successfully!");
                         
@@ -1618,11 +1570,10 @@
                     console.log(this.data_videoInformation_update.id);
                     try{
                         let formData_ = new FormData();
-                        // formData_.append('photo_fileName', this.data_videoInformation_update.photo_fileName);
-                        formData_.append('video_title', this.data_videoInformation_update.video_title);
+                        
                         formData_.append('video_description', this.data_videoInformation_update.video_description);
                         formData_.append('video_videographer', this.data_videoInformation_update.video_videographer);
-                        formData_.append('video_category', this.data_videoInformation_update.video_category);
+                        formData_.append('video_category', this.data_videoInformation_update.selected_video_category);
                         formData_.append('video_duration', this.data_videoInformation_update.video_duration);
                         formData_.append('video_type', this.data_videoInformation_update.video_type);
                         formData_.append('video_tags', this.videoTagsArray);
@@ -1684,22 +1635,6 @@
                             video_tags: '',
                         })
                 },
-                validate_delete_photo: async function(){
-                    this.$refs['modal_validate_deletePhoto'].show();
-                },
-                deletePhoto: async function () {
-                    console.log("Photo deleted");
-                    this.$refs['modal_validate_deletePhoto'].hide();
-                    
-                    this.$toast.open({
-                        message: 'Photo was deleted successfully!',
-                        type: 'success', // Options: 'success', 'info', 'error', 'default'
-                        position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                        duration: 5000, 
-                    });
-                    
-                    this.loadEventPhotos();
-                },
                 validate_delete_event: async function(){
                     this.$refs['modal_validate_deleteEvent'].show();
                 },
@@ -1730,7 +1665,38 @@
                     });
                     
                     this.$router.push('/author/events');
-                }
+                },
+                validate_delete_photo: async function(){
+                    this.$refs['modal_validate_deletePhoto'].show();
+                },
+                deletePhoto: async function () {
+                    console.log("Photo deleted");
+                    this.$refs['modal_validate_deletePhoto'].hide();
+                    
+                    this.$toast.open({
+                        message: 'Photo was deleted successfully!',
+                        type: 'success', // Options: 'success', 'info', 'error', 'default'
+                        position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                        duration: 5000, 
+                    });
+                    
+                    this.loadEventPhotos();
+                },
+                validate_delete_video: async function(){
+                    this.$refs['modal_validate_deleteVideo'].show();
+                },
+                deleteVideo: async function () {
+                    this.$refs['modal_validate_deleteVideo'].hide();
+                    
+                    this.$toast.open({
+                        message: 'Video was deleted successfully!',
+                        type: 'success', // Options: 'success', 'info', 'error', 'default'
+                        position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                        duration: 5000, 
+                    });
+                    
+                    this.loadEventVideos();
+                },
             },
             computed: {
                 photoTagsArray: {
@@ -1805,5 +1771,30 @@
 
     .photo-video-font-title-size{
         font-size: 14px;
+    }
+
+    .status{
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .event-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .event-cardd, .event-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .event-card:hover {
+        /* transform: translateY(-5px); */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 </style>

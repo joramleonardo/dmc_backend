@@ -95,7 +95,7 @@
                     <div class="row g-4">
                         <div class="col-md-4">
 
-                            <div class="card"  id="Event_Information">
+                            <div class="card event-cardd"  id="Event_Information">
                                 <div class="card-header">
                                     <h3 class="card-title">
                                     Event Information
@@ -113,29 +113,29 @@
                                 </div>
                                 <div class="card-body">
                                     <dl class="row">
-                                        <dt class="col-5">Title:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_title}}</dd>
+                                        <dt class="col-5 font-title-size">TITLE:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_title}}</dd>
 
-                                        <dt class="col-5">Description:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_description}}</dd>
+                                        <dt class="col-5 font-title-size">DESCRIPTION:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_description}}</dd>
 
-                                        <dt class="col-5">Date:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_date}}</dd>
+                                        <dt class="col-5 font-title-size">DATE:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_date}}</dd>
 
-                                        <dt class="col-5">Venue:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_venue}}</dd>
+                                        <dt class="col-5 font-title-size">VENUE:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_venue}}</dd>
 
-                                        <dt class="col-5">Organizing Agency:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_organizingAgency}}</dd>
+                                        <dt class="col-5 font-title-size">ORGANIZING AGENCY:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_organizingAgency}}</dd>
 
-                                        <dt class="col-5">Category:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_category}}</dd>
+                                        <dt class="col-5 font-title-size">CATEGORY:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_category}}</dd>
 
-                                        <dt class="col-5">Sector:</dt>
-                                        <dd class="col-7">{{data_eventInformation.event_sector}}</dd>
+                                        <dt class="col-5 font-title-size">SECTOR:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.event_sector}}</dd>
 
-                                        <dt class="col-5">Tags:</dt>
-                                        <dd class="col-7">
+                                        <dt class="col-5 font-title-size">TAGS:</dt>
+                                        <dd class="col-7 font-body-size">
                                             <span v-for="(event, index) in album_tags" :key="index">
                                                 <a class="badge badge-outline text-secondary fw-normal badge-pill">
                                                     {{event.album_tagName}}
@@ -148,7 +148,7 @@
                             
                             <div v-if="currentAlbumStatus === 'For Comment' ">
                                 <div v-if="noOfComment === 0">
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -160,7 +160,7 @@
                                     </div>
                                 </div>
                                 <div v-else>
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -184,7 +184,7 @@
                             
                             <div v-if="currentAlbumStatus === 'For Revision' ">
                                 <div v-if="noOfComment === 0">
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
                                 <div v-else>
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -220,7 +220,7 @@
                             
                             <div v-if="currentAlbumStatus === 'Revision For Review' ">
                                 <div v-if="noOfComment === 0">
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -232,7 +232,7 @@
                                     </div>
                                 </div>
                                 <div v-else>
-                                    <div class="card"  id="Comment Section"  style="margin-top: 15px">
+                                    <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
                                         <div class="card-header">
                                             <h3 class="card-title">
                                                 Comment Logs
@@ -254,7 +254,7 @@
                                 </div>
                             </div>
                             
-                            <div class="card" id="Event_Tracking_Log" style="margin-top: 15px">
+                            <div class="card event-cardd" id="Event_Tracking_Log" style="margin-top: 15px">
                                 <div class="card-header">
                                     <h3 class="card-title">
                                         Event Tracking Log
@@ -284,7 +284,7 @@
                             
                         </div>
                         <div class="col-md-8">
-                            <div class="card">
+                            <div class="card event-cardd">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
                                     <li class="nav-item">
@@ -314,31 +314,34 @@
                                             </div>
                                             <div v-else>
                                                 <div class="row row-cards">
-                                                    <div class="col-6" v-for="(event, index) in list_photo" :key="index">
-                                                        <div class="card placeholder-glow">
+                                                    <div class="col-4" v-for="(event, index) in list_photo" :key="index">
+                                                        <div class="card event-cardd placeholder-glow">
+                                                            <div class="card-header">
+                                                                <h5 class="card-title photo-video-font-title-size">
+                                                                    {{event.photo_id}}
+                                                                </h5>
+                                                            </div>
                                                             <a :href="`/storage/images/${event.photo_fileName}`" data-fslightbox="gallery" @click="initLightbox">
                                                                 <div :style="{ backgroundImage: `url('/storage/images/${event.photo_fileName}')` }" class="img-responsive img-responsive-1x1 rounded border">
                                                                 </div>
                                                             </a>
                                                             <div class="ribbon ribbon-top">
                                                                 <div v-if="currentAlbumStatus === 'For Comment' ">
-                                                                    <b-button @click="leaveComment(event.id, 'PHOTO DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
+                                                                    <b-button @click="leaveComment(event.photo_id, 'PHOTO DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
                                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                                                                     </b-button>
                                                                 </div>
                                                             </div>
                                                             <div class="card-body">
                                                                 <dl class="row">
-                                                                    <dt class="col-12 font-title-size">Title:</dt>
-                                                                    <dd class="col-12">{{event.photo_title}}</dd>
-                                                                    <dt class="col-12 font-title-size">Description:</dt>
-                                                                    <dd class="col-12">{{event.photo_description}}</dd>
-                                                                    <dt class="col-12 font-title-size">Photographer:</dt>
-                                                                    <dd class="col-12">{{event.photo_photographer}}</dd>
-                                                                    <dt class="col-12 font-title-size">Category:</dt>
-                                                                    <dd class="col-12">{{event.photo_category}}</dd>
-                                                                    <dt class="col-12 font-title-size">Tags:</dt>
-                                                                    <dd class="col-12">
+                                                                    <dt class="col-12 font-title-size">DESCRIPTION:</dt>
+                                                                    <dd class="col-12 font-body-size">{{event.photo_description}}</dd>
+                                                                    <dt class="col-12 font-title-size">PHOTOGRAPHER:</dt>
+                                                                    <dd class="col-12 font-body-size">{{event.photo_photographer}}</dd>
+                                                                    <dt class="col-12 font-title-size">CATEGORY:</dt>
+                                                                    <dd class="col-12 font-body-size">{{event.photo_category}}</dd>
+                                                                    <dt class="col-12 font-title-size">TAGS:</dt>
+                                                                    <dd class="col-12 font-body-size">
                                                                         <span v-for="(tag, idx) in event.photo_tags.split(',')" :key="idx" class="tag-style">
                                                                             <a class="badge badge-outline text-secondary fw-normal badge-pill">
                                                                                 {{tag}}
@@ -364,6 +367,11 @@
                                                     <div class="row row-cards">
                                                         <div class="col-6" v-for="(event, index) in list_video" :key="index">
                                                             <div class="card placeholder-glow">
+                                                                <div class="card-header">
+                                                                    <h5 class="card-title photo-video-font-title-size">
+                                                                        {{event.video_id}}
+                                                                    </h5>
+                                                                </div>
                                                                 <div class="ratio ratio-4x3 card-img-top">
                                                                     <iframe width="420" height="315"
                                                                         :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
@@ -372,7 +380,7 @@
                                                                 </div>
                                                                 <div class="ribbon ribbon-top">
                                                                     <div v-if="currentAlbumStatus === 'For Comment' ">
-                                                                        <b-button @click="leaveComment(event.id)" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
+                                                                        <b-button @click="leaveComment(event.id, 'VIDEO DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                                                                         </b-button>
                                                                     </div>
@@ -656,6 +664,13 @@
                         this.commentSection = '';
                         this.$refs['modal_commentBox'].hide();
 
+                        this.$toast.open({
+                            message: 'Comment has been submitted',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
+
 
                     }catch (error) {
                         
@@ -687,6 +702,12 @@
                             formData_eventTrackingLog.append('date', this.finalDateTime);
                         const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
 
+                        this.$toast.open({
+                            message: 'Under review',
+                            type: 'info', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                     }
                     else if (value == "4"){
                     
@@ -703,6 +724,13 @@
                             formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
                             formData_eventTrackingLog.append('date', this.finalDateTime);
                         const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
+                        this.$toast.open({
+                            message: 'Event Sent for Revision',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                     }
                     else if (value == "6"){
                     
@@ -713,13 +741,19 @@
                         const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
 
                         // EVENT TRACKING STATUS
-                        this.eventTrackingStatus = "Unpublished";
+                        this.eventTrackingStatus = "Accepted";
                         let formData_eventTrackingLog = new FormData();
                             formData_eventTrackingLog.append('album_id', this.event_id);
                             formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
                             formData_eventTrackingLog.append('date', this.finalDateTime);
                         const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
 
+                        this.$toast.open({
+                            message: 'Accepted and now for Publish!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                     }
                     else if (value == "7"){
                         
@@ -737,6 +771,12 @@
                             formData_eventTrackingLog.append('date', this.finalDateTime);
                         const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
 
+                        this.$toast.open({
+                            message: 'Published successfully!',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                     }
                     else if (value == "8"){
                     
@@ -745,6 +785,13 @@
                         let formData_albumStatus = new FormData();
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
+                       
+                        this.$toast.open({
+                            message: 'Kindly leave a comment to indicate the reason for the revision',
+                            type: 'info', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
                     }
 
 
@@ -819,6 +866,39 @@
     .font-title-size{
         font-size: 12px;
         font-weight: 700;
+    }
+
+    .font-body-size{
+        font-size: 12px;
+    }
+
+    .photo-video-font-title-size{
+        font-size: 14px;
+    }
+
+    .status{
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .event-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .event-cardd, .event-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .event-card:hover {
+        /* transform: translateY(-5px); */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     

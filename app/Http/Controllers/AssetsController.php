@@ -141,10 +141,9 @@ class AssetsController extends Controller
             $data->video_link = $item['video_link'];
             $data->video_youtubeID = $item['video_youtubeID'];
             $data->video_videographer = $item['video_videographer'];
+            $data->video_category = $item['video_category'];
             $data->video_type = $item['video_type'];
             $data->video_duration = $item['video_duration'];
-            $data->video_title = $item['video_title'];
-            $data->video_category = $item['video_category'];
             $data->video_description = $item['video_description'];
             $data->video_tags = $item['video_tags'];
 
@@ -259,9 +258,9 @@ class AssetsController extends Controller
             ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
             ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') // Ensures rows exist
+            ->whereNotNull('tbl_album.album_id') 
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') // Grouping by album_id
+            ->groupBy('tbl_album.album_id') 
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
@@ -269,20 +268,40 @@ class AssetsController extends Controller
                           FROM tbl_photo 
                           WHERE tbl_photo.album_id = tbl_album.album_id 
                           ORDER BY tbl_photo.created_at ASC 
-                          LIMIT 1) as first_photo_fileName') // Subquery for the first photo
+                          LIMIT 1) as first_photo_fileName')
             ]);
     
         return response()->json($data, 200);
     }
 
     public function getAllListDraft(Request $request){
-            $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
-                    ->where('tbl_album_status.album_status', "Saved as Draft")
-                    ->where('tbl_album.is_deleted', "0")
-                    ->orderBy('tbl_album.created_at', 'desc')
-                    ->get('*');
+            // $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
+            //         ->where('tbl_album_status.album_status', "Saved as Draft")
+            //         ->where('tbl_album.is_deleted', "0")
+            //         ->orderBy('tbl_album.created_at', 'desc')
+            //         ->get('*');
         
-            return response()->json($data, 200);
+            // return response()->json($data, 200);
+            
+            $data = DB::table('tbl_album')
+            ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
+            ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
+            ->where('tbl_album_status.album_status', "Saved as Draft")
+            ->where('tbl_album.is_deleted', "0")
+            ->whereNotNull('tbl_album.album_id') 
+            ->orderBy('tbl_album.created_at', 'desc')
+            ->groupBy('tbl_album.album_id') 
+            ->get([
+                'tbl_album.*',
+                'tbl_album_status.*',
+                DB::raw('(SELECT tbl_photo.photo_fileName 
+                        FROM tbl_photo 
+                        WHERE tbl_photo.album_id = tbl_album.album_id 
+                        ORDER BY tbl_photo.created_at ASC 
+                        LIMIT 1) as first_photo_fileName')
+            ]);
+
+        return response()->json($data, 200);
     }
 
     public function getAllListUnderReview(Request $request){
@@ -299,7 +318,7 @@ class AssetsController extends Controller
             $data = Assets::join('tbl_album_status','tbl_album.album_id', '=', 'tbl_album_status.album_id')
                     // ->where('tbl_album_status.album_status', "Submitted for Review")
                     ->where('tbl_album.is_deleted', "0")
-                    ->whereIn('tbl_album_status.album_status', ["Submitted for Review", "Done Revision"])
+                    ->whereIn('tbl_album_status.album_status', ["Submitted for Review", "Done Revision", "Revision For Review"])
                     ->orderBy('tbl_album.created_at', 'desc')
                     ->get('*');
         
@@ -442,7 +461,7 @@ class AssetsController extends Controller
 
        
         //UPDATE
-        $data->video_title = $request->video_title;
+       
         $data->video_description = $request->video_description;
         $data->video_videographer = $request->video_videographer;
         $data->video_category = $request->video_category;

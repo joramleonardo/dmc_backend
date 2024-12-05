@@ -5,10 +5,7 @@
         <div class="row align-items-center g-4">
           <div class="col-lg">
             <div class="container-tight">
-              <!-- <div class="text-center mb-4">
-                <a href="." class="navbar-brand navbar-brand-autodark"><img src="images/1.png" height="50" alt=""></a>
-              </div> -->
-              <div class="card card-md">
+              <div class="card card-md event-card">
                 <div class="card-body">
                   <h2 class="h2 text-center mb-4">Login to your account</h2>
                   <!-- <form action="./" method="get" autocomplete="off" novalidate> -->
@@ -140,6 +137,16 @@
 </script>
 
 <style scoped>
+
+
+    .event-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
     .body{
         background: linear-gradient(90deg, #6c92b4, #337ab8);	

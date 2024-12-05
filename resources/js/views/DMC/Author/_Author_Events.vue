@@ -12,8 +12,9 @@
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                List of DOST Events
+                                DOST Events
                             </h2>
+                            <!-- <p>Browse and manage all event drafts, reviews, and published items here.</p> -->
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="d-flex">
@@ -52,12 +53,11 @@
                                             </div>
                                         </div>
                                         <div class="row row-cards" v-else>
-                                            <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_allEvents" :key="index">
+                                            <div class="col-sm-6 col-lg-4 event-container" v-for="(event, index) in list_allEvents" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
-                                                    <div class="card card-sm">
+                                                    <div class="card card-sm event-card">
                                                         <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
-                                                             
                                                         </a>
                                                         <a class="d-block" v-else>
                                                             <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
@@ -65,13 +65,13 @@
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
                                                                 <div style="font-size: 12px; font-weight: 600;">
-                                                                    <div>{{event.event_title}}</div>
+                                                                    <div class="event-title">{{event.event_title}}</div>
                                                                 </div>
                                                             </div>
                                                             <div class="d-flex align-items-center">
                                                                 <div style="margin-top: 1%;">
                                                                     <div v-if="event.album_status === 'Saved as Draft' ">
-                                                                        <span class="badge bg-cyan text-cyan-fg">Draft</span>
+                                                                        <span class="badge bg-cyan text-cyan-fg status">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
                                                                         <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
@@ -106,10 +106,6 @@
                                                                     </a>
                                                                 </div> -->
                                                             </div>
-                                                            <div class="d-flex align-items-center">
-                                                                {{event.first_photo_fileName}}
-                                                                
-                                                            </div>
                                                         </div>
                                                     </div>                           
                                                 </router-link>
@@ -139,8 +135,11 @@
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_draft" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
                                                     <div class="card card-sm">
-                                                        <a class="d-block">
+                                                        <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
+                                                        </a>
+                                                        <a class="d-block" v-else>
+                                                            <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
                                                         </a>
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
@@ -667,27 +666,6 @@
                     selected_category_album: null,
                     options_category_album: [
                         { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Assistant Secretaries' },
-                        { value: '2', text: 'Deputy Directors' },
-                        { value: '3', text: 'Directors' },
-                        { value: '4', text: 'Executive Director' },
-                        { value: '5', text: 'Group photo' },
-                        { value: '6', text: 'Launch/ Events/Activities' },
-                        { value: '7', text: 'Lecturers/Resource Speaker' },
-                        { value: '8', text: 'MOA/MOU signing' },
-                        { value: '9', text: 'Participants' },
-                        { value: '10', text: 'Portraits' },
-                        { value: '11', text: 'Product/Service' },
-                        { value: '12', text: 'Project visits' },
-                        { value: '13', text: 'Project/Program activities' },
-                        { value: '14', text: 'Regional Directors' },
-                        { value: '15', text: 'Secretaries' },
-                        { value: '16', text: 'Service Directors' },
-                        { value: '17', text: 'Undersecretaries' }
-                    ],
-                    selected_category_album: null,
-                    options_category_album: [
-                        { value: null, text: 'Please select category', disabled: true},
                         { value: '1', text: 'Anniversary' },
                         { value: '2', text: 'Awarding Ceremonies' },
                         { value: '3', text: 'Building Inauguration' },
@@ -705,7 +683,8 @@
                         { value: '15', text: 'RSTW' },
                         { value: '16', text: 'Scholarship' },
                         { value: '17', text: 'Scientific Meeting' },
-                        { value: '18', text: 'Training/Seminar' }
+                        { value: '18', text: 'Training/Seminar' },
+                        { value: '19', text: 'Others...' }
                     ],
                     selected_category_photo: null,
                     options_category_photo: [
@@ -726,7 +705,8 @@
                         { value: '14', text: 'Regional Directors' },
                         { value: '15', text: 'Secretaries' },
                         { value: '16', text: 'Service Directors' },
-                        { value: '17', text: 'Undersecretaries' }
+                        { value: '17', text: 'Undersecretaries' },
+                        { value: '18', text: 'Others...' }
                     ],
                     options_category_type: [
                         { value: null, text: 'Please select video type', disabled: true},
@@ -750,7 +730,7 @@
                         { value: '12', text: 'RSTW' },
                         { value: '13', text: 'Same day edits' },
                         { value: '14', text: 'Speeches' },
-                        { value: '15', text: 'Others' }
+                        { value: '15', text: 'Others...' }
                     ],
                     selected_sector: null,
                     options_sector: [
@@ -759,7 +739,8 @@
                         { value: '2', text: 'Regional Offices and S&T Provincial Centers' },
                         { value: '3', text: 'Research and Development Institutes' },
                         { value: '4', text: 'Scientific and Technological Services' },
-                        { value: '5', text: 'Sectoral Planning Councils' }
+                        { value: '5', text: 'Sectoral Planning Councils' },
+                        { value: '6', text: 'Others...' }
                     ],
                     selected_allAgency: null,
                     options_allAgency: [
@@ -778,14 +759,16 @@
                         { value: '12', text: 'Office of the Undersecretary for Scientific and Technical Services' },
                         { value: '13', text: 'Office of the Undersecretary for Special Concerns' },
                         { value: '14', text: 'Philippine Atmospheric, Geophysical and Astronomical Services Administration' },
-                        { value: '15', text: 'Philippine Council for Agriculture and Resources and Research Development' }
+                        { value: '15', text: 'Philippine Council for Agriculture and Resources and Research Development' },
+                        { value: '16', text: 'Others...' }
                     ],
                     selected_agency: null,
                     options_agency: [
                         { value: null, text: 'Please select organizing agency/office', disabled: true},
                         { value: '1', text: 'Attached Agencies' },
                         { value: '2', text: 'Regional Offices' },
-                        { value: '3', text: 'Provincial S&T Centers (PSTCs)' }
+                        { value: '3', text: 'Provincial S&T Centers (PSTCs)' },
+                        { value: '4', text: 'Others...' }
                     ],
                     show: true,
                     ticketData:{
@@ -849,29 +832,7 @@
                         const response_allEvents = await assets_service.getAllListEvents();
                         this.list_allEvents = response_allEvents.data;
                         this.totalRows_allEvents = this.list_allEvents.length;
-                        console.log(this.list_allEvents);
-                        console.log("hello");
-                        // for(let i=0; i < this.totalRows_allEvents; i++ ){
-                        //     console.log("aa");
-                        //     this.albumID = this.list_allEvents[i].album_id;
-                        //     console.log(this.albumID);
-                        //     const response_photoList = await assets_service.getListPhoto_selected(this.albumID);
-                        //     this.list_photo = response_photoList.data;
-                        //     this.photo_length = this.list_photo.length;
-                        //     this.thumbnail = this.list_photo[i].photo_fileName;
-                        //     console.log(this.thumbnail);
-                            
-                        // }
-                            
-                            console.log("vv");
-
-                        // for (let i = 0; i < tagList.length; i ++) {
-                        //     let tagName = tagList.slice(i, i+1);
-                        //     let formData_albumTags = new FormData();
-                        //         formData_albumTags.append('album_id', this.album_id);
-                        //         formData_albumTags.append('album_tagName', tagName);
-                        //     const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
-                        // }
+                        
                         
 
                     } catch(error) {
@@ -1096,4 +1057,40 @@
         }
 </script>
 
+<style>
+    .event-title{
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 5px  ;
+    }
+    .status{
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px;
+        border-radius: 12px;
+        display: inline-block;
+        margin: 5px;
+        text-transform: uppercase;
+    }
 
+    .event-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .event-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .event-card:hover {
+        /* transform: translateY(-5px); */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
