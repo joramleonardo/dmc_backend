@@ -305,7 +305,7 @@
                 },
                 loadForReviewList: async function() {
                     try{
-                        const response = await assets_service.getAllListForReview();
+                        const response = await assets_service.getAllListForReview_publisher();
                         this.list_forReview = response.data;
                         console.log(this.list_forReview);
                         this.totalRows_forReview= this.list_forReview.length;
@@ -318,7 +318,7 @@
                 },
                 loadUnderReviewList: async function() {
                     try{
-                        const response = await assets_service.getAllListUnderReview();
+                        const response = await assets_service.getAllListUnderReview_publisher();
                         this.list_underReview = response.data;
                         console.log(this.list_underReview);
                         this.totalRows_underReview= this.list_underReview.length;
@@ -331,7 +331,7 @@
                 },
                 loadForRevisionList: async function() {
                     try{
-                        const response = await assets_service.getAllListForRevision();
+                        const response = await assets_service.getAllListForRevision_publisher();
                         this.list_forRevision = response.data;
                         console.log(this.list_forRevision);
                         this.totalRows_forRevision= this.list_forRevision.length;
@@ -344,7 +344,7 @@
                 },
                 loadUnpublished: async function() {
                     try{
-                        const response = await assets_service.getAllListUnpublished();
+                        const response = await assets_service.getAllListUnpublished_publisher();
                         this.list_unpublished = response.data;
                         console.log(this.list_unpublished);
                         this.totalRows_unpublished= this.list_unpublished.length;
@@ -357,7 +357,7 @@
                 },
                 loadPublished: async function() {
                     try{
-                        const response = await assets_service.getAllListPublished();
+                        const response = await assets_service.getAllListPublished_publisher();
                         this.list_published = response.data;
                         console.log(this.list_published);
                         this.totalRows_published= this.list_published.length;

@@ -30,33 +30,65 @@ export function addVideoData(data){
 }
 
 //GET OR DISPLAY RESULTS
-export function getAllListEvents(){
-    return http().get('/getAllListEvents');
+// export function getAllListEvents(author){
+//     return httpFile().post(`/getAllListEvents/${author}`);
+// }
+
+export function getAllListEvents(author){
+    return httpFile().post(`/getAllListEvents/${author}`);
 }
 
-export function getAllListDraft(){
-    return http().get('/getAllListDraft');
+export function getAllListDraft(author){
+    return httpFile().post(`/getAllListDraft/${author}`);
 }
 
-export function getAllListForReview(){
-    return http().get('/getAllListForReview');
+export function getAllListForReview(author){
+    return httpFile().post(`/getAllListForReview/${author}`);
 }
 
-export function getAllListUnderReview(){
-    return http().get('/getAllListUnderReview');
+export function getAllListUnderReview(author){
+    return httpFile().post(`/getAllListUnderReview/${author}`);
 }
 
-export function getAllListForRevision(){
-    return http().get('/getAllListForRevision');
+export function getAllListForRevision(author){
+    return httpFile().post(`/getAllListForRevision/${author}`);
 }
 
-export function getAllListPublished(){
-    return http().get('/getAllListPublished');
+export function getAllListPublished(author){
+    return httpFile().post(`/getAllListPublished/${author}`);
 }
 
-export function getAllListUnpublished(){
-    return http().get('/getAllListUnpublished');
+export function getAllListUnpublished(author){
+    return httpFile().post(`/getAllListUnpublished/${author}`);
 }
+
+// =======================
+
+export function getAllListForReview_publisher(){
+    return http().get('/getAllListForReview_publisher');
+}
+
+export function getAllListUnderReview_publisher(){
+    return http().get('/getAllListUnderReview_publisher');
+}
+
+export function getAllListForRevision_publisher(){
+    return http().get('/getAllListForRevision_publisher');
+}
+
+export function getAllListUnpublished_publisher(){
+    return http().get('/getAllListUnpublished_publisher');
+}
+
+export function getAllListPublished_publisher(){
+    return http().get('/getAllListPublished_publisher');
+}
+
+
+
+
+// =======================
+
 
 
 export function getAllListPhoto(){

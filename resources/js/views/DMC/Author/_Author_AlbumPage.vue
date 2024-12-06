@@ -536,29 +536,7 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
                                             <b-form-select v-model="photoEntry.selected_photo_category" :options="options_photo_categoryList"></b-form-select>
-                                            <!-- <div class="col">
-                                                <select class="form-select" v-model="selected_category_album">
-                                                    <option selected disabled>Please select photo category</option>
-                                                    <option value="1">Anniversary</option>
-                                                    <option value="2">Awarding Ceremonies</option>
-                                                    <option value="3">Building Inauguration</option>
-                                                    <option value="4">Conference</option>
-                                                    <option value="5">Convention</option>
-                                                    <option value="6">Exhibits</option>
-                                                    <option value="7">Forum</option>
-                                                    <option value="8">MOA Signing</option>
-                                                    <option value="9">MOU Signing</option>
-                                                    <option value="10">NSTW</option>
-                                                    <option value="11">NYSTIF</option>
-                                                    <option value="12">Program Launch</option>
-                                                    <option value="13">Project Launch</option>
-                                                    <option value="14">Project Visit</option>
-                                                    <option value="15">RSTW</option>
-                                                    <option value="16">Scholarship</option>
-                                                    <option value="17">Scientific Meeting</option>
-                                                    <option value="18">Training/Seminar</option>
-                                                </select>
-                                            </div> -->
+                                            
                                         </b-form-group> 
                                     </div>
                                 </div>
@@ -723,21 +701,18 @@
                         <div class="col-sm-6 col-md-6">
                             <b-form-group >   
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo:</label>
-                                <!-- <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="data_photoInformation_update.photo_fileName">
-                                </b-form-file> -->
-                                <!-- <a data-fslightbox="gallery" :href='`/storage/images/${data_photoInformation_update.photo_fileName}`'  @click="initLightbox"> -->
                                     <div class="img-responsive rounded border" 
                                     :style="{ backgroundImage: `url('/storage/images/${data_photoInformation_update.photo_fileName}')` }">
                                     </div>
-                                <!-- </a> -->
                                 
                             </b-form-group> 
                         </div>
                         <div class="col-sm-6 col-md-6">
-                            <!-- <b-form-group class="group" id="form_externalEventDate">
-                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Title:</label>
-                                <b-form-input  v-model="data_photoInformation_update.photo_title" placeholder="Enter Photographer..."   ></b-form-input>
-                            </b-form-group>  -->
+                            <b-form-group >   
+                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Select Photo:</label>
+                                <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="data_photoInformation_update.photo_fileName">
+                                </b-form-file>
+                            </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Description:</label>
                                 <b-form-textarea id="textarea" v-model="data_photoInformation_update.photo_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
@@ -748,13 +723,11 @@
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
-                                <!-- <b-form-select id="input-3" v-model="data_photoInformation_update.photo_category" :options="options_category_photo"   ></b-form-select> -->
                                 <b-form-select v-model="data_photoInformation_update.photo_category" :options="options_photo_categoryList"></b-form-select>
                                 
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Tags:</label>
-                                <!-- <b-form-tags input-id="tags-basic" name="tags" v-model="photo_tags_new" placeholder="Add new tags separated by enter key..."></b-form-tags> -->
                                 <b-form-tags input-id="tags-basic" name="tags" v-model="photoTagsArray" placeholder="Add new tags separated by enter key..."></b-form-tags>
                             </b-form-group> 
                         </div>
@@ -1513,14 +1486,17 @@
                 },
                 updatePhoto: async function() {
 
+                    console.log(this.data_photoInformation_update.photo_fileName);
+                    console.log(this.data_photoInformation_update.photo_description);
+                    console.log(this.data_photoInformation_update.photo_photographer);
+                    console.log(this.data_photoInformation_update.photo_category);
 
                     let photoID = this.data_photoInformation_update.photo_id;
                     console.log(photoID);
                     console.log(this.data_photoInformation_update.id);
                     try{
                         let formData_ = new FormData();
-                        // formData_.append('photo_fileName', this.data_photoInformation_update.photo_fileName);
-                        // formData_.append('photo_title', this.data_photoInformation_update.photo_title);
+                        formData_.append('photo_fileName', this.data_photoInformation_update.photo_fileName);
                         formData_.append('photo_description', this.data_photoInformation_update.photo_description);
                         formData_.append('photo_photographer', this.data_photoInformation_update.photo_photographer);
                         formData_.append('photo_category', this.data_photoInformation_update.photo_category);
@@ -1528,31 +1504,12 @@
                         
                         const response_ = await assets_service.updatePhoto(this.data_photoInformation_update.id, formData_);
                         
-                       // Save tags
-                        // let formData_albumTags = new FormData();
-                        // let tagList = [];
-                        // tagList = this.photoTagsArray;
-                        // console.log("list of new tags: " + tagList);
-                        // for (let i = 0; i < tagList.length; i ++) {
-                        //     let tagName = tagList.slice(i, i+1);
-             
-                        //     const response_albumTags = await assets_service.checkAlbumTagsExists(this.data_eventInformation_update.album_id,tagName);
-                        //     console.log(tagName +": " + response_albumTags.data.message)
-
-                        //     if (response_albumTags.data.message === "none"){
-                        //         formData_albumTags.append('album_id', this.data_eventInformation_update.album_id);
-                        //         formData_albumTags.append('album_tagName', tagName);
-                        //         console.log(tagName +": " + "Added to db");
-
-                        //         const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
-                        //     }
-                        // }
 
                         this.loadEventPhotos();
                         this.$toast.open({
                             message: 'Photo Information was updated successfully!',
-                            type: 'success', // Options: 'success', 'info', 'error', 'default'
-                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            type: 'success', 
+                            position: 'bottom-right',
                             duration: 5000, 
                         });
                         this.$refs['modal_updatePhoto'].hide();

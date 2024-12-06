@@ -134,7 +134,7 @@
                                         <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_draft" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
-                                                    <div class="card card-sm">
+                                                    <div class="card card-sm event-card">
                                                         <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
                                                         </a>
@@ -213,9 +213,12 @@
                                         <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_forReview" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
-                                                    <div class="card card-sm">
-                                                        <a class="d-block">
+                                                    <div class="card card-sm event-card">
+                                                        <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
+                                                        </a>
+                                                        <a class="d-block" v-else>
+                                                            <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
                                                         </a>
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
@@ -289,9 +292,12 @@
                                         <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_forRevision" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
-                                                    <div class="card card-sm">
-                                                        <a class="d-block">
+                                                    <div class="card card-sm event-card">
+                                                        <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
+                                                        </a>
+                                                        <a class="d-block" v-else>
+                                                            <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
                                                         </a>
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
@@ -365,9 +371,12 @@
                                         <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_unpublished" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
-                                                    <div class="card card-sm">
-                                                        <a class="d-block">
+                                                    <div class="card card-sm event-card">
+                                                        <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
+                                                        </a>
+                                                        <a class="d-block" v-else>
+                                                            <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
                                                         </a>
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
@@ -442,9 +451,12 @@
                                         <div class="row row-cards" v-else>
                                             <div class="col-sm-6 col-lg-4" v-for="(event, index) in list_published" :key="index">
                                                 <router-link v-bind:to="{name : 'album', params: { id: event.album_id}}" style="text-decoration: none;">
-                                                    <div class="card card-sm">
-                                                        <a class="d-block">
+                                                    <div class="card card-sm event-card">
+                                                        <a class="d-block" v-if="event.first_photo_fileName === null">
                                                             <img src="images/no_img.jpg" class="card-img-top">
+                                                        </a>
+                                                        <a class="d-block" v-else>
+                                                            <img :src="`/storage/images/${event.first_photo_fileName}`" class="card-img-top">
                                                         </a>
                                                         <div class="card-body">
                                                             <div class="d-flex align-items-center">
@@ -506,48 +518,24 @@
         </div>
 
         <b-modal id="modal_addAlbumInfo" ref="modal_addAlbumInfo"  title="Event Information" size="xl" centered hide-footer>
-            
             <div class="card" id="createEventForm" >
                 <div class="card-header">
                     <h3 class="card-title">EVENT INFORMATION</h3>
                 </div>
                 <div class="card-body">
                     <div class="row row-cards">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Event Title:</label>
                             <b-form-input v-model="ticketData.eventTitle" placeholder="Enter Title..." required></b-form-input>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="mb-3 mb-0">
-                            <label class="form-label"><span style="color: red;">* </span>Short Description:</label>
-                            <textarea class="form-control" v-model="ticketData.eventDescription" rows="2" placeholder="Short description here.." required></textarea>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6">
-                            <div class="mb-3">
-                            <label class="form-label"><span style="color: red;">* </span>Event Date:</label>
-                            <b-form-datepicker required id="eventDate" v-model="ticketData.eventDate" class="mb-2"></b-form-datepicker>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-6">
-                            <div class="mb-3">
-                            <label class="form-label"><span style="color: red;">* </span>Event Venue:</label>
-                            <b-form-input required id="input-2" v-model="ticketData.eventVenue" placeholder="Enter Venue..."   ></b-form-input>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="mb-3">
-                            <label class="form-label"><span style="color: red;">* </span>Organizing Agency/Office:</label>
-                            <b-form-input v-model="selected_agency" placeholder="Enter Organizing Agency/Office..." required></b-form-input>
-                            </div>
-                        </div>
-                        <div class="ccol-sm-6 col-md-3">
+                        <div class="col-md-4">
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Category:</label>
                                 <div class="col">
-                                    <select class="form-select" v-model="selected_category_album" required>
+                                    <b-form-select v-model="selected_category_album" :options="options_category_album"></b-form-select>
+                                    <!-- <select class="form-select" v-model="selected_category_album" required>
                                         <option selected disabled>Please select category</option>
                                         <option value="1">Anniversary</option>
                                         <option value="2">Awarding Ceremonies</option>
@@ -568,24 +556,39 @@
                                         <option value="17">Scientific Meeting</option>
                                         <option value="18">Training/Seminar</option>
                                         <option value="19">Others...</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-md-12">
+                            <div class="mb-3 mb-0">
+                            <label class="form-label"><span style="color: red;">* </span>Short Description:</label>
+                            <textarea class="form-control" v-model="ticketData.eventDescription" rows="2" placeholder="Short description here.." required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="mb-3">
+                            <label class="form-label"><span style="color: red;">* </span>Event Date:</label>
+                            <b-form-datepicker required id="eventDate" v-model="ticketData.eventDate" class="mb-2"></b-form-datepicker>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="mb-3">
+                            <label class="form-label"><span style="color: red;">* </span>Event Venue:</label>
+                            <b-form-input required id="input-2" v-model="ticketData.eventVenue" placeholder="Enter Venue..."   ></b-form-input>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label"><span style="color: red;">* </span>Sector:</label>
-                                <div class="col">
-                                    <select class="form-select" v-model="selected_sector" required>
-                                        <option selected disabled>Please select sector</option>
-                                        <option value="1">Collegial and Scientific Bodies</option>
-                                        <option value="2">Regional Offices and S&T Provincial Centers</option>
-                                        <option value="3">Research and Development Institutes</option>
-                                        <option value="4">Scientific and Technological Services</option>
-                                        <option value="5">Sectoral Planning Councils</option>
-                                        <option value="6">Others...</option>
-                                    </select>
-                                </div>
+                                <b-form-select v-model="selected_sector" :options="options_sector"></b-form-select>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label"><span style="color: red;">* </span>Organizing Agency/Office:</label>
+                                <b-form-input v-model="ticketData.selected_agency" placeholder="Enter Organizing Agency/Office..." required></b-form-input>
                             </div>
                         </div>
                         <div class="col-md-12" style="color: black !important">
@@ -663,84 +666,38 @@
                         food: null,
                         checked: []
                     },
-                    selected_category_album: null,
+                    selected_category_album: 'Please select category',
                     options_category_album: [
                         { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Anniversary' },
-                        { value: '2', text: 'Awarding Ceremonies' },
-                        { value: '3', text: 'Building Inauguration' },
-                        { value: '4', text: 'Conference' },
-                        { value: '5', text: 'Convention' },
-                        { value: '6', text: 'Exhibits' },
-                        { value: '7', text: 'Forum' },
-                        { value: '8', text: 'MOA Signing' },
-                        { value: '9', text: 'MOU Signing' },
-                        { value: '10', text: 'NSTW' },
-                        { value: '11', text: 'NYSTIF' },
-                        { value: '12', text: 'Program Launch' },
-                        { value: '13', text: 'Prject Launch' },
-                        { value: '14', text: 'Project Visit' },
-                        { value: '15', text: 'RSTW' },
-                        { value: '16', text: 'Scholarship' },
-                        { value: '17', text: 'Scientific Meeting' },
-                        { value: '18', text: 'Training/Seminar' },
-                        { value: '19', text: 'Others...' }
+                        { value: 'Anniversary', text: 'Anniversary' },
+                        { value: 'Awarding Ceremonies', text: 'Awarding Ceremonies' },
+                        { value: 'Building Inauguration', text: 'Building Inauguration' },
+                        { value: 'Conference', text: 'Conference' },
+                        { value: 'Convention', text: 'Convention' },
+                        { value: 'Exhibits', text: 'Exhibits' },
+                        { value: 'Forum', text: 'Forum' },
+                        { value: 'MOA Signing', text: 'MOA Signing' },
+                        { value: 'MOU Signing', text: 'MOU Signing' },
+                        { value: 'NSTW', text: 'NSTW' },
+                        { value: 'NYSTIF', text: 'NYSTIF' },
+                        { value: 'Program Launch', text: 'Program Launch' },
+                        { value: 'Prject Launch', text: 'Prject Launch' },
+                        { value: 'Project Visit', text: 'Project Visit' },
+                        { value: 'RSTW', text: 'RSTW' },
+                        { value: 'Scholarship', text: 'Scholarship' },
+                        { value: 'Scientific Meeting', text: 'Scientific Meeting' },
+                        { value: 'Training/Seminar', text: 'Training/Seminar' },
+                        { value: 'Others', text: 'Others...' }
                     ],
-                    selected_category_photo: null,
-                    options_category_photo: [
-                        { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Assistant Secretaries' },
-                        { value: '2', text: 'Deputy Directors' },
-                        { value: '3', text: 'Directors' },
-                        { value: '4', text: 'Executive Director' },
-                        { value: '5', text: 'Group photo' },
-                        { value: '6', text: 'Launch/ Events/Activities' },
-                        { value: '7', text: 'Lecturers/Resource Speaker' },
-                        { value: '8', text: 'MOA/MOU signing' },
-                        { value: '9', text: 'Participants' },
-                        { value: '10', text: 'Portraits' },
-                        { value: '11', text: 'Product/Service' },
-                        { value: '12', text: 'Project visits' },
-                        { value: '13', text: 'Project/Program activities' },
-                        { value: '14', text: 'Regional Directors' },
-                        { value: '15', text: 'Secretaries' },
-                        { value: '16', text: 'Service Directors' },
-                        { value: '17', text: 'Undersecretaries' },
-                        { value: '18', text: 'Others...' }
-                    ],
-                    options_category_type: [
-                        { value: null, text: 'Please select video type', disabled: true},
-                        { value: '1', text: 'Full Video' },
-                        { value: '2', text: 'Video Clip' },
-                    ],
-                    selected_category_video: null,
-                    options_category_video: [
-                        { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Anniversaries' },
-                        { value: '2', text: 'Awarding Ceremonies' },
-                        { value: '3', text: 'Competition/ Contests' },
-                        { value: '4', text: 'Exhibits' },
-                        { value: '5', text: 'Lectures, Discussion, Seminar, Training' },
-                        { value: '6', text: 'MOA/MOU signing' },
-                        { value: '7', text: 'NSTW' },
-                        { value: '8', text: 'NYSTIF' },
-                        { value: '9', text: 'Program Launch' },
-                        { value: '10', text: 'Project Launch' },
-                        { value: '11', text: 'Project/Program activities' },
-                        { value: '12', text: 'RSTW' },
-                        { value: '13', text: 'Same day edits' },
-                        { value: '14', text: 'Speeches' },
-                        { value: '15', text: 'Others...' }
-                    ],
-                    selected_sector: null,
+                    selected_sector: 'Please select sector',
                     options_sector: [
                         { value: null, text: 'Please select sector', disabled: true},
-                        { value: '1', text: 'Collegial and Scientific Bodies' },
-                        { value: '2', text: 'Regional Offices and S&T Provincial Centers' },
-                        { value: '3', text: 'Research and Development Institutes' },
-                        { value: '4', text: 'Scientific and Technological Services' },
-                        { value: '5', text: 'Sectoral Planning Councils' },
-                        { value: '6', text: 'Others...' }
+                        { value: 'Collegial and Scientific Bodies', text: 'Collegial and Scientific Bodies' },
+                        { value: 'Regional Offices and S&T Provincial Centers', text: 'Regional Offices and S&T Provincial Centers' },
+                        { value: 'Research and Development Institutes', text: 'Research and Development Institutes' },
+                        { value: 'Scientific and Technological Services', text: 'Scientific and Technological Services' },
+                        { value: 'Sectoral Planning Councils', text: 'Sectoral Planning Councils' },
+                        { value: 'Others', text: 'Others...' }
                     ],
                     selected_allAgency: null,
                     options_allAgency: [
@@ -800,8 +757,8 @@
                     albumID: '',
                 }
             },
-            mounted(){
-                this.userData();
+            async mounted(){
+                await this.userData();
                 this.loadAllEvents();
                 this.loadDraftList();
                 this.loadForReviewList();
@@ -829,12 +786,10 @@
                 },
                 loadAllEvents: async function() {
                     try{
-                        const response_allEvents = await assets_service.getAllListEvents();
+                        const response_allEvents = await assets_service.getAllListEvents(this.displayName);
                         this.list_allEvents = response_allEvents.data;
                         this.totalRows_allEvents = this.list_allEvents.length;
                         
-                        
-
                     } catch(error) {
                         this.flashMessage.error({
                         message: 'Some error occured! Please try again.',
@@ -845,7 +800,7 @@
                 },
                 loadDraftList: async function() {
                     try{
-                        const response = await assets_service.getAllListDraft();
+                        const response = await assets_service.getAllListDraft(this.displayName);
                         this.list_draft = response.data;
                         this.totalRows_draft = this.list_draft.length;
                     } catch(error) {
@@ -857,7 +812,7 @@
                 },
                 loadForRevisionList: async function() {
                     try{
-                        const response = await assets_service.getAllListForRevision();
+                        const response = await assets_service.getAllListForRevision(this.displayName);
                         this.list_forRevision = response.data;
                         this.totalRows_forRevision= this.list_forRevision.length;
                     } catch(error) {
@@ -869,7 +824,7 @@
                 },
                 loadForReviewList: async function() {
                     try{
-                        const response = await assets_service.getAllListForReview();
+                        const response = await assets_service.getAllListForReview(this.displayName);
                         this.list_forReview = response.data;
                         this.totalRows_forReview= this.list_forReview.length;
                     } catch(error) {
@@ -881,7 +836,7 @@
                 },
                 loadPublishedList: async function() {
                     try{
-                        const response = await assets_service.getAllListPublished();
+                        const response = await assets_service.getAllListPublished(this.displayName);
                         this.list_published = response.data;
                         this.totalRows_published= this.list_published.length;
                     } catch(error) {
@@ -893,7 +848,7 @@
                 },
                 loadUnpublishedList: async function() {
                     try{
-                        const response = await assets_service.getAllListUnpublished();
+                        const response = await assets_service.getAllListUnpublished(this.displayName);
                         this.list_unpublished = response.data;
                         this.totalRows_unpublished= this.list_unpublished.length;
                     } catch(error) {
@@ -943,7 +898,7 @@
                         this.selected_category_album === null  ||  
                         this.selected_sector === null  ||  
                         this.ticketData.eventDescription === undefined  ||  
-                        this.selected_agency === null  ||  
+                        this.ticketData.selected_agency === null  ||  
                         this.ticketData.eventDate === undefined  ||  
                         this.ticketData.eventVenue === undefined  ||  
                         this.ticketData.eventTags === undefined  ){
@@ -986,7 +941,7 @@
                                 formData_eventData.append('event_category', this.selected_category_album);
                                 formData_eventData.append('event_sector', this.selected_sector);
                                 formData_eventData.append('event_description', this.ticketData.eventDescription);
-                                formData_eventData.append('event_organizingAgency', this.selected_agency);
+                                formData_eventData.append('event_organizingAgency', this.ticketData.selected_agency);
                                 formData_eventData.append('event_date', this.ticketData.eventDate);
                                 formData_eventData.append('event_venue', this.ticketData.eventVenue);
                                 formData_eventData.append('event_tags', this.ticketData.eventTags);
@@ -1032,7 +987,7 @@
                         this.ticketData.eventDescription = '';
                         this.ticketData.eventDate = '';
                         this.ticketData.eventVenue = '';
-                        this.selected_agency = '';
+                        this.ticketData.selected_agency = '';
                         this.selected_category_album = '';
                         this.selected_sector = '';
                         this.ticketData.eventTags = [];
@@ -1076,7 +1031,7 @@
 
     .event-card img {
         width: 100%;
-        height: 200px;
+        height: auto; 
         object-fit: cover;
     }
 

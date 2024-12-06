@@ -64,13 +64,23 @@ Route::post('addPhotoTags', [AssetsController::class, 'addPhotoTags']);
 Route::post('addVideoTags', [AssetsController::class, 'addVideoTags']);
 Route::post('addVideoData', [AssetsController::class, 'addVideoData']);
 
-Route::get('getAllListEvents', [AssetsController::class, 'getAllListEvents']);
-Route::get('getAllListDraft', [AssetsController::class, 'getAllListDraft']);
-Route::get('getAllListUnderReview', [AssetsController::class, 'getAllListUnderReview']);
-Route::get('getAllListForReview', [AssetsController::class, 'getAllListForReview']);
-Route::get('getAllListForRevision', [AssetsController::class, 'getAllListForRevision']);
-Route::get('getAllListPublished', [AssetsController::class, 'getAllListPublished']);
-Route::get('getAllListUnpublished', [AssetsController::class, 'getAllListUnpublished']);
+
+Route::post('/getAllListEvents/{author}', [AssetsController::class, 'getAllListEvents']);
+Route::post('/getAllListDraft/{author}', [AssetsController::class, 'getAllListDraft']);
+Route::post('/getAllListUnderReview/{author}', [AssetsController::class, 'getAllListUnderReview']);
+Route::post('/getAllListForReview/{author}', [AssetsController::class, 'getAllListForReview']);
+Route::post('/getAllListForRevision/{author}', [AssetsController::class, 'getAllListForRevision']);
+Route::post('/getAllListPublished/{author}', [AssetsController::class, 'getAllListPublished']);
+Route::post('/getAllListUnpublished/{author}', [AssetsController::class, 'getAllListUnpublished']);
+
+Route::get('getAllListForReview_publisher', [AssetsController::class, 'getAllListForReview_publisher']);
+Route::get('getAllListUnderReview_publisher', [AssetsController::class, 'getAllListUnderReview_publisher']);
+Route::get('getAllListForRevision_publisher', [AssetsController::class, 'getAllListForRevision_publisher']);
+Route::get('getAllListUnpublished_publisher', [AssetsController::class, 'getAllListUnpublished_publisher']);
+Route::get('getAllListPublished_publisher', [AssetsController::class, 'getAllListPublished_publisher']);
+
+
+
 
 
 Route::get('getAllListPhoto', [AssetsController::class, 'getAllListPhoto']);

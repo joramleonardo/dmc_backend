@@ -12,15 +12,9 @@
 
         <!-- CSS files -->
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-        <!-- <link href="tabler/libs/plyr/dist/plyr.css?1692870487" rel="stylesheet"/> -->
-        <!-- <link href="tabler/css/tabler.min.css?1692870487" rel="stylesheet"/> -->
         <link href="tabler/css/tabler.css" rel="stylesheet"/>
-        <link href="tabler/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
-        <link href="tabler/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
+       
         <link href="tabler/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-        <!-- <script src="https://cdn.jsdelivr.net/npm/fslightbox/index.js"></script> -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/fslightbox@3.4.2/index.js"></script> -->
-
 
         <style>
             @import url('https://rsms.me/inter/inter.css');
@@ -39,13 +33,9 @@
         
         <!-- Libs JS -->    
         <script src="https://cdn.jsdelivr.net/npm/fslightbox@3.4.2/index.js"></script>
-        <!-- <script src="tabler/libs/plyr/dist/plyr.min.js?1692870487" defer></script> -->
         <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.8/dist/plyr.polyfilled.js"></script>
         <script src="https://www.youtube.com/iframe_api"></script>
-        <script src="tabler/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
-        <script src="tabler/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
-        <script src="tabler/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
-        <script src="tabler/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
+   
         <!-- Tabler Core -->
         <script src="tabler/js/tabler.min.js?1692870487" defer></script>
         <script src="tabler/js/demo.min.js?1692870487" defer></script>
