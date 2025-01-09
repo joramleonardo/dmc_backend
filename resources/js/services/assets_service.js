@@ -17,6 +17,15 @@ export function addPhotoData(data){
     return httpFile().post('/addPhotoData', data);
 }
 
+export function deletePhoto(data) {
+    return httpFile().post('/deletePhoto', data);
+}
+
+export function replacePhoto(data) {
+    return httpFile().post('/replacePhoto', data);
+}
+
+
 export function addPhotoTags(data){
     return httpFile().post('/addPhotoTags', data);
 }

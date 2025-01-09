@@ -59,7 +59,10 @@ Route::post('addEventData', [AssetsController::class, 'addEventData']);
 Route::post('addComment', [AssetsController::class, 'addComment']);
 Route::post('addAlbumTags', [AssetsController::class, 'addAlbumTags']);
 
-Route::post('addPhotoData', [AssetsController::class, 'addPhotoData']);
+Route::post('/addPhotoData', [AssetsController::class, 'addPhotoData']);
+Route::post('/deletePhoto', [AssetsController::class, 'deletePhoto']);
+Route::post('/replacePhoto', [AssetsController::class, 'replacePhoto']);
+
 Route::post('addPhotoTags', [AssetsController::class, 'addPhotoTags']);
 Route::post('addVideoTags', [AssetsController::class, 'addVideoTags']);
 Route::post('addVideoData', [AssetsController::class, 'addVideoData']);

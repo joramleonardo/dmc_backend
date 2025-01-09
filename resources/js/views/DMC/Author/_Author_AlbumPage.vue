@@ -706,13 +706,12 @@
                                     </div>
                                 
                             </b-form-group> 
+                            <b-form-group >   
+                                <b-button variant="info" value="1" @click="validate_upload_newPhoto()">Replace this photo</b-button>
+                                
+                            </b-form-group> 
                         </div>
                         <div class="col-sm-6 col-md-6">
-                            <b-form-group >   
-                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Select Photo:</label>
-                                <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="data_photoInformation_update.photo_fileName">
-                                </b-form-file>
-                            </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Description:</label>
                                 <b-form-textarea id="textarea" v-model="data_photoInformation_update.photo_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
@@ -840,6 +839,28 @@
                 <b-button variant="secondary" @click="$bvModal.hide('modal_validate_deleteEvent')">No</b-button>
             </template>
         </b-modal>
+
+        <b-modal id="modal_validate_upload_newPhoto" ref="modal_validate_upload_newPhoto"  title="Are you sure you want to replace this photo?" size="lg" centered 
+        :header-bg-variant="headerBG_deleteInfo" :header-text-variant="headerText_savedSuccessfully">
+            <div>
+                Uploading a new photo will replace the previously uploaded photo.
+            </div>
+            <template #modal-footer>
+                <b-button variant="danger" value="1" @click="select_newPhoto()">Yes</b-button>
+                <b-button variant="secondary" @click="$bvModal.hide('modal_validate_upload_newPhoto')">No</b-button>
+            </template>
+        </b-modal>
+
+        <b-modal id="modal_select_newPhoto" ref="modal_select_newPhoto"  title="Select new photo" size="lg" centered 
+        :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
+            <div>
+                <input type="file" @change="handleFileUpload" />
+            </div>
+            <template #modal-footer>
+                <b-button variant="success" value="1" @click="replacePhoto()">Save</b-button>
+                <b-button variant="secondary" @click="$bvModal.hide('modal_select_newPhoto')">Cancel</b-button>
+            </template>
+        </b-modal>
                             
     </div>
 </template>
@@ -896,7 +917,7 @@
                         { value: 'Speeches', text: 'Speeches' },
                         { value: 'Others...', text: 'Others...' },
                     ],
-
+                    headerBG_deleteInfo: 'info',
                     headerBG_deleteWarning: 'danger',
                     headerBG_savedSuccessfully: 'warning',
                     headerText_savedSuccessfully: 'light',
@@ -1013,6 +1034,8 @@
                     trackingLog: [], // Initialize as an empty array
                     firstUnderReviewShown: false,
                     result: '',
+                    oldFilename: '', // Replace with the current filename
+                    newPhoto: null,
                 }
             },
             mounted(){
@@ -1071,33 +1094,33 @@
                 initializeFsLightbox() {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
-                        // console.log("FS Lightbox initialized automatically after delay");
+                        console.log("FS Lightbox initialized automatically after delay");
                     } else {
-                        // console.error("FS Lightbox is not available; check CDN loading");
+                        console.error("FS Lightbox is not available; check CDN loading");
                     }
                 },
                 initLightbox() {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
-                        // console.log("FS Lightbox initialized on click");
+                        console.log("FS Lightbox initialized on click");
                     } else {
-                        // console.error("FS Lightbox is not available; check CDN loading");
+                        console.error("FS Lightbox is not available; check CDN loading");
                     }
                 },
                 initializeLightbox() {
                     setTimeout(() => {
                     if (typeof refreshFsLightbox === 'function') {
                         refreshFsLightbox();
-                        // console.log("FS Lightbox initialized in this component");
+                        console.log("FS Lightbox initialized in this component");
                     } else {
-                        // console.error("FS Lightbox is not available; check CDN loading");
+                        console.error("FS Lightbox is not available; check CDN loading");
                     }
                     }, 1000); 
                 },
                 loadTrackingLog: async function (){
                     const response_trackingLog = await assets_service.getTrackingLog(this.event_id);
                     this.trackingLog = response_trackingLog.data;
-                    console.log(this.trackingLog);
+                    
                 },
                 loadAlbumStatus: async function (){
                     const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
@@ -1162,10 +1185,10 @@
 
 
                     const response = await assets_service.getPhotoTags_selected(this.data_photoInformation_update.photo_id);
-                    console.log(this.data_photoInformation_update);
+                    
                     this.photo_tags_new = response.data.map(item => item.photo_tagName);
 
-                    console.log("Photo ID: " + this.data_photoInformation_update.photo_id);
+                    
 
                     this.$refs['modal_updatePhoto'].show();
                 },
@@ -1177,7 +1200,7 @@
 
                     this.video_tags_new = response.data.map(item => item.video_tagName);
                     
-                    console.log("Video ID: " + this.data_videoInformation_update.video_id);
+                    // console.log("Video ID: " + this.data_videoInformation_update.video_id);
                     
                     this.$refs['modal_updateVideo'].show();
                 },
@@ -1253,7 +1276,7 @@
                     
 
                     const response_countAlbumVideo = await assets_service.countAlbumVideoEntry(this.data_eventInformation.album_id);
-                    console.log(response_countAlbumVideo.data);
+                    // console.log(response_countAlbumVideo.data);
 
                     try{
 
@@ -1270,7 +1293,7 @@
                             const match = albumID.match(/000(\d+)/);
                             if (match) {
                                 this.result = match[1]; // "1"
-                                console.log(this.result); // Output: "1"
+                                //console.log(this.result); // Output: "1"
                             }
 
 
@@ -1288,7 +1311,7 @@
                             let url = videoEntry.video_link;
                             let urlID = url.split("v=")[1].substring(0, 11)
                                 
-                            console.log("this is video id: " + this.video_id);
+                            //console.log("this is video id: " + this.video_id);
                             formData_videoData.append(`video_form[${index}][album_id]`, this.data_eventInformation.album_id);
                             formData_videoData.append(`video_form[${index}][video_id]`, this.video_id );
                             formData_videoData.append(`video_form[${index}][video_link]`, videoEntry.video_link);
@@ -1300,7 +1323,7 @@
                             formData_videoData.append(`video_form[${index}][video_description]`, videoEntry.video_description);
                             formData_videoData.append(`video_form[${index}][video_tags]`, videoEntry.video_tags);
                             
-                            console.log("aaa");
+                            //console.log("aaa");
                             this.video_tag_list = videoEntry.video_tags;
                         });
                         
@@ -1362,12 +1385,12 @@
                             let tagName = tagList.slice(i, i+1);
              
                             const response_albumTags = await assets_service.checkAlbumTagsExists(this.data_eventInformation_update.album_id,tagName);
-                            console.log(tagName +": " + response_albumTags.data.message)
+                            //console.log(tagName +": " + response_albumTags.data.message)
 
                             if (response_albumTags.data.message === "none"){
                                 formData_albumTags.append('album_id', this.data_eventInformation_update.album_id);
                                 formData_albumTags.append('album_tagName', tagName);
-                                console.log(tagName +": " + "Added to db");
+                                //console.log(tagName +": " + "Added to db");
 
                                 const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
                             }
@@ -1381,11 +1404,11 @@
                             duration: 5000, 
                         });
                         this.$refs['modal_albumInfo'].hide();
-                        console.log("Event Information updated successfully!");
+                        //console.log("Event Information updated successfully!");
                         
                     }
                     catch(error){
-                        console.log("An error occurred!");
+                        //console.log("An error occurred!");
                     }
                 },
                 getAlbumID: async function(){
@@ -1486,14 +1509,9 @@
                 },
                 updatePhoto: async function() {
 
-                    console.log(this.data_photoInformation_update.photo_fileName);
-                    console.log(this.data_photoInformation_update.photo_description);
-                    console.log(this.data_photoInformation_update.photo_photographer);
-                    console.log(this.data_photoInformation_update.photo_category);
 
                     let photoID = this.data_photoInformation_update.photo_id;
-                    console.log(photoID);
-                    console.log(this.data_photoInformation_update.id);
+                    
                     try{
                         let formData_ = new FormData();
                         formData_.append('photo_fileName', this.data_photoInformation_update.photo_fileName);
@@ -1507,24 +1525,26 @@
 
                         this.loadEventPhotos();
                         this.$toast.open({
-                            message: 'Photo Information was updated successfully!',
+                            message: 'Photo information was updated successfully!',
                             type: 'success', 
                             position: 'bottom-right',
                             duration: 5000, 
                         });
                         this.$refs['modal_updatePhoto'].hide();
-                        console.log("Photo Information updated successfully!");
                         
                     }
                     catch(error){
-                        console.log("An error occurred!");
+                        this.$toast.open({
+                            message: 'An error occured! Photo information was not updated.',
+                            type: 'danger', 
+                            position: 'bottom-right',
+                            duration: 5000, 
+                        });
                     }
                 },
                 updateVideo: async function() {
 
                     let photoID = this.data_videoInformation_update.video_id;
-                    console.log(photoID);
-                    console.log(this.data_videoInformation_update.id);
                     try{
                         let formData_ = new FormData();
                         
@@ -1537,33 +1557,25 @@
                         
                         const response_ = await assets_service.updateVideo(this.data_videoInformation_update.id, formData_);
                         
-                       // Save tags
-                        // let formData_albumTags = new FormData();
-                        // let tagList = [];
-                        // tagList = this.photoTagsArray;
-                        // console.log("list of new tags: " + tagList);
-                        // for (let i = 0; i < tagList.length; i ++) {
-                        //     let tagName = tagList.slice(i, i+1);
-             
-                        //     const response_albumTags = await assets_service.checkAlbumTagsExists(this.data_eventInformation_update.album_id,tagName);
-                        //     console.log(tagName +": " + response_albumTags.data.message)
-
-                        //     if (response_albumTags.data.message === "none"){
-                        //         formData_albumTags.append('album_id', this.data_eventInformation_update.album_id);
-                        //         formData_albumTags.append('album_tagName', tagName);
-                        //         console.log(tagName +": " + "Added to db");
-
-                        //         const response_albumTags = await assets_service.addAlbumTags(formData_albumTags);
-                        //     }
-                        // }
-
+                       
                         this.loadEventVideos();
+                        this.$toast.open({
+                            message: 'Video information was updated successfully!',
+                            type: 'success', 
+                            position: 'bottom-right',
+                            duration: 5000, 
+                        });
+
                         this.$refs['modal_updateVideo'].hide();
-                        console.log("Video Information updated successfully!");
                         
                     }
                     catch(error){
-                        console.log("An error occurred!");
+                        this.$toast.open({
+                            message: 'An error occured! Video information was not updated.',
+                            type: 'danger', 
+                            position: 'bottom-right',
+                            duration: 5000, 
+                        });
                     }
                 },
                 clearEntry(index){
@@ -1596,7 +1608,6 @@
                     this.$refs['modal_validate_deleteEvent'].show();
                 },
                 deleteEvent: async function () {
-                    console.log("Event deleted");
 
                     let albumID = this.data_eventInformation.album_id;
                     try{
@@ -1605,10 +1616,21 @@
                         
                         const response_ = await assets_service.deleteAlbum(albumID, formData_);
                         
-                        
+                        this.$toast.open({
+                            message: 'Event was deleted successfully!',
+                            type: 'success', 
+                            position: 'bottom-right',
+                            duration: 5000, 
+                        });
+
                     }
                     catch(error){
-                        console.log("An error occurred!");
+                        this.$toast.open({
+                            message: 'An error occured! Event cannot be deleted.',
+                            type: 'danger', 
+                            position: 'bottom-right',
+                            duration: 5000, 
+                        });
                     }
 
 
@@ -1627,7 +1649,6 @@
                     this.$refs['modal_validate_deletePhoto'].show();
                 },
                 deletePhoto: async function () {
-                    console.log("Photo deleted");
                     this.$refs['modal_validate_deletePhoto'].hide();
                     
                     this.$toast.open({
@@ -1653,6 +1674,59 @@
                     });
                     
                     this.loadEventVideos();
+                },
+                validate_upload_newPhoto: async function(){
+                    this.$refs['modal_validate_upload_newPhoto'].show();
+                },
+                select_newPhoto: async function(){
+                    this.$refs['modal_validate_upload_newPhoto'].hide();
+                    this.$refs['modal_select_newPhoto'].show();
+                },
+                handleFileUpload(event) {
+                    this.newPhoto = event.target.files[0]; // Get the selected file
+                },
+                replacePhoto: async function () {
+                    if (!this.newPhoto) {
+                        alert('Please select a new photo to upload!');
+                        return;
+                    }
+                    else{
+                        const formData = new FormData();
+                        formData.append('old_filename', this.data_photoInformation_update.photo_fileName);
+                        formData.append('new_photo', this.newPhoto);
+                        
+                        try {
+                            const response = await assets_service.replacePhoto(formData); // Call the API
+                            this.oldFilename = response.new_filename; // Update the old filename
+                            
+                            this.$refs['modal_select_newPhoto'].hide();
+                            this.$refs['modal_updatePhoto'].hide();
+
+                            this.loadEventPhotos();
+                            this.$toast.open({
+                                message: 'Photo was replaced successfully!',
+                                type: 'success', // Options: 'success', 'info', 'error', 'default'
+                                position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                                duration: 5000, 
+                            });
+                            
+                            
+                        } catch (error) {
+                            
+                            this.$toast.open({
+                                message: 'An error occured! Photo cannot be replaced.',
+                                type: 'danger', 
+                                position: 'bottom-right',
+                                duration: 5000, 
+                            });
+                            console.error('Error replacing photo:', error.response?.data?.message || error.message);
+                        }
+                        
+                        
+                    }
+                    
+
+
                 },
             },
             computed: {
@@ -1700,6 +1774,28 @@
             },
 
         }
+/** 
+        onChange(e) {
+            this.questionImage = e.target.files[0];
+            this.fields.img = [this.questionImage];
+            this.previewImage();
+        },
+        previewImage() {
+            const file = this.questionImage;
+            if (!file) return;
+
+            if (!file.type.match("image.*")) {
+                alert("Please select an image file");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.questionImagePath = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+*/
 </script>
 
 <style>

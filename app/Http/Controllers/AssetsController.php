@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+
 use Session;
 // use Storage;
 use App\Assets;
@@ -106,31 +107,20 @@ class AssetsController extends Controller
         
         $data->save();
     }
-    
-    public function addPhotoData(Request $request){
-        foreach($request->photo_form as $item){
-            $file_location = null;
-                if ($item['photo_fileName'] && is_file($item['photo_fileName'])) {
-                    
-                    $file = $item['photo_fileName'];
-                    $filePath = $item['photo_fileName']->store('public/images');
-                    $filePathArray = explode('/', $filePath);
-                    $file_newName = $filePathArray[2];
 
-                    $data = new Photo(); 
-                    $data->album_id = $item['album_id'];
-                    $data->photo_id = $item['photo_id'];
-                    $data->photo_fileName = $file_newName;
-                    // $data->photo_title = $item['photo_title'];
-                    $data->photo_category = $item['photo_category'];
-                    $data->photo_description = $item['photo_description'];
-                    $data->photo_photographer = $item['photo_photographer'];
-                    $data->photo_tags = $item['photo_tags'];
+    // public function deletePhoto($filename){
+    //     // Define the path to the photo
+    //     $filePath = 'public/images/' . $filename;
 
-                    $data->save();
-            }
-        }
-    }
+    //     // Check if the file exists
+    //     if (Storage::exists($filePath)) {
+    //         // Delete the file
+    //         Storage::delete($filePath);
+    //         return response()->json(['message' => 'Photo deleted successfully.']);
+    //     } else {
+    //         return response()->json(['message' => 'Photo not found.'], 404);
+    //     }
+    // }
 
     public function addVideoData(Request $request){
         foreach($request->video_form as $item){
@@ -588,18 +578,6 @@ public function getAllListPublished_publisher(Request $request){
         $data->save();
     }
     
-    public function updatePhoto(Request $request, $photo_id){
-        $data = Photo::where('id', $photo_id)->first();
-
-        //UPDATE
-        $data->photo_fileName = $request->photo_fileName;
-        $data->photo_description = $request->photo_description;
-        $data->photo_photographer = $request->photo_photographer;
-        $data->photo_category = $request->photo_category;
-        $data->photo_tags = $request->photo_tags;
-        $data->save();
-    }
-    
     public function updateVideo(Request $request, $photo_id){
         $data = Video::where('id', $photo_id)->first();
 
@@ -613,5 +591,114 @@ public function getAllListPublished_publisher(Request $request){
         $data->video_type = $request->video_type;
         $data->video_tags = $request->video_tags;
         $data->save();
+    }
+    
+    public function updatePhoto(Request $request, $photo_id){
+        $data = Photo::where('id', $photo_id)->first();
+
+        //UPDATE
+        $data->photo_fileName = $request->photo_fileName;
+        $data->photo_description = $request->photo_description;
+        $data->photo_photographer = $request->photo_photographer;
+        $data->photo_category = $request->photo_category;
+        $data->photo_tags = $request->photo_tags;
+        $data->save();
+    }
+    
+    public function addPhotoData(Request $request){
+        
+
+        foreach($request->photo_form as $item){
+
+            $validator = \Validator::make($item, [
+                'photo_fileName' => 'required|file|mimes:jpeg,png,jpg,gif|max:30720',
+                
+            ]);
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Invalid file type or missing required fields.',
+                    'errors' => $validator->errors(),
+                ], 400);
+            }
+
+            $file_location = null;
+                if ($item['photo_fileName'] && is_file($item['photo_fileName'])) {
+                    
+                    $file = $item['photo_fileName'];
+                    $filePath = $item['photo_fileName']->store('public/images');
+                    $filePathArray = explode('/', $filePath);
+                    $file_newName = $filePathArray[2];
+
+                    $data = new Photo(); 
+                    $data->album_id = $item['album_id'];
+                    $data->photo_id = $item['photo_id'];
+                    $data->photo_fileName = $file_newName;
+                    // $data->photo_title = $item['photo_title'];
+                    $data->photo_category = $item['photo_category'];
+                    $data->photo_description = $item['photo_description'];
+                    $data->photo_photographer = $item['photo_photographer'];
+                    $data->photo_tags = $item['photo_tags'];
+
+                    $data->save();
+            }
+        }
+    }
+
+    public function replacePhoto(Request $request){
+        $request->validate([
+            'old_filename' => 'required|string', // Validate the old filename
+            'new_photo' => 'required|file|mimes:jpeg,png,jpg,gif|max:30720', // Validate the new photo
+        ]);
+
+        $oldFilename = $request->input('old_filename');
+        $filePath = 'public/images/' . $oldFilename;
+
+        // Check if the old file exists and delete it
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+
+        // Store the new photo
+        $newPhoto = $request->file('new_photo');
+        $newFilename = time() . '_' . $newPhoto->getClientOriginalName();
+        $newPhotoPath = $newPhoto->storeAs('public/images', $newFilename);
+
+        // Update the database record
+        $photo = Photo::where('photo_fileName', $oldFilename)->first();
+        if ($photo) {
+            $photo->photo_fileName = $newFilename; // Replace the old filename with the new one
+            $photo->save();
+        } else {
+            // If no database entry exists for the old file, create a new one
+            Photo::create(['photo_fileName' => $newFilename]);
+        }
+
+        return response()->json([
+            'message' => 'Photo replaced successfully.',
+            'new_filename' => $newFilename,
+        ]);
+    }
+
+    public function deletePhoto(Request $request){
+        $filename = $request->input('filename'); // Get filename from the request
+        $filePath = 'public/images/' . $filename;
+
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+            return response()->json(['message' => 'Photo deleted successfully.']);
+        } else {
+            return response()->json(['message' => 'Photo not found.'], 404);
+        }
+
+        $photo = Photo::where('photo_fileName', $filename)->first();
+        if ($photo) {
+            $photo->delete();
+            return response()->json(['message' => 'Photo and database entry deleted successfully.']);
+        } else {
+            return response()->json(['message' => 'Database entry not found.'], 404);
+        }
+
     }
 }
