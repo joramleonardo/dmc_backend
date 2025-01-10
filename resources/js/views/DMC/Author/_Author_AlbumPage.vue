@@ -316,9 +316,9 @@
                                                                         <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                                         </b-button>
-                                                                        <b-button @click="validate_delete_photo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
+                                                                        <!-- <b-button @click="validate_delete_photo()" class="mr-1" variant="danger"  v-b-tooltip.hover title="Delete Event">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="15"  height="15"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                                                                        </b-button>
+                                                                        </b-button> -->
                                                                     </div>
                                                                     <div v-if="currentAlbumStatus === 'For Revision' ">
                                                                         <b-button @click="showModal_updatePhoto(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Photo">
@@ -851,11 +851,23 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_select_newPhoto" ref="modal_select_newPhoto"  title="Select new photo" size="lg" centered 
+        <b-modal id="modal_select_newPhoto" ref="modal_select_newPhoto"  title="Select new photossss" size="lg" centered 
         :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
-            <div>
+            <!-- <div>
                 <input type="file" @change="handleFileUpload" />
+                <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="photoEntry.photo_fileName">
+                </b-form-file>
+            </div> -->
+            <div>
+                <!-- <input type="file" @change="handleFileUpload" /> -->
+                <b-form-file 
+                    placeholder="Choose a file or drop it here..." 
+                    drop-placeholder="Drop file here..." 
+                    v-model="newPhoto">
+                </b-form-file>
+                
             </div>
+            
             <template #modal-footer>
                 <b-button variant="success" value="1" @click="replacePhoto()">Save</b-button>
                 <b-button variant="secondary" @click="$bvModal.hide('modal_select_newPhoto')">Cancel</b-button>
@@ -1036,6 +1048,9 @@
                     result: '',
                     oldFilename: '', // Replace with the current filename
                     newPhoto: null,
+                    update_photoInformation: {
+                        photo_fileName: null, // Store the old filename
+                    },
                 }
             },
             mounted(){
@@ -1694,11 +1709,9 @@
                         const formData = new FormData();
                         formData.append('old_filename', this.data_photoInformation_update.photo_fileName);
                         formData.append('new_photo', this.newPhoto);
-                        
                         try {
                             const response = await assets_service.replacePhoto(formData); // Call the API
-                            this.oldFilename = response.new_filename; // Update the old filename
-                            
+                            this.data_photoInformation_update.photo_fileName = response.new_filename; // Update the old filename
                             this.$refs['modal_select_newPhoto'].hide();
                             this.$refs['modal_updatePhoto'].hide();
 
@@ -1709,8 +1722,6 @@
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
                                 duration: 5000, 
                             });
-                            
-                            
                         } catch (error) {
                             
                             this.$toast.open({
@@ -1721,12 +1732,7 @@
                             });
                             console.error('Error replacing photo:', error.response?.data?.message || error.message);
                         }
-                        
-                        
                     }
-                    
-
-
                 },
             },
             computed: {
