@@ -64,6 +64,14 @@ class AssetsController extends Controller
         $data->save();
     }
     
+    public function updateFeaturedStatus(Request $request, $album_id){
+        $data = AlbumStatus::where('album_id', $album_id)->first();
+
+        //UPDATE
+        $data->	album_featured = $request->album_featured;
+        $data->save();
+    }
+    
     public function updateAlbumStatus_withPublisher(Request $request, $album_id){
         $data = AlbumStatus::where('album_id', $album_id)->first();
 
@@ -186,16 +194,23 @@ class AssetsController extends Controller
 
     public function getAlbumStatus(Request $request, $album_id){
         $data = AlbumStatus::where('album_id', $album_id)
-                            ->get('*');
+                            ->pluck('album_status');
+    
+        return response()->json($data, 200);
+    }
+
+    public function getFeaturedStatus(Request $request, $album_id){
+        $data = AlbumStatus::where('album_id', $album_id)
+                            ->pluck('album_featured');
     
         return response()->json($data, 200);
     }
 
     public function getTrackingLog(Request $request, $album_id){
-        // $data = EventTrackingLog::where('album_id', $album_id)
         $data = EventTrackingLog::join('tbl_album_status','tbl_tracking_event_log.album_id', '=', 'tbl_album_status.album_id')
                                 ->where('tbl_album_status.album_id', $album_id)
-                                ->get('*');
+                                // ->select('tbl_tracking_event_log.activity', 'tbl_tracking_event_log.date')
+                            ->get('*');
     
         return response()->json($data, 200);
     }
@@ -483,6 +498,29 @@ public function getAllListPublished_publisher(Request $request){
     return response()->json($data, 200);
 }
 
+public function getAllListFeatured(Request $request){
+    $data = DB::table('tbl_album')
+    ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
+    ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
+    ->where('tbl_album_status.album_status', "Published")
+    ->where('tbl_album_status.album_featured', "1")
+    ->where('tbl_album.is_deleted', "0")
+    ->whereNotNull('tbl_album.album_id') 
+    ->orderBy('tbl_album.created_at', 'desc')
+    ->groupBy('tbl_album.album_id') 
+    ->get([
+        'tbl_album.*',
+        'tbl_album_status.*',
+        DB::raw('(SELECT tbl_photo.photo_fileName 
+                FROM tbl_photo 
+                WHERE tbl_photo.album_id = tbl_album.album_id 
+                ORDER BY tbl_photo.created_at ASC 
+                LIMIT 1) as first_photo_fileName')
+    ]);
+
+return response()->json($data, 200);
+}
+
 
 
 
@@ -528,7 +566,9 @@ public function getAllListPublished_publisher(Request $request){
 
     public function getAlbumTags_selected(Request $request, $album_id){
               $data = AlbumTags::where('tbl_album_tags.album_id', $album_id)
-                    ->get('*');
+                                ->select('tbl_album_tags.album_id', 'tbl_album_tags.album_tagName')
+                                ->get();
+                    
         return response()->json($data, 200);
     }
 

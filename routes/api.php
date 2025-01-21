@@ -82,6 +82,8 @@ Route::get('getAllListForRevision_publisher', [AssetsController::class, 'getAllL
 Route::get('getAllListUnpublished_publisher', [AssetsController::class, 'getAllListUnpublished_publisher']);
 Route::get('getAllListPublished_publisher', [AssetsController::class, 'getAllListPublished_publisher']);
 
+Route::get('getAllListFeatured', [AssetsController::class, 'getAllListFeatured']);
+
 
 
 
@@ -99,6 +101,7 @@ Route::post('/getPhotoTags_selected/{photo_id}', [AssetsController::class, 'getP
 Route::post('/getVideoTags_selected/{video_id}', [AssetsController::class, 'getVideoTags_selected']);
 Route::get('getAllListVideo', [AssetsController::class, 'getAllListVideo']);
 Route::post('/getAlbumStatus/{album_id}', [AssetsController::class, 'getAlbumStatus']);
+Route::post('/getFeaturedStatus/{album_id}', [AssetsController::class, 'getFeaturedStatus']);
 Route::post('/getTrackingLog/{album_id}', [AssetsController::class, 'getTrackingLog']);
 Route::post('/getCommentLog/{album_id}', [AssetsController::class, 'getCommentLog']);
 
@@ -126,3 +129,5 @@ Route::post('addAlbumStatus_withAuthor', [AssetsController::class, 'addAlbumStat
 
 Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);
 Route::post('/updateAlbumStatus_withPublisher/{albumID}', [AssetsController::class, 'updateAlbumStatus_withPublisher']);
+
+Route::post('/updateFeaturedStatus/{albumID}', [AssetsController::class, 'updateFeaturedStatus']);

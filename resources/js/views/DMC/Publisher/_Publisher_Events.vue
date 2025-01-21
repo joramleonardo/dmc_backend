@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="page-header d-print-none">
+        <!-- <div class="page-header d-print-none">
             <div class="tabler-container-xl">
                 <div class="row g-2 align-items-center">
                     <div class="col">
@@ -10,13 +10,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="page-body">
             <div class="tabler-container-xl">
                 <div class="row row-cards">
                     <div class="col-lg-12">
                         <div >
                             <b-tabs card>
+                                <!-- Pending For Review -->
                                 <b-tab active>
                                     <template #title>
                                         Pending for Review
@@ -56,6 +57,7 @@
                                         
                                     </div>
                                 </b-tab>
+                                <!-- Under Review -->
                                 <b-tab>
                                     <template #title>
                                         Under Review
@@ -95,6 +97,7 @@
                                         
                                     </div>
                                 </b-tab>
+                                <!-- For Revision  -->
                                 <b-tab>
                                     <template #title>
                                         For Revision 
@@ -130,6 +133,7 @@
                                         
                                     </div>
                                 </b-tab>
+                                <!-- Unpublished -->
                                 <b-tab>
                                     <template #title>
                                         Unpublished
@@ -159,6 +163,7 @@
                                         </b-table>
                                     </div>
                                 </b-tab>
+                                <!-- Published -->
                                 <b-tab>
                                     <template #title>
                                         Published
@@ -180,6 +185,36 @@
                                     </div>
                                     <div class="row row-cards" v-else>
                                         <b-table :items="list_published" :fields="fields_PENDING" striped hover>
+                                            <template #cell(actions)="row">
+                                                <b-button @click="navigateToReview(row.item.album_id)" variant="info">
+                                                    View Details
+                                                </b-button>
+                                            </template>
+                                        </b-table>
+                                    </div>
+                                </b-tab>
+                                <!-- Featured -->
+                                <b-tab>
+                                    <template #title>
+                                        Featured
+                                        <span v-if="totalRows_featured != 0">
+                                            <b-badge variant="success">{{totalRows_featured}}</b-badge>
+                                        </span>
+                                        <span v-else>
+                                            <b-badge variant="secondary">0</b-badge>
+                                        </span>
+                                    </template>
+                                    <div class="row row-cards" v-if="totalRows_featured == 0">
+                                        <div class="col-sm-6 col-lg-4" >
+                                            <div class="row row-cards">
+                                                <div class="h3 m-0">
+                                                    NO DATA AVAILAVLE 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-cards" v-else>
+                                        <b-table :items="list_featured" :fields="fields_PENDING" striped hover>
                                             <template #cell(actions)="row">
                                                 <b-button @click="navigateToReview(row.item.album_id)" variant="info">
                                                     View Details
@@ -228,16 +263,14 @@
                     displayName: '',
                     forReview: [],
                     forRevision: [],
-                    list_forReview: [],
-                    totalRows_forReview: '',
-                    list_underReview: [],
-                    totalRows_underReview: '',
-                    list_forRevision: [],
-                    totalRows_forRevision: '',
-                    list_unpublished: [],
-                    totalRows_unpublished: '',
-                    list_published: [],
-                    totalRows_published: '',
+
+                    list_forReview: [], totalRows_forReview: '',
+                    list_underReview: [], totalRows_underReview: '',
+                    list_forRevision: [], totalRows_forRevision: '',
+                    list_unpublished: [], totalRows_unpublished: '',
+                    list_published: [], totalRows_published: '',
+
+                    list_featured: [], totalRows_featured: '',
                     
                     finalTime: '',
                     finalDate: '',
@@ -256,6 +289,7 @@
                 this.loadForRevisionList();
                 this.loadUnpublished();
                 this.loadPublished();
+                this.loadFeatured();
             },
             methods: {
                 userData: async function(){
@@ -361,6 +395,19 @@
                         this.list_published = response.data;
                         console.log(this.list_published);
                         this.totalRows_published= this.list_published.length;
+                    } catch(error) {
+                        this.flashMessage.error({
+                        message: 'Some error occured! Please try again.',
+                        time: 5000
+                        });
+                    }
+                },
+                loadFeatured: async function() {
+                    try{
+                        const response = await assets_service.getAllListFeatured();
+                        this.list_featured = response.data;
+                        console.log(this.list_featured);
+                        this.totalRows_featured= this.list_featured.length;
                     } catch(error) {
                         this.flashMessage.error({
                         message: 'Some error occured! Please try again.',

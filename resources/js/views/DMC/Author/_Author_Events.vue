@@ -14,7 +14,7 @@
                             <h2 class="page-title">
                                 DOST Events
                             </h2>
-                            <!-- <p>Browse and manage all event drafts, reviews, and published items here.</p> -->
+                            <!-- <p>Browse and manage all events here.</p> -->
                         </div>
                         <div class="col-auto ms-auto d-print-none">
                             <div class="d-flex">
@@ -535,28 +535,6 @@
                             <label class="form-label"><span style="color: red;">* </span>Category:</label>
                                 <div class="col">
                                     <b-form-select v-model="selected_category_album" :options="options_category_album"></b-form-select>
-                                    <!-- <select class="form-select" v-model="selected_category_album" required>
-                                        <option selected disabled>Please select category</option>
-                                        <option value="1">Anniversary</option>
-                                        <option value="2">Awarding Ceremonies</option>
-                                        <option value="3">Building Inauguration</option>
-                                        <option value="4">Conference</option>
-                                        <option value="5">Convention</option>
-                                        <option value="6">Exhibits</option>
-                                        <option value="7">Forum</option>
-                                        <option value="8">MOA Signing</option>
-                                        <option value="9">MOU Signing</option>
-                                        <option value="10">NSTW</option>
-                                        <option value="11">NYSTIF</option>
-                                        <option value="12">Program Launch</option>
-                                        <option value="13">Project Launch</option>
-                                        <option value="14">Project Visit</option>
-                                        <option value="15">RSTW</option>
-                                        <option value="16">Scholarship</option>
-                                        <option value="17">Scientific Meeting</option>
-                                        <option value="18">Training/Seminar</option>
-                                        <option value="19">Others...</option>
-                                    </select> -->
                                 </div>
                             </div>
                         </div>

@@ -93,6 +93,10 @@ export function getAllListPublished_publisher(){
     return http().get('/getAllListPublished_publisher');
 }
 
+export function getAllListFeatured(){
+    return http().get('/getAllListFeatured');
+}
+
 
 
 
@@ -110,6 +114,10 @@ export function getAllListVideo(){
 
 export function getAlbumStatus(album_id){
     return httpFile().post(`/getAlbumStatus/${album_id}`);
+}
+
+export function getFeaturedStatus(album_id){
+    return httpFile().post(`/getFeaturedStatus/${album_id}`);
 }
 
 export function getTrackingLog(album_id){
@@ -213,4 +221,8 @@ export function updateAlbumStatus(albumID, data){
 
 export function updateAlbumStatus_withPublisher(albumID, data){
     return httpFile().post(`updateAlbumStatus_withPublisher/${albumID}`, data);
+}
+
+export function updateFeaturedStatus(albumID, data){
+    return httpFile().post(`updateFeaturedStatus/${albumID}`, data);
 }

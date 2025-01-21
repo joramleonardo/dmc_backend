@@ -113,6 +113,9 @@
                                 </div>
                                 <div class="card-body">
                                     <dl class="row">
+                                        <dt class="col-5 font-title-size">EVENT ID:</dt>
+                                        <dd class="col-7 font-body-size">{{data_eventInformation.album_id}}</dd>
+
                                         <dt class="col-5 font-title-size">TITLE:</dt>
                                         <dd class="col-7 font-body-size">{{data_eventInformation.event_title}}</dd>
 
@@ -143,6 +146,31 @@
                                             </span>
                                         </dd>
                                     </dl>
+                                </div>
+                            </div>
+                            <div class="card event-cardd"  id="Event_Featured" style="margin-top: 15px">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                    Featured Event
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div v-if="currentFeaturedStatus === '0' ">
+                                        <b-button @click="changeFeatured(0)" class="mr-1" variant="success" >
+                                            YES
+                                        </b-button>
+                                        <b-button @click="changeFeatured(1)" class="mr-1" variant="secondary" >
+                                            NO
+                                        </b-button>
+                                    </div>
+                                    <div v-if="currentFeaturedStatus === '1' ">
+                                        <b-button @click="changeFeatured(0)" class="mr-1" variant="secondary" >
+                                            YES
+                                        </b-button>
+                                        <b-button @click="changeFeatured(1)" class="mr-1" variant="danger" >
+                                            NO
+                                        </b-button>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -469,6 +497,8 @@
                     video_length: 0,
                     albumStatus: '',
                     currentAlbumStatus: '',
+                    featuredStatus: '',
+                    currentFeaturedStatus: '',
                     selected_category_album: null,
                     finalTime: '',
                     finalDate: '',
@@ -494,16 +524,41 @@
                 this.loadTrackingLog();
                 this.loadEventDetails();
                 this.loadAlbumStatus();
+                this.loadFeaturedStatus();
                 this.loadEventPhotos();
                 this.loadEventVideos();
                 this.loadCountCommentEntry();
                 this.loadCommentLog();
             },
             methods: {
+                initializeFsLightbox() {
+                    if (typeof refreshFsLightbox === 'function') {
+                        refreshFsLightbox();
+                        console.log("FS Lightbox initialized automatically after delay");
+                    } else {
+                        console.error("FS Lightbox is not available; check CDN loading");
+                    }
+                },
+                initLightbox() {
+                    if (typeof refreshFsLightbox === 'function') {
+                        refreshFsLightbox();
+                        console.log("FS Lightbox initialized on click");
+                    } else {
+                        console.error("FS Lightbox is not available; check CDN loading");
+                    }
+                    },
+                initializeLightbox() {
+                    setTimeout(() => {
+                    if (typeof refreshFsLightbox === 'function') {
+                        refreshFsLightbox();
+                        console.log("FS Lightbox initialized in this component");
+                    } else {
+                        console.error("FS Lightbox is not available; check CDN loading");
+                    }
+                    }, 1000); 
+                },
                 userData: async function(){
                     try{
-
-                        
                         const response = await auth_service.getUserData();
                         this.displayName=response.data.user.name;
                     } catch(error) {
@@ -545,32 +600,6 @@
                     this.finalDate = monthName + " " + currentDay + " " + currentYear;
                     this.finalDateTime = monthName + " " + currentDay + " " + currentYear + " " + getHours + ":" + getMinutes + " " + newformat;
                 },
-                initializeFsLightbox() {
-                    if (typeof refreshFsLightbox === 'function') {
-                        refreshFsLightbox();
-                        console.log("FS Lightbox initialized automatically after delay");
-                    } else {
-                        console.error("FS Lightbox is not available; check CDN loading");
-                    }
-                },
-                initLightbox() {
-                    if (typeof refreshFsLightbox === 'function') {
-                        refreshFsLightbox();
-                        console.log("FS Lightbox initialized on click");
-                    } else {
-                        console.error("FS Lightbox is not available; check CDN loading");
-                    }
-                    },
-                initializeLightbox() {
-                    setTimeout(() => {
-                    if (typeof refreshFsLightbox === 'function') {
-                        refreshFsLightbox();
-                        console.log("FS Lightbox initialized in this component");
-                    } else {
-                        console.error("FS Lightbox is not available; check CDN loading");
-                    }
-                    }, 1000); 
-                },
                 loadPage: async function(){
                     document.getElementById("_spinner").style.display = "none";
                     document.getElementById("_body").style.display = "block";
@@ -578,17 +607,21 @@
                 loadTrackingLog: async function (){
                     const response_trackingLog = await assets_service.getTrackingLog(this.event_id);
                     this.trackingLog = response_trackingLog.data;
-                    console.log(this.trackingLog);
                 },
                 loadCommentLog: async function (){
                     const response_commentLog = await assets_service.getCommentLog(this.event_id);
                     this.list_commentLog = response_commentLog.data;
-                    console.log("List of Comments");
-                    console.log(this.list_commentLog);
+                    
                 },
                 loadAlbumStatus: async function (){
                     const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
-                    this.currentAlbumStatus = response_statusAlbum.data[0].album_status;
+                    this.currentAlbumStatus = response_statusAlbum.data[0];
+
+                },
+                loadFeaturedStatus: async function (){
+                    const response_featuredStatusAlbum = await assets_service.getFeaturedStatus(this.event_id);
+                    this.currentFeaturedStatus = response_featuredStatusAlbum.data[0];
+                    
                 },
                 loadEventDetails: async function(data){
 
@@ -599,8 +632,6 @@
                     const response = await assets_service.getAlbumTags_selected(this.event_id);
                     this.album_tags = response.data;
 
-                    // const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
-                    // this.currentAlbumStatus = response_statusAlbum.data[0].album_status;
                 },
                 loadEventPhotos: async function(){
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
@@ -628,13 +659,8 @@
                     this.noOfComment = response_countPhoto.data;
 
 
-                    console.log("No. of comments: " + this.noOfComment);
                 },
                 leaveComment: async function (value, section){
-                    console.log(value);
-                    console.log(section);
-                    console.log(this.commentSection);
-
                     this.sectionID = value;
                     this.sectionTitle = section;
                     
@@ -643,12 +669,6 @@
                 submitComment: async function (){
 
                     this.sectionComment = this.commentSection;
-
-                    console.log("Insert the data below in the database");
-                    console.log("Album ID: " + this.event_id);
-                    console.log("section_id: " + this.sectionID);
-                    console.log("section_title: " + this.sectionTitle);
-                    console.log("section_comment: " + this.sectionComment);
 
                     try{
                         // Add Comment
@@ -678,13 +698,10 @@
 
                 },
                 changeStatus: async function (value){
-
-                    
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
                     this.data_eventInformation = response_eventDetails.data[0];
                     let albumID = this.data_eventInformation.album_id;
                     
-
                     if (value == "3"){
                     
                         // EVENT STATUS
@@ -817,11 +834,43 @@
                         });
                     }
 
-
-
                     this.loadEventDetails();
                     this.loadAlbumStatus();
                     this.loadTrackingLog();
+                },
+                changeFeatured: async function (value){
+                    const response_eventDetails = await assets_service.getEventDetails(this.event_id);
+                    this.data_eventInformation = response_eventDetails.data[0];
+                    let albumID = this.data_eventInformation.album_id;
+                    
+                    if (value == "0"){
+                        this.featuredStatus = "0"; // NO
+                        let formData_featuredStatus = new FormData();
+                        formData_featuredStatus.append('album_featured', this.featuredStatus);
+                        const response_featuredStatusData = await assets_service.updateFeaturedStatus(this.event_id, formData_featuredStatus);
+
+                        this.$toast.open({
+                            message: 'The event is now listed as a featured event on your website',
+                            type: 'success', // Options: 'success', 'info', 'error', 'default'
+                            position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                            duration: 5000, 
+                        });
+                    }
+                    else if (value == "1"){
+                        this.featuredStatus = "1"; // YES
+                        let formData_featuredStatus = new FormData();
+                        formData_featuredStatus.append('album_featured', this.featuredStatus);
+                        const response_featuredStatusData = await assets_service.updateFeaturedStatus(this.event_id, formData_featuredStatus);
+
+                    this.$toast.open({
+                        message: 'The event is now removed as a featured event on your website',
+                        type: 'success', // Options: 'success', 'info', 'error', 'default'
+                        position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
+                        duration: 5000, 
+                    });
+                    }
+
+                    this.loadFeaturedStatus();
                 }
             },
             computed: {
