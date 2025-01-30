@@ -646,7 +646,7 @@
                     },
                     selected_category_album: 'Please select category',
                     options_category_album: [
-                        { value: null, text: 'Please select category', disabled: true},
+                        { value: 'Please select category', text: 'Please select category', disabled: true},
                         { value: 'Anniversary', text: 'Anniversary' },
                         { value: 'Awarding Ceremonies', text: 'Awarding Ceremonies' },
                         { value: 'Building Inauguration', text: 'Building Inauguration' },
@@ -669,7 +669,7 @@
                     ],
                     selected_sector: 'Please select sector',
                     options_sector: [
-                        { value: null, text: 'Please select sector', disabled: true},
+                        { value: 'Please select sector', text: 'Please select sector', disabled: true},
                         { value: 'Collegial and Scientific Bodies', text: 'Collegial and Scientific Bodies' },
                         { value: 'Regional Offices and S&T Provincial Centers', text: 'Regional Offices and S&T Provincial Centers' },
                         { value: 'Research and Development Institutes', text: 'Research and Development Institutes' },
@@ -901,15 +901,15 @@
                             const const_1 = await assets_service.countAlbumEntry();
                             let totalAlbumEntry = const_1.data;
                             if (totalAlbumEntry == 0 ){
-                                this.album_id = "ET" + "2024" + "-0001";
+                                this.album_id = "ET" + "2025" + "-0001";
                             }
                             else if (totalAlbumEntry > 0 && totalAlbumEntry < 10){
                                 let i = totalAlbumEntry + 1;
-                                this.album_id = "ET" + "2024" + "-000" + i;
+                                this.album_id = "ET" + "2025" + "-000" + i;
                             }
                             else if (totalAlbumEntry >= 10){
                                 let i = totalAlbumEntry + 1;
-                                this.album_id = "ET" + "2024" + "-00" + i;
+                                this.album_id = "ET" + "2025" + "-00" + i;
                             }
                             
                             // CREATE EVENT

@@ -624,6 +624,9 @@ return response()->json($data, 200);
        
         //UPDATE
        
+        
+        $data->video_link = $request->video_link;
+        $data->video_youtubeID = $request->video_youtubeID;
         $data->video_description = $request->video_description;
         $data->video_videographer = $request->video_videographer;
         $data->video_category = $request->video_category;

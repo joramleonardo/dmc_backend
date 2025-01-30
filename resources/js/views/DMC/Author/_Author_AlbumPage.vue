@@ -451,35 +451,15 @@
                             <div class="mb-3">
                             <label class="form-label"><span style="color: red;">* </span>Category:</label>
                                 <div class="col">
-                                    <select class="form-select" v-model="data_eventInformation_update.event_category">
-                                        <option selected disabled>Please select category</option>
-                                        <option value="1">Anniversary</option>
-                                        <option value="2">Awarding Ceremonies</option>
-                                        <option value="3">Building Inauguration</option>
-                                        <option value="4">Conference</option>
-                                        <option value="5">Convention</option>
-                                        <option value="6">Exhibits</option>
-                                        <option value="7">Forum</option>
-                                        <option value="8">MOA Signing</option>
-                                        <option value="9">MOU Signing</option>
-                                        <option value="10">NSTW</option>
-                                        <option value="11">NYSTIF</option>
-                                        <option value="12">Program Launch</option>
-                                        <option value="13">Project Launch</option>
-                                        <option value="14">Project Visit</option>
-                                        <option value="15">RSTW</option>
-                                        <option value="16">Scholarship</option>
-                                        <option value="17">Scientific Meeting</option>
-                                        <option value="18">Training/Seminar</option>
-                                        <option value="19">Others...</option>
-                                    </select>
+                                    <b-form-select v-model="data_eventInformation_update.event_category" :options="options_category_album"></b-form-select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="mb-3">
                                 <label class="form-label"><span style="color: red;">* </span>Sector:</label>
-                                <div class="col">
+                                <b-form-select v-model="data_eventInformation_update.event_sector" :options="options_sector"></b-form-select>
+                                <!-- <div class="col">
                                     <select class="form-select" v-model="data_eventInformation_update.event_sector">
                                         <option selected disabled>Please select sector</option>
                                         <option value="1">Collegial and Scientific Bodies</option>
@@ -488,7 +468,7 @@
                                         <option value="4">Scientific and Technological Services</option>
                                         <option value="5">Sectoral Planning Councils</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-12" style="color: black !important">
@@ -525,10 +505,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 mb-0">
-                                        <!-- <b-form-group class="group" id="form_externalEventDate">
-                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Title:</label>
-                                            <b-form-input v-model="photoEntry.photo_title" placeholder="Enter Title..."   ></b-form-input>
-                                        </b-form-group>  -->
                                         
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photographer:</label>
@@ -538,7 +514,7 @@
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
-                                            <b-form-select v-model="photoEntry.selected_photo_category" :options="options_photo_categoryList"></b-form-select>
+                                            <b-form-select v-model="selected_photo_category" :options="options_photo_categoryList"></b-form-select>
                                             
                                         </b-form-group> 
                                     </div>
@@ -612,27 +588,6 @@
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
                                             
                                             <b-form-select v-model="videoEntry.selected_video_category" :options="options_video_categoryList"></b-form-select>
-                                            <!-- <div class="col">
-                                                <select class="form-select" v-model="selected_category_video">
-                                                    <option selected disabled>Please select video category</option>
-                                                    <option value="1">Anniversaries</option>
-                                                    <option value="2">Awarding Ceremonies </option>
-                                                    <option value="3">Competition/ Contests</option>
-                                                    <option value="4">Exhibits</option>
-                                                    <option value="5">Lectures, Discussion, Seminar, Training</option>
-                                                    <option value="6">MOA/MOU signing</option>
-                                                    <option value="7">NSTW</option>
-                                                    <option value="8">NYSTIF</option>
-                                                    <option value="9">Program Launch</option>
-                                                    <option value="10">Project Launch</option>
-                                                    <option value="11">Project/Program activities</option>
-                                                    <option value="12">RSTW</option>
-                                                    <option value="13">Same day edits</option>
-                                                    <option value="14">Speeches</option>
-                                                    <option value="15">Others</option>
-                                                </select>
-                                            </div> -->
-                                            <!-- <b-form-select id="input-3" v-model="videoEntry.video_category" :options="options_category_video"   ></b-form-select>-->
                                         </b-form-group>
                                     </div>
                                 </div>
@@ -640,16 +595,15 @@
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Type:</label>
-                                            <b-form-select id="input-3" v-model="videoEntry.video_type" :options="options_category_type"   ></b-form-select>
+                                            <b-form-select id="input-3" v-model="videoEntry.selected_video_type" :options="options_category_type"   ></b-form-select>
                                         </b-form-group> 
                                     </div>
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
-                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration (hh:mm:ss):</label>
+                                            <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration (HH:mm):</label>
                                             <b-form-timepicker
                                                 v-model="videoEntry.video_duration"
                                                 locale="en"
-                                                show-seconds
                                                 :hour12="false"
                                             ></b-form-timepicker>
                                         </b-form-group> 
@@ -761,6 +715,10 @@
                             </b-form-group> 
                         </div>
                         <div class="col-sm-6 col-md-6">
+                            <b-form-group >   
+                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Video (Youtube Link):</label>
+                                <b-form-input id="" v-model="data_videoInformation_update.video_link"  placeholder="Enter Youtube Link here..."   ></b-form-input>
+                            </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Description:</label>
                                 <b-form-textarea id="textarea" v-model="data_videoInformation_update.video_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
@@ -771,14 +729,14 @@
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
-                                <b-form-select v-model="data_videoInformation_update.selected_video_category" :options="options_video_categoryList"></b-form-select> 
+                                <b-form-select v-model="data_videoInformation_update.video_category" :options="options_video_categoryList"></b-form-select> 
                             </b-form-group> 
                             <b-form-group class="group" id="form_externalEventDate">
-                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration:</label>
+                                <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration (HH:mm): </label>
                                 <b-form-timepicker
                                     v-model="data_videoInformation_update.video_duration"
                                     locale="en"
-                                    show-seconds
+                                    placeholder="HH:mm"
                                     :hour12="false"
                                 ></b-form-timepicker>
                             </b-form-group> 
@@ -892,7 +850,7 @@
                     
                     selected_photo_category: 'Please select photo category',
                     options_photo_categoryList: [
-                        { value: null, text: 'Please select photo category', disabled: true },
+                        { value: 'Please select photo category', text: 'Please select photo category', disabled: true },
                         { value: 'Assistant Secretaries', text: 'Assistant Secretaries' },
                         { value: 'Deputy Directors', text: 'Deputy Directors' },
                         { value: 'Directors', text: 'Directors' },
@@ -915,7 +873,7 @@
                     
                     selected_video_category: 'Please select video category',
                     options_video_categoryList: [
-                        { value: null, text: 'Please select video category', disabled: true },
+                        { value: 'Please select video category', text: 'Please select video category', disabled: true },
                         { value: 'Anniversaries', text: 'Anniversaries' },
                         { value: 'Awarding Ceremonies', text: 'Awarding Ceremonies' },
                         { value: 'Competition/ Contests', text: 'Competition/ Contests' },
@@ -931,6 +889,46 @@
                         { value: 'Same day edits', text: 'Same day edits' },
                         { value: 'Speeches', text: 'Speeches' },
                         { value: 'Others...', text: 'Others...' },
+                    ],
+                    selected_video_type: 'Please select video type',
+                    options_category_type: [
+                        { value: 'Please select video type', text: 'Please select video type', disabled: true},
+                        { value: 'Full Video', text: 'Full Video' },
+                        { value: 'Video Clip', text: 'Video Clip' },,
+                        { value: 'Others...', text: 'Others...' }
+                    ],
+                    selected_category_album: 'Please select category',
+                    options_category_album: [
+                        { value: 'Please select category', text: 'Please select category', disabled: true},
+                        { value: 'Anniversary', text: 'Anniversary' },
+                        { value: 'Awarding Ceremonies', text: 'Awarding Ceremonies' },
+                        { value: 'Building Inauguration', text: 'Building Inauguration' },
+                        { value: 'Conference', text: 'Conference' },
+                        { value: 'Convention', text: 'Convention' },
+                        { value: 'Exhibits', text: 'Exhibits' },
+                        { value: 'Forum', text: 'Forum' },
+                        { value: 'MOA Signing', text: 'MOA Signing' },
+                        { value: 'MOU Signing', text: 'MOU Signing' },
+                        { value: 'NSTW', text: 'NSTW' },
+                        { value: 'NYSTIF', text: 'NYSTIF' },
+                        { value: 'Program Launch', text: 'Program Launch' },
+                        { value: 'Prject Launch', text: 'Prject Launch' },
+                        { value: 'Project Visit', text: 'Project Visit' },
+                        { value: 'RSTW', text: 'RSTW' },
+                        { value: 'Scholarship', text: 'Scholarship' },
+                        { value: 'Scientific Meeting', text: 'Scientific Meeting' },
+                        { value: 'Training/Seminar', text: 'Training/Seminar' },
+                        { value: 'Others', text: 'Others...' }
+                    ],
+                    selected_sector: 'Please select sector',
+                    options_sector: [
+                        { value: 'Please select sector', text: 'Please select sector', disabled: true},
+                        { value: 'Collegial and Scientific Bodies', text: 'Collegial and Scientific Bodies' },
+                        { value: 'Regional Offices and S&T Provincial Centers', text: 'Regional Offices and S&T Provincial Centers' },
+                        { value: 'Research and Development Institutes', text: 'Research and Development Institutes' },
+                        { value: 'Scientific and Technological Services', text: 'Scientific and Technological Services' },
+                        { value: 'Sectoral Planning Councils', text: 'Sectoral Planning Councils' },
+                        { value: 'Others', text: 'Others...' }
                     ],
                     headerBG_deleteInfo: 'info',
                     headerBG_deleteWarning: 'danger',
@@ -982,53 +980,6 @@
                     ],
                     vidClip_tabCounter: 1,
                     video_id: 1,
-                    selected_category_photo: null,
-                    options_category_photo: [
-                        { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Assistant Secretaries' },
-                        { value: '2', text: 'Deputy Directors' },
-                        { value: '3', text: 'Directors' },
-                        { value: '4', text: 'Executive Director' },
-                        { value: '5', text: 'Group photo' },
-                        { value: '6', text: 'Launch/ Events/Activities' },
-                        { value: '7', text: 'Lecturers/Resource Speaker' },
-                        { value: '8', text: 'MOA/MOU signing' },
-                        { value: '9', text: 'Participants' },
-                        { value: '10', text: 'Portraits' },
-                        { value: '11', text: 'Product/Service' },
-                        { value: '12', text: 'Project visits' },
-                        { value: '13', text: 'Project/Program activities' },
-                        { value: '14', text: 'Regional Directors' },
-                        { value: '15', text: 'Secretaries' },
-                        { value: '16', text: 'Service Directors' },
-                        { value: '17', text: 'Undersecretaries' },
-                        { value: '18', text: 'Others...' }
-                    ],
-                    options_category_type: [
-                        { value: null, text: 'Please select video type', disabled: true},
-                        { value: '1', text: 'Full Video' },
-                        { value: '2', text: 'Video Clip' },,
-                        { value: '3', text: 'Others...' }
-                    ],
-                    selected_category_video: null,
-                    options_category_video: [
-                        { value: null, text: 'Please select category', disabled: true},
-                        { value: '1', text: 'Anniversaries' },
-                        { value: '2', text: 'Awarding Ceremonies' },
-                        { value: '3', text: 'Competition/ Contests' },
-                        { value: '4', text: 'Exhibits' },
-                        { value: '5', text: 'Lectures, Discussion, Seminar, Training' },
-                        { value: '6', text: 'MOA/MOU signing' },
-                        { value: '7', text: 'NSTW' },
-                        { value: '8', text: 'NYSTIF' },
-                        { value: '9', text: 'Program Launch' },
-                        { value: '10', text: 'Project Launch' },
-                        { value: '11', text: 'Project/Program activities' },
-                        { value: '12', text: 'RSTW' },
-                        { value: '13', text: 'Same day edits' },
-                        { value: '14', text: 'Speeches' },
-                        { value: '15', text: 'Others...' }
-                    ],
                     list_photo: [],
                     list_video: [],
                     photo_length: 0,
@@ -1237,18 +1188,17 @@
                             let count_finalPhoto = count_newPhoto + totalPhotoEntry;
                             if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
-                                this.photo_id = "ETP" + "2024" + "-" + "000" + i  + "-" + i;
+                                this.photo_id = "ETP" + "2025" + "-" + "000" + i  + "-" + i;
                             }
                             else if (totalPhotoEntry > 9){
                                 let i = count_finalPhoto;
-                                this.photo_id = "ETP" + "2024" + "-" + "00" + i  + "-" + i;
+                                this.photo_id = "ETP" + "2025" + "-" + "00" + i  + "-" + i;
                             }
 
                             formData_photoData.append(`photo_form[${index}][album_id]`, this.data_eventInformation.album_id);
                             formData_photoData.append(`photo_form[${index}][photo_id]`, this.photo_id );
                             formData_photoData.append(`photo_form[${index}][photo_fileName]`, photoEntry.photo_fileName);
-                            //formData_photoData.append(`photo_form[${index}][photo_title]`, photoEntry.photo_title);
-                            formData_photoData.append(`photo_form[${index}][photo_category]`, photoEntry.selected_photo_category);
+                            formData_photoData.append(`photo_form[${index}][photo_category]`, this.selected_photo_category);
                             formData_photoData.append(`photo_form[${index}][photo_description]`, photoEntry.photo_description);
                             formData_photoData.append(`photo_form[${index}][photo_photographer]`, photoEntry.photo_photographer);
                             formData_photoData.append(`photo_form[${index}][photo_tags]`, photoEntry.photo_tags);
@@ -1284,7 +1234,7 @@
                             photoEntry.photo_fileName = null;
                             photoEntry.photo_title = '';
                             photoEntry.photo_photographer = '';
-                            photoEntry.selected_photo_category = '';
+                            this.selected_photo_category = 'Please select photo category';
                             photoEntry.photo_description = '';
                             photoEntry.photo_tags = '';
                         });
@@ -1294,7 +1244,6 @@
                     
 
                     const response_countAlbumVideo = await assets_service.countAlbumVideoEntry(this.data_eventInformation.album_id);
-                    // console.log(response_countAlbumVideo.data);
 
                     try{
 
@@ -1311,32 +1260,30 @@
                             const match = albumID.match(/000(\d+)/);
                             if (match) {
                                 this.result = match[1]; // "1"
-                                //console.log(this.result); // Output: "1"
                             }
 
 
                             if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
-                                this.video_id = "ETV" + "2024" + "-" + "000" + this.result  + "-" + i;
+                                this.video_id = "ETV" + "2025" + "-" + "000" + this.result  + "-" + i;
                             }
                             else if (totalPhotoEntry > 9){
                                 
                                 let i = count_finalPhoto;
-                                this.video_id = "ETV" + "2024" + "-" + "00" + this.result  + "-" + i;
+                                this.video_id = "ETV" + "2025" + "-" + "00" + this.result  + "-" + i;
                             }
 
 
                             let url = videoEntry.video_link;
                             let urlID = url.split("v=")[1].substring(0, 11)
                                 
-                            //console.log("this is video id: " + this.video_id);
                             formData_videoData.append(`video_form[${index}][album_id]`, this.data_eventInformation.album_id);
                             formData_videoData.append(`video_form[${index}][video_id]`, this.video_id );
                             formData_videoData.append(`video_form[${index}][video_link]`, videoEntry.video_link);
                             formData_videoData.append(`video_form[${index}][video_youtubeID]`, urlID);
                             formData_videoData.append(`video_form[${index}][video_videographer]`, videoEntry.video_videographer);
                             formData_videoData.append(`video_form[${index}][video_category]`, videoEntry.selected_video_category);
-                            formData_videoData.append(`video_form[${index}][video_type]`, videoEntry.video_type);
+                            formData_videoData.append(`video_form[${index}][video_type]`, videoEntry.selected_video_type);
                             formData_videoData.append(`video_form[${index}][video_duration]`, videoEntry.video_duration);
                             formData_videoData.append(`video_form[${index}][video_description]`, videoEntry.video_description);
                             formData_videoData.append(`video_form[${index}][video_tags]`, videoEntry.video_tags);
@@ -1370,8 +1317,8 @@
                         this.vidClip_tabs.forEach((videoEntry, index) => {
                             videoEntry.video_link = '';
                             videoEntry.video_videographer = '';
-                            videoEntry.selected_video_category = '';
-                            videoEntry.video_type = '';
+                            this.selected_video_category = 'Please select video category';
+                            this.selected_video_type = 'Please select video type';
                             videoEntry.video_duration = '';
                             videoEntry.video_description = '';
                             videoEntry.video_tags = '';
@@ -1403,7 +1350,6 @@
                             let tagName = tagList.slice(i, i+1);
              
                             const response_albumTags = await assets_service.checkAlbumTagsExists(this.data_eventInformation_update.album_id,tagName);
-                            //console.log(tagName +": " + response_albumTags.data.message)
 
                             if (response_albumTags.data.message === "none"){
                                 formData_albumTags.append('album_id', this.data_eventInformation_update.album_id);
@@ -1422,7 +1368,6 @@
                             duration: 5000, 
                         });
                         this.$refs['modal_albumInfo'].hide();
-                        //console.log("Event Information updated successfully!");
                         
                     }
                     catch(error){
@@ -1566,12 +1511,20 @@
                     try{
                         let formData_ = new FormData();
                         
+                        let url = this.data_videoInformation_update.video_link;
+                        let urlID = url.split("v=")[1].substring(0, 11)
+
+                        formData_.append('video_link', this.data_videoInformation_update.video_link);
+                        formData_.append('video_youtubeID', urlID);
                         formData_.append('video_description', this.data_videoInformation_update.video_description);
                         formData_.append('video_videographer', this.data_videoInformation_update.video_videographer);
-                        formData_.append('video_category', this.data_videoInformation_update.selected_video_category);
+                        formData_.append('video_category', this.data_videoInformation_update.video_category);
                         formData_.append('video_duration', this.data_videoInformation_update.video_duration);
                         formData_.append('video_type', this.data_videoInformation_update.video_type);
                         formData_.append('video_tags', this.videoTagsArray);
+                        
+                        // formData_.append(`video_form[${index}][video_link]`, videoEntry.video_link);
+                        // formData_.append(`video_form[${index}][video_youtubeID]`, urlID);
                         
                         const response_ = await assets_service.updateVideo(this.data_videoInformation_update.id, formData_);
                         
