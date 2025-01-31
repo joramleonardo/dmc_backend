@@ -122,6 +122,7 @@ const routes = [
 ];
 
 const router = new Router({
+    // mode: 'history', // <---- Change from hash to history mode
     routes: routes,
     linkActiveClass: 'active'
 });

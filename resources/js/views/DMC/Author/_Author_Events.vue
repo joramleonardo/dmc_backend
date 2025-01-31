@@ -966,8 +966,8 @@
                         this.ticketData.eventDate = '';
                         this.ticketData.eventVenue = '';
                         this.ticketData.selected_agency = '';
-                        this.selected_category_album = '';
-                        this.selected_sector = '';
+                        this.selected_category_album = 'Please select category';
+                        this.selected_sector = 'Please select sector';
                         this.ticketData.eventTags = [];
 
                         this.$toast.open({

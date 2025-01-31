@@ -148,30 +148,33 @@
                                     </dl>
                                 </div>
                             </div>
-                            <div class="card event-cardd"  id="Event_Featured" style="margin-top: 15px">
-                                <div class="card-header">
-                                    <h3 class="card-title">
-                                    Featured Event
-                                    </h3>
-                                </div>
-                                <div class="card-body">
-                                    <div v-if="currentFeaturedStatus === '0' ">
-                                        <b-button @click="changeFeatured(0)" class="mr-1" variant="success" >
-                                            YES
-                                        </b-button>
-                                        <b-button @click="changeFeatured(1)" class="mr-1" variant="secondary" >
-                                            NO
-                                        </b-button>
+                            <div v-if="currentAlbumStatus === 'Published'">
+                                <div class="card event-cardd"  id="Event_Featured" style="margin-top: 15px">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                        Feature this Event?
+                                        </h3>
                                     </div>
-                                    <div v-if="currentFeaturedStatus === '1' ">
-                                        <b-button @click="changeFeatured(0)" class="mr-1" variant="secondary" >
-                                            YES
-                                        </b-button>
-                                        <b-button @click="changeFeatured(1)" class="mr-1" variant="danger" >
-                                            NO
-                                        </b-button>
+                                    <div class="card-body">
+                                        <div v-if="currentFeaturedStatus === '0' ">
+                                            <b-button @click="changeFeatured(0)" class="mr-1" variant="success" >
+                                                YES
+                                            </b-button>
+                                            <b-button @click="changeFeatured(1)" class="mr-1" variant="secondary" >
+                                                NO
+                                            </b-button>
+                                        </div>
+                                        <div v-if="currentFeaturedStatus === '1' ">
+                                            <b-button @click="changeFeatured(0)" class="mr-1" variant="secondary" >
+                                                YES
+                                            </b-button>
+                                            <b-button @click="changeFeatured(1)" class="mr-1" variant="danger" >
+                                                NO
+                                            </b-button>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                             
                             <div v-if="currentAlbumStatus === 'For Comment' ">
@@ -779,6 +782,12 @@
                         let formData_albumStatus = new FormData();
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
+                        
+                        // EVENT FEATURED
+                        this.featuredStatus = "0"; // NO
+                        let formData_featuredStatus = new FormData();
+                        formData_featuredStatus.append('album_featured', this.featuredStatus);
+                        const response_featuredStatusData = await assets_service.updateFeaturedStatus(this.event_id, formData_featuredStatus);
 
                         // EVENT TRACKING STATUS
                         this.eventTrackingStatus = "Published";
@@ -787,6 +796,8 @@
                             formData_eventTrackingLog.append('activity', this.eventTrackingStatus);
                             formData_eventTrackingLog.append('date', this.finalDateTime);
                         const response_eventTrackingLog = await assets_service.addTrackingLog(formData_eventTrackingLog);
+
+                        //
 
                         this.$toast.open({
                             message: 'Published successfully!',

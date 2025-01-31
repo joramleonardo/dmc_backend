@@ -1231,13 +1231,20 @@
                         });
                         this.$refs['modal_uploadPhoto'].hide();
                         this.photo_tabs.forEach((photoEntry, index) => {
+                            console.log("H E L L O O O O O O O O O O ");
+                            console.log(index);
+                            console.log(this.photo_tabs.length);
+                            
+                            console.log("_______________AAAAAA_");
                             photoEntry.photo_fileName = null;
                             photoEntry.photo_title = '';
                             photoEntry.photo_photographer = '';
                             this.selected_photo_category = 'Please select photo category';
                             photoEntry.photo_description = '';
                             photoEntry.photo_tags = '';
+                            this.photo_tabs.splice(0,this.photo_tabs.length);
                         });
+                        
                     }catch(error){}
                 },
                 uploadVideo: async function() {
