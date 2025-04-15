@@ -10,6 +10,7 @@ use Session;
 // use Storage;
 use App\Assets;
 use App\Album;
+use App\UpcomingEvent;
 use App\AlbumTags;
 use App\AlbumStatus;
 use App\Photo;
@@ -23,7 +24,7 @@ class AssetsController extends Controller
 {
 
     public function addEventData(Request $request){
-        $data = new Album(); 
+        $data = new Album();
         $data->album_id = $request->album_id;
         $data->event_title = $request->event_title;
         $data->event_category = $request->event_category;
@@ -34,16 +35,37 @@ class AssetsController extends Controller
         $data->event_venue = $request->event_venue;
         $data->event_tags = $request->event_tags;
         $data->is_deleted = $request->is_deleted;
-        
+
         $data->save();
     }
 
+    public function addUpcomingEventData(Request $request)
+    {
+        $data = new UpcomingEvent();
+        $data->event_title = $request->eventTitle;
+        $data->event_date = $request->dateOfEvent;
+        $data->event_location = $request->locationOfEvent;
+        $data->event_organizing_agency = $request->organizingAgency;
+        $data->event_description = $request->briefDescription;
+
+        // Handle event_banner upload
+        if ($request->hasFile('eventBanner') && $request->file('eventBanner')->isValid()) {
+            $bannerPath = $request->file('eventBanner')->store('public/images');
+            $bannerFilename = basename($bannerPath); // get only the file name
+            $data->event_banner = $bannerFilename;
+        }
+
+        $data->save();
+
+        return response()->json(['message' => 'Event saved successfully.'], 200);
+    }
+
     public function addTrackingLog(Request $request){
-        $data = new EventTrackingLog(); 
+        $data = new EventTrackingLog();
         $data->album_id = $request->album_id;
         $data->activity = $request->activity;
         $data->date = $request->date;
- 
+
         $data->save();
     }
 
@@ -51,11 +73,12 @@ class AssetsController extends Controller
         $data = new AlbumStatus();
         $data->album_id = $request->album_id;
         $data->album_status = $request->album_status;
+        $data->album_featured = $request->album_featured;
         $data->name_author = $request->name_author;
-        
+
         $data->save();
     }
-    
+
     public function updateAlbumStatus(Request $request, $album_id){
         $data = AlbumStatus::where('album_id', $album_id)->first();
 
@@ -63,15 +86,34 @@ class AssetsController extends Controller
         $data->album_status = $request->album_status;
         $data->save();
     }
-    
-    public function updateFeaturedStatus(Request $request, $album_id){
-        $data = AlbumStatus::where('album_id', $album_id)->first();
 
-        //UPDATE
-        $data->	album_featured = $request->album_featured;
+    // public function updateFeaturedStatus(Request $request, $album_id){
+    //     $data = AlbumStatus::where('album_id', $album_id)->first();
+
+    //     $data->	album_featured = $request->album_featured;
+    //     $data->save();
+    // }
+
+    public function updateFeaturedStatus(Request $request, $album_id)
+    {
+        // Update album_featured status
+        $data = AlbumStatus::where('album_id', $album_id)->first();
+        $data->album_featured = $request->album_featured;
         $data->save();
+
+        // Insert log into featured_logs
+        DB::table('featured_logs')->insert([
+            'album_id' => $album_id,
+            'action' => $request->album_featured == '1' ? 'set_featured' : 'unset_featured',
+            'ip_address' => $request->ip(),
+            'created_at' => now(),
+        ]);
+
+        return response()->json(['message' => 'Featured status updated and logged.']);
     }
-    
+
+
+
     public function updateAlbumStatus_withPublisher(Request $request, $album_id){
         $data = AlbumStatus::where('album_id', $album_id)->first();
 
@@ -83,12 +125,12 @@ class AssetsController extends Controller
 
 
     public function addComment(Request $request){
-        $data = new Comment(); 
+        $data = new Comment();
         $data->album_id = $request->album_id;
         $data->section_id = $request->section_id;
         $data->section_title = $request->section_title;
         $data->section_comment = $request->section_comment;
-        
+
         $data->save();
     }
 
@@ -96,7 +138,7 @@ class AssetsController extends Controller
         $data = new AlbumTags();
         $data->album_id = $request->album_id;
         $data->album_tagName = $request->album_tagName;
-        
+
         $data->save();
     }
 
@@ -104,7 +146,7 @@ class AssetsController extends Controller
         $data = new PhotoTags();
         $data->photo_id = $request->photo_id;
         $data->photo_tagName = $request->photo_tagName;
-        
+
         $data->save();
     }
 
@@ -112,7 +154,7 @@ class AssetsController extends Controller
         $data = new VideoTags();
         $data->video_id = $request->video_id;
         $data->video_tagName = $request->video_tagName;
-        
+
         $data->save();
     }
 
@@ -133,7 +175,7 @@ class AssetsController extends Controller
     public function addVideoData(Request $request){
         foreach($request->video_form as $item){
 
-            $data = new Video(); 
+            $data = new Video();
             $data->album_id = $item['album_id'];
             $data->video_id = $item['video_id'];
             $data->video_link = $item['video_link'];
@@ -147,8 +189,8 @@ class AssetsController extends Controller
 
             $data->save();
         }
-        
-        
+
+
     }
 
     public function countAlbumEntry(){
@@ -179,7 +221,7 @@ class AssetsController extends Controller
             return response()->json(['message' => 'none']);
         }
     }
-    
+
     public function countAlbumTags(Request $album_id){
         $data = Photo::where('tbl_photo.photo_id', $album_id)
                             ->count();
@@ -195,14 +237,14 @@ class AssetsController extends Controller
     public function getAlbumStatus(Request $request, $album_id){
         $data = AlbumStatus::where('album_id', $album_id)
                             ->pluck('album_status');
-    
+
         return response()->json($data, 200);
     }
 
     public function getFeaturedStatus(Request $request, $album_id){
         $data = AlbumStatus::where('album_id', $album_id)
                             ->pluck('album_featured');
-    
+
         return response()->json($data, 200);
     }
 
@@ -211,10 +253,10 @@ class AssetsController extends Controller
                                 ->where('tbl_album_status.album_id', $album_id)
                                 // ->select('tbl_tracking_event_log.activity', 'tbl_tracking_event_log.date')
                             ->get('*');
-    
+
         return response()->json($data, 200);
     }
-    
+
     public function getCommentLog(Request $request, $album_id){
         $data = Comment::where('album_id', $album_id)
                             ->get('*');
@@ -230,40 +272,40 @@ class AssetsController extends Controller
             ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                          FROM tbl_photo 
-                          WHERE tbl_photo.album_id = tbl_album.album_id 
-                          ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                          FROM tbl_photo
+                          WHERE tbl_photo.album_id = tbl_album.album_id
+                          ORDER BY tbl_photo.created_at ASC
                           LIMIT 1) as first_photo_fileName')
             ]);
-    
+
         return response()->json($data, 200);
     }
 
     public function getAllListDraft(Request $request, $author){
-            
+
             $data = DB::table('tbl_album')
             ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
             ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album_status.album_status', "Saved as Draft")
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                        FROM tbl_photo 
-                        WHERE tbl_photo.album_id = tbl_album.album_id 
-                        ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                        FROM tbl_photo
+                        WHERE tbl_photo.album_id = tbl_album.album_id
+                        ORDER BY tbl_photo.created_at ASC
                         LIMIT 1) as first_photo_fileName')
             ]);
 
@@ -277,16 +319,16 @@ class AssetsController extends Controller
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album_status.album_status', ["Under Review", "For Comment"])
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                        FROM tbl_photo 
-                        WHERE tbl_photo.album_id = tbl_album.album_id 
-                        ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                        FROM tbl_photo
+                        WHERE tbl_photo.album_id = tbl_album.album_id
+                        ORDER BY tbl_photo.created_at ASC
                         LIMIT 1) as first_photo_fileName')
             ]);
 
@@ -300,16 +342,16 @@ class AssetsController extends Controller
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album_status.album_status', ["Submitted for Review", "Done Revision", "Revision For Review"])
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                        FROM tbl_photo 
-                        WHERE tbl_photo.album_id = tbl_album.album_id 
-                        ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                        FROM tbl_photo
+                        WHERE tbl_photo.album_id = tbl_album.album_id
+                        ORDER BY tbl_photo.created_at ASC
                         LIMIT 1) as first_photo_fileName')
             ]);
 
@@ -323,16 +365,16 @@ class AssetsController extends Controller
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album_status.album_status', "For Revision")
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                        FROM tbl_photo 
-                        WHERE tbl_photo.album_id = tbl_album.album_id 
-                        ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                        FROM tbl_photo
+                        WHERE tbl_photo.album_id = tbl_album.album_id
+                        ORDER BY tbl_photo.created_at ASC
                         LIMIT 1) as first_photo_fileName')
             ]);
 
@@ -346,16 +388,16 @@ class AssetsController extends Controller
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album_status.album_status', "Unpublished")
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                        FROM tbl_photo 
-                        WHERE tbl_photo.album_id = tbl_album.album_id 
-                        ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                        FROM tbl_photo
+                        WHERE tbl_photo.album_id = tbl_album.album_id
+                        ORDER BY tbl_photo.created_at ASC
                         LIMIT 1) as first_photo_fileName')
             ]);
 
@@ -369,16 +411,16 @@ class AssetsController extends Controller
             ->where('tbl_album_status.name_author', $author)
             ->where('tbl_album_status.album_status', "Published")
             ->where('tbl_album.is_deleted', "0")
-            ->whereNotNull('tbl_album.album_id') 
+            ->whereNotNull('tbl_album.album_id')
             ->orderBy('tbl_album.created_at', 'desc')
-            ->groupBy('tbl_album.album_id') 
+            ->groupBy('tbl_album.album_id')
             ->get([
                 'tbl_album.*',
                 'tbl_album_status.*',
-                DB::raw('(SELECT tbl_photo.photo_fileName 
-                        FROM tbl_photo 
-                        WHERE tbl_photo.album_id = tbl_album.album_id 
-                        ORDER BY tbl_photo.created_at ASC 
+                DB::raw('(SELECT tbl_photo.photo_fileName
+                        FROM tbl_photo
+                        WHERE tbl_photo.album_id = tbl_album.album_id
+                        ORDER BY tbl_photo.created_at ASC
                         LIMIT 1) as first_photo_fileName')
             ]);
 
@@ -392,18 +434,18 @@ public function getAllListForReview_publisher(Request $request){
         $data = DB::table('tbl_album')
         ->leftJoin('tbl_album_status', 'tbl_album.album_id', '=', 'tbl_album_status.album_id')
         ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
-        ->where('tbl_album_status.album_status', ["Submitted for Review", "Done Revision", "Revision For Review"])
+        ->whereIn('tbl_album_status.album_status', ["Submitted for Review", "Done Revision", "Revision For Review"])
         ->where('tbl_album.is_deleted', "0")
-        ->whereNotNull('tbl_album.album_id') 
+        ->whereNotNull('tbl_album.album_id')
         ->orderBy('tbl_album.created_at', 'desc')
-        ->groupBy('tbl_album.album_id') 
+        ->groupBy('tbl_album.album_id')
         ->get([
             'tbl_album.*',
             'tbl_album_status.*',
-            DB::raw('(SELECT tbl_photo.photo_fileName 
-                    FROM tbl_photo 
-                    WHERE tbl_photo.album_id = tbl_album.album_id 
-                    ORDER BY tbl_photo.created_at ASC 
+            DB::raw('(SELECT tbl_photo.photo_fileName
+                    FROM tbl_photo
+                    WHERE tbl_photo.album_id = tbl_album.album_id
+                    ORDER BY tbl_photo.created_at ASC
                     LIMIT 1) as first_photo_fileName')
         ]);
 
@@ -416,16 +458,16 @@ public function getAllListUnderReview_publisher(Request $request){
         ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
         ->where('tbl_album_status.album_status', ["Under Review", "For Comment"])
         ->where('tbl_album.is_deleted', "0")
-        ->whereNotNull('tbl_album.album_id') 
+        ->whereNotNull('tbl_album.album_id')
         ->orderBy('tbl_album.created_at', 'desc')
-        ->groupBy('tbl_album.album_id') 
+        ->groupBy('tbl_album.album_id')
         ->get([
             'tbl_album.*',
             'tbl_album_status.*',
-            DB::raw('(SELECT tbl_photo.photo_fileName 
-                    FROM tbl_photo 
-                    WHERE tbl_photo.album_id = tbl_album.album_id 
-                    ORDER BY tbl_photo.created_at ASC 
+            DB::raw('(SELECT tbl_photo.photo_fileName
+                    FROM tbl_photo
+                    WHERE tbl_photo.album_id = tbl_album.album_id
+                    ORDER BY tbl_photo.created_at ASC
                     LIMIT 1) as first_photo_fileName')
         ]);
 
@@ -438,16 +480,16 @@ public function getAllListForRevision_publisher(Request $request){
         ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
         ->where('tbl_album_status.album_status', "For Revision")
         ->where('tbl_album.is_deleted', "0")
-        ->whereNotNull('tbl_album.album_id') 
+        ->whereNotNull('tbl_album.album_id')
         ->orderBy('tbl_album.created_at', 'desc')
-        ->groupBy('tbl_album.album_id') 
+        ->groupBy('tbl_album.album_id')
         ->get([
             'tbl_album.*',
             'tbl_album_status.*',
-            DB::raw('(SELECT tbl_photo.photo_fileName 
-                    FROM tbl_photo 
-                    WHERE tbl_photo.album_id = tbl_album.album_id 
-                    ORDER BY tbl_photo.created_at ASC 
+            DB::raw('(SELECT tbl_photo.photo_fileName
+                    FROM tbl_photo
+                    WHERE tbl_photo.album_id = tbl_album.album_id
+                    ORDER BY tbl_photo.created_at ASC
                     LIMIT 1) as first_photo_fileName')
         ]);
 
@@ -460,16 +502,16 @@ public function getAllListUnpublished_publisher(Request $request){
         ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
         ->where('tbl_album_status.album_status', "Unpublished")
         ->where('tbl_album.is_deleted', "0")
-        ->whereNotNull('tbl_album.album_id') 
+        ->whereNotNull('tbl_album.album_id')
         ->orderBy('tbl_album.created_at', 'desc')
-        ->groupBy('tbl_album.album_id') 
+        ->groupBy('tbl_album.album_id')
         ->get([
             'tbl_album.*',
             'tbl_album_status.*',
-            DB::raw('(SELECT tbl_photo.photo_fileName 
-                    FROM tbl_photo 
-                    WHERE tbl_photo.album_id = tbl_album.album_id 
-                    ORDER BY tbl_photo.created_at ASC 
+            DB::raw('(SELECT tbl_photo.photo_fileName
+                    FROM tbl_photo
+                    WHERE tbl_photo.album_id = tbl_album.album_id
+                    ORDER BY tbl_photo.created_at ASC
                     LIMIT 1) as first_photo_fileName')
         ]);
 
@@ -482,16 +524,16 @@ public function getAllListPublished_publisher(Request $request){
         ->leftJoin('tbl_photo', 'tbl_album.album_id', '=', 'tbl_photo.album_id')
         ->where('tbl_album_status.album_status', "Published")
         ->where('tbl_album.is_deleted', "0")
-        ->whereNotNull('tbl_album.album_id') 
+        ->whereNotNull('tbl_album.album_id')
         ->orderBy('tbl_album.created_at', 'desc')
-        ->groupBy('tbl_album.album_id') 
+        ->groupBy('tbl_album.album_id')
         ->get([
             'tbl_album.*',
             'tbl_album_status.*',
-            DB::raw('(SELECT tbl_photo.photo_fileName 
-                    FROM tbl_photo 
-                    WHERE tbl_photo.album_id = tbl_album.album_id 
-                    ORDER BY tbl_photo.created_at ASC 
+            DB::raw('(SELECT tbl_photo.photo_fileName
+                    FROM tbl_photo
+                    WHERE tbl_photo.album_id = tbl_album.album_id
+                    ORDER BY tbl_photo.created_at ASC
                     LIMIT 1) as first_photo_fileName')
         ]);
 
@@ -505,20 +547,26 @@ public function getAllListFeatured(Request $request){
     ->where('tbl_album_status.album_status', "Published")
     ->where('tbl_album_status.album_featured', "1")
     ->where('tbl_album.is_deleted', "0")
-    ->whereNotNull('tbl_album.album_id') 
+    ->whereNotNull('tbl_album.album_id')
     ->orderBy('tbl_album.created_at', 'desc')
-    ->groupBy('tbl_album.album_id') 
+    ->groupBy('tbl_album.album_id')
     ->get([
         'tbl_album.*',
         'tbl_album_status.*',
-        DB::raw('(SELECT tbl_photo.photo_fileName 
-                FROM tbl_photo 
-                WHERE tbl_photo.album_id = tbl_album.album_id 
-                ORDER BY tbl_photo.created_at ASC 
+        DB::raw('(SELECT tbl_photo.photo_fileName
+                FROM tbl_photo
+                WHERE tbl_photo.album_id = tbl_album.album_id
+                ORDER BY tbl_photo.created_at ASC
                 LIMIT 1) as first_photo_fileName')
     ]);
 
 return response()->json($data, 200);
+}
+
+public function getAllUpcomingEvents()
+{
+    $data = UpcomingEvent::all();
+    return response()->json($data, 200);
 }
 
 
@@ -544,13 +592,13 @@ return response()->json($data, 200);
                     ->get('*');
         return response()->json($data, 200);
     }
-    
+
     public function getPhotoDetails(Request $request, $id){
             $data = Photo::where('id', $id)
                 ->get('*');
             return response()->json($data, 200);
     }
-    
+
     public function getVideoDetails(Request $request, $id){
             $data = Video::where('id', $id)
                 ->get('*');
@@ -568,7 +616,7 @@ return response()->json($data, 200);
               $data = AlbumTags::where('tbl_album_tags.album_id', $album_id)
                                 ->select('tbl_album_tags.album_id', 'tbl_album_tags.album_tagName')
                                 ->get();
-                    
+
         return response()->json($data, 200);
     }
 
@@ -595,14 +643,14 @@ return response()->json($data, 200);
               $data = Video::get('*');
         return response()->json($data, 200);
     }
-    
+
     public function deleteAlbum(Request $request, $albumID){
         $data = Assets::where('album_id', $albumID)->first();
 
         $data->is_deleted = $request->is_deleted;
         $data->save();
     }
-    
+
     public function updateAlbum(Request $request, $albumID){
         $data = Assets::where('album_id', $albumID)->first();
 
@@ -617,14 +665,14 @@ return response()->json($data, 200);
         $data->event_tags = $request->event_tags;
         $data->save();
     }
-    
+
     public function updateVideo(Request $request, $photo_id){
         $data = Video::where('id', $photo_id)->first();
 
-       
+
         //UPDATE
-       
-        
+
+
         $data->video_link = $request->video_link;
         $data->video_youtubeID = $request->video_youtubeID;
         $data->video_description = $request->video_description;
@@ -635,7 +683,7 @@ return response()->json($data, 200);
         $data->video_tags = $request->video_tags;
         $data->save();
     }
-    
+
     public function updatePhoto(Request $request, $photo_id){
         $data = Photo::where('id', $photo_id)->first();
 
@@ -647,15 +695,15 @@ return response()->json($data, 200);
         $data->photo_tags = $request->photo_tags;
         $data->save();
     }
-    
+
     public function addPhotoData(Request $request){
-        
+
 
         foreach($request->photo_form as $item){
 
             $validator = \Validator::make($item, [
                 'photo_fileName' => 'required|file|mimes:jpeg,png,jpg,gif|max:30720',
-                
+
             ]);
 
             // Check if validation fails
@@ -668,13 +716,13 @@ return response()->json($data, 200);
 
             $file_location = null;
                 if ($item['photo_fileName'] && is_file($item['photo_fileName'])) {
-                    
+
                     $file = $item['photo_fileName'];
                     $filePath = $item['photo_fileName']->store('public/images');
                     $filePathArray = explode('/', $filePath);
                     $file_newName = $filePathArray[2];
 
-                    $data = new Photo(); 
+                    $data = new Photo();
                     $data->album_id = $item['album_id'];
                     $data->photo_id = $item['photo_id'];
                     $data->photo_fileName = $file_newName;

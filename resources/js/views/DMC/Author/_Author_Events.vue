@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+
         <div id="_spinner">
             <div class="text-center mt-5">
                 <b-spinner label="Busy"></b-spinner>
@@ -35,7 +35,7 @@
                                 <b-tabs card>
                                     <b-tab active>
                                         <template #title>
-                                            All 
+                                            All
                                             <span v-if="totalRows_allEvents != 0">
                                                 <b-badge variant="primary">{{totalRows_allEvents}}</b-badge>
                                             </span>
@@ -47,7 +47,7 @@
                                             <div class="col-sm-6 col-lg-4" >
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
-                                                        NO DATA AVAILAVLE 
+                                                        NO DATA AVAILAVLE
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@
                                                                         <span class="badge bg-cyan text-cyan-fg status">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Under Review' ">
                                                                         <span class="badge bg-purple text-purple-fg">Under Review</span>
@@ -86,7 +86,7 @@
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Revision For Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
                                                                         <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -107,14 +107,14 @@
                                                                 </div> -->
                                                             </div>
                                                         </div>
-                                                    </div>                           
+                                                    </div>
                                                 </router-link>
                                             </div>
                                         </div>
                                     </b-tab>
                                     <b-tab>
                                         <template #title>
-                                            Drafts 
+                                            Drafts
                                             <span v-if="totalRows_draft != 0">
                                                 <b-badge variant="danger">{{totalRows_draft}}</b-badge>
                                             </span>
@@ -126,7 +126,7 @@
                                                 <div class="col-sm-6 col-lg-4" >
                                                     <div class="row row-cards">
                                                         <div class="h3 m-0">
-                                                            NO DATA AVAILAVLE 
+                                                            NO DATA AVAILAVLE
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,7 +153,7 @@
                                                                         <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Under Review' ">
                                                                         <span class="badge bg-purple text-purple-fg">Under Review</span>
@@ -165,7 +165,7 @@
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Revision For Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
                                                                         <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -186,14 +186,14 @@
                                                                 </div> -->
                                                             </div>
                                                         </div>
-                                                    </div>                           
+                                                    </div>
                                                 </router-link>
                                             </div>
                                         </div>
                                     </b-tab>
                                     <b-tab >
                                         <template #title>
-                                            Submitted for Review 
+                                            Submitted for Review
                                             <span v-if="totalRows_forReview != 0">
                                                 <b-badge variant="danger">{{totalRows_forReview}}</b-badge>
                                             </span>
@@ -205,7 +205,7 @@
                                                 <div class="col-sm-6 col-lg-4" >
                                                     <div class="row row-cards">
                                                         <div class="h3 m-0">
-                                                            NO DATA AVAILAVLE 
+                                                            NO DATA AVAILAVLE
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,7 +232,7 @@
                                                                         <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Under Review' ">
                                                                         <span class="badge bg-purple text-purple-fg">Under Review</span>
@@ -244,7 +244,7 @@
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Revision For Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
                                                                         <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -265,14 +265,14 @@
                                                                 </div> -->
                                                             </div>
                                                         </div>
-                                                    </div>                           
+                                                    </div>
                                                 </router-link>
                                             </div>
                                         </div>
                                     </b-tab>
                                     <b-tab >
                                         <template #title>
-                                            To Be Revised 
+                                            To Be Revised
                                             <span v-if="totalRows_forRevision != 0">
                                                 <b-badge variant="danger">{{totalRows_forRevision}}</b-badge>
                                             </span>
@@ -284,7 +284,7 @@
                                                 <div class="col-sm-6 col-lg-4" >
                                                     <div class="row row-cards">
                                                         <div class="h3 m-0">
-                                                            NO DATA AVAILAVLE 
+                                                            NO DATA AVAILAVLE
                                                         </div>
                                                     </div>
                                                 </div>
@@ -311,7 +311,7 @@
                                                                         <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Under Review' ">
                                                                         <span class="badge bg-purple text-purple-fg">Under Review</span>
@@ -323,7 +323,7 @@
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Revision For Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
                                                                         <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -344,14 +344,14 @@
                                                                 </div> -->
                                                             </div>
                                                         </div>
-                                                    </div>                           
+                                                    </div>
                                                 </router-link>
                                             </div>
                                         </div>
                                     </b-tab>
                                     <b-tab >
                                         <template #title>
-                                            Unpublished 
+                                            Unpublished
                                             <span v-if="totalRows_unpublished != 0">
                                                 <b-badge variant="warning">{{totalRows_unpublished}}</b-badge>
                                             </span>
@@ -363,7 +363,7 @@
                                             <div class="col-sm-6 col-lg-4" >
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
-                                                        NO DATA AVAILAVLE 
+                                                        NO DATA AVAILAVLE
                                                     </div>
                                                 </div>
                                             </div>
@@ -390,7 +390,7 @@
                                                                         <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Under Review' ">
                                                                         <span class="badge bg-purple text-purple-fg">Under Review</span>
@@ -402,7 +402,7 @@
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Revision For Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
                                                                         <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -423,27 +423,27 @@
                                                                 </div> -->
                                                             </div>
                                                         </div>
-                                                    </div>                           
+                                                    </div>
                                                 </router-link>
                                             </div>
                                         </div>
                                     </b-tab>
                                     <b-tab >
                                         <template #title>
-                                            Published 
+                                            Published
                                             <span v-if="totalRows_published != 0">
                                                 <b-badge variant="success">{{totalRows_published}}</b-badge>
                                             </span>
                                             <span v-else>
                                                 <b-badge variant="secondary">0</b-badge>
                                             </span>
-                                            
+
                                         </template>
                                         <div class="row row-cards" v-if="totalRows_published == 0">
                                             <div class="col-sm-6 col-lg-4" >
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
-                                                        NO DATA AVAILAVLE 
+                                                        NO DATA AVAILAVLE
                                                     </div>
                                                 </div>
                                             </div>
@@ -470,7 +470,7 @@
                                                                         <span class="badge bg-cyan text-cyan-fg">Draft</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Submitted for Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Submitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Under Review' ">
                                                                         <span class="badge bg-purple text-purple-fg">Under Review</span>
@@ -482,7 +482,7 @@
                                                                         <span class="badge bg-red text-red-fg">Needs Revision</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Revision For Review' ">
-                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                                                        <span class="badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                                                     </div>
                                                                     <div v-if="event.album_status === 'Unpublished' ">
                                                                         <span class="badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -503,7 +503,7 @@
                                                                 </div> -->
                                                             </div>
                                                         </div>
-                                                    </div>                           
+                                                    </div>
                                                 </router-link>
                                             </div>
                                         </div>
@@ -560,7 +560,7 @@
                             <div class="mb-3">
                                 <label class="form-label"><span style="color: red;">* </span>Sector:</label>
                                 <b-form-select v-model="selected_sector" :options="options_sector"></b-form-select>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -573,7 +573,7 @@
                             <div class="mb-3" style="color: black !important">
                                 <label class="form-label"><span style="color: red;">* </span>Tags:</label>
                                 <b-form-tags required input-id="tags-basic" name="tags" v-model="ticketData.eventTags" placeholder="Add new tags separated by enter key..."></b-form-tags>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -590,7 +590,7 @@
 
 
 <script type="text/javascript">
-    
+
         import * as assets_service from '../../../services/assets_service.js';
         import * as auth_service from '../../../services/auth_service.js';
 
@@ -767,7 +767,7 @@
                         const response_allEvents = await assets_service.getAllListEvents(this.displayName);
                         this.list_allEvents = response_allEvents.data;
                         this.totalRows_allEvents = this.list_allEvents.length;
-                        
+
                     } catch(error) {
                         this.flashMessage.error({
                         message: 'Some error occured! Please try again.',
@@ -872,30 +872,30 @@
                 },
                 saveEvent: async function() {
 
-                    if (this.ticketData.eventTitle === undefined || 
-                        this.selected_category_album === null  ||  
-                        this.selected_sector === null  ||  
-                        this.ticketData.eventDescription === undefined  ||  
-                        this.ticketData.selected_agency === null  ||  
-                        this.ticketData.eventDate === undefined  ||  
-                        this.ticketData.eventVenue === undefined  ||  
+                    if (this.ticketData.eventTitle === undefined ||
+                        this.selected_category_album === null  ||
+                        this.selected_sector === null  ||
+                        this.ticketData.eventDescription === undefined  ||
+                        this.ticketData.selected_agency === null  ||
+                        this.ticketData.eventDate === undefined  ||
+                        this.ticketData.eventVenue === undefined  ||
                         this.ticketData.eventTags === undefined  ){
 
                             this.$toast.open({
                                 message: 'Required Fields!',
                                 type: 'error', // Options: 'success', 'info', 'error', 'default'
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                                duration: 5000, 
+                                duration: 5000,
                             });
                     }
                     else{
-                        
+
                         // EVENT STATUS
                         this.albumStatus = "Saved as Draft";
 
                         // EVENT TRACKING STATUS
                         this.eventTrackingStatus = "Event Created";
-                        
+
                         try{
                             // GENERATE EVENT ID
                             const const_1 = await assets_service.countAlbumEntry();
@@ -911,7 +911,7 @@
                                 let i = totalAlbumEntry + 1;
                                 this.album_id = "ET" + "2025" + "-00" + i;
                             }
-                            
+
                             // CREATE EVENT
                             let formData_eventData = new FormData();
                                 formData_eventData.append('album_id', this.album_id);
@@ -948,6 +948,7 @@
                             let formData_albumStatus = new FormData();
                                 formData_albumStatus.append('album_id', this.album_id);
                                 formData_albumStatus.append('album_status', this.albumStatus);
+                                formData_albumStatus.append('album_featured', "0");
                                 formData_albumStatus.append('name_author', this.displayName);
                             const response_albumStatusData = await assets_service.addAlbumStatus_withAuthor(formData_albumStatus);
 
@@ -957,7 +958,7 @@
                                 message: 'An error occured!',
                                 type: 'error', // Options: 'success', 'info', 'error', 'default'
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                                duration: 5000, 
+                                duration: 5000,
                             });
                         }
 
@@ -974,9 +975,9 @@
                             message: 'Event was created successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
-                        
+
                         this.loadAllEvents();
                         this.loadDraftList();
                         this.$refs.modal_addAlbumInfo.hide();
@@ -1009,7 +1010,7 @@
 
     .event-card img {
         width: 100%;
-        height: auto; 
+        height: auto;
         object-fit: cover;
     }
 

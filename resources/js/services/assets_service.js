@@ -5,6 +5,10 @@ export function addEventData(data){
     return httpFile().post('/addEventData', data);
 }
 
+export function addUpcomingEventData(data){
+    return httpFile().post('/addUpcomingEventData', data);
+}
+
 export function addComment(data){
     return httpFile().post('/addComment', data);
 }
@@ -38,10 +42,7 @@ export function addVideoData(data){
     return httpFile().post('/addVideoData', data);
 }
 
-//GET OR DISPLAY RESULTS
-// export function getAllListEvents(author){
-//     return httpFile().post(`/getAllListEvents/${author}`);
-// }
+
 
 export function getAllListEvents(author){
     return httpFile().post(`/getAllListEvents/${author}`);
@@ -96,6 +97,11 @@ export function getAllListPublished_publisher(){
 export function getAllListFeatured(){
     return http().get('/getAllListFeatured');
 }
+
+export function getAllUpcomingEvents(){
+    return http().get('/getAllUpcomingEvents');
+}
+
 
 
 

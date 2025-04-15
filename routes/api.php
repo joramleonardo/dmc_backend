@@ -54,80 +54,81 @@ Route::post('getUserData', [LoginController::class, 'getUserData']);
 
 
 
-// Route::post('addEventData', 'AssetsController@addEventData');
-Route::post('addEventData', [AssetsController::class, 'addEventData']);
-Route::post('addComment', [AssetsController::class, 'addComment']);
-Route::post('addAlbumTags', [AssetsController::class, 'addAlbumTags']);
+    Route::post('addEventData', [AssetsController::class, 'addEventData']);
+    Route::post('addUpcomingEventData', [AssetsController::class, 'addUpcomingEventData']);
+    Route::post('addComment', [AssetsController::class, 'addComment']);
+    Route::post('addAlbumTags', [AssetsController::class, 'addAlbumTags']);
 
-Route::post('/addPhotoData', [AssetsController::class, 'addPhotoData']);
-Route::post('/deletePhoto', [AssetsController::class, 'deletePhoto']);
-Route::post('/replacePhoto', [AssetsController::class, 'replacePhoto']);
+    Route::post('/addPhotoData', [AssetsController::class, 'addPhotoData']);
+    Route::post('/deletePhoto', [AssetsController::class, 'deletePhoto']);
+    Route::post('/replacePhoto', [AssetsController::class, 'replacePhoto']);
 
-Route::post('addPhotoTags', [AssetsController::class, 'addPhotoTags']);
-Route::post('addVideoTags', [AssetsController::class, 'addVideoTags']);
-Route::post('addVideoData', [AssetsController::class, 'addVideoData']);
-
-
-Route::post('/getAllListEvents/{author}', [AssetsController::class, 'getAllListEvents']);
-Route::post('/getAllListDraft/{author}', [AssetsController::class, 'getAllListDraft']);
-Route::post('/getAllListUnderReview/{author}', [AssetsController::class, 'getAllListUnderReview']);
-Route::post('/getAllListForReview/{author}', [AssetsController::class, 'getAllListForReview']);
-Route::post('/getAllListForRevision/{author}', [AssetsController::class, 'getAllListForRevision']);
-Route::post('/getAllListPublished/{author}', [AssetsController::class, 'getAllListPublished']);
-Route::post('/getAllListUnpublished/{author}', [AssetsController::class, 'getAllListUnpublished']);
-
-Route::get('getAllListForReview_publisher', [AssetsController::class, 'getAllListForReview_publisher']);
-Route::get('getAllListUnderReview_publisher', [AssetsController::class, 'getAllListUnderReview_publisher']);
-Route::get('getAllListForRevision_publisher', [AssetsController::class, 'getAllListForRevision_publisher']);
-Route::get('getAllListUnpublished_publisher', [AssetsController::class, 'getAllListUnpublished_publisher']);
-Route::get('getAllListPublished_publisher', [AssetsController::class, 'getAllListPublished_publisher']);
-
-Route::get('getAllListFeatured', [AssetsController::class, 'getAllListFeatured']);
+    Route::post('addPhotoTags', [AssetsController::class, 'addPhotoTags']);
+    Route::post('addVideoTags', [AssetsController::class, 'addVideoTags']);
+    Route::post('addVideoData', [AssetsController::class, 'addVideoData']);
 
 
+    Route::post('/getAllListEvents/{author}', [AssetsController::class, 'getAllListEvents']);
+    Route::post('/getAllListDraft/{author}', [AssetsController::class, 'getAllListDraft']);
+    Route::post('/getAllListUnderReview/{author}', [AssetsController::class, 'getAllListUnderReview']);
+    Route::post('/getAllListForReview/{author}', [AssetsController::class, 'getAllListForReview']);
+    Route::post('/getAllListForRevision/{author}', [AssetsController::class, 'getAllListForRevision']);
+    Route::post('/getAllListPublished/{author}', [AssetsController::class, 'getAllListPublished']);
+    Route::post('/getAllListUnpublished/{author}', [AssetsController::class, 'getAllListUnpublished']);
+
+    Route::get('getAllListForReview_publisher', [AssetsController::class, 'getAllListForReview_publisher']);
+    Route::get('getAllListUnderReview_publisher', [AssetsController::class, 'getAllListUnderReview_publisher']);
+    Route::get('getAllListForRevision_publisher', [AssetsController::class, 'getAllListForRevision_publisher']);
+    Route::get('getAllListUnpublished_publisher', [AssetsController::class, 'getAllListUnpublished_publisher']);
+    Route::get('getAllListPublished_publisher', [AssetsController::class, 'getAllListPublished_publisher']);
+
+    Route::get('getAllListFeatured', [AssetsController::class, 'getAllListFeatured']);
+    Route::get('getAllUpcomingEvents', [AssetsController::class, 'getAllUpcomingEvents']);
 
 
 
-Route::get('getAllListPhoto', [AssetsController::class, 'getAllListPhoto']);
-Route::post('/getEventDetails/{album_id}', [AssetsController::class, 'getEventDetails']);
-Route::post('/getListPhoto_selected/{album_id}', [AssetsController::class, 'getListPhoto_selected']);
-Route::post('/getPhotoDetails/{id}', [AssetsController::class, 'getPhotoDetails']);
-Route::post('/getVideoDetails/{id}', [AssetsController::class, 'getVideoDetails']);
-
-Route::post('/getAlbumID/{id}', [AssetsController::class, 'getAlbumID']);
-Route::post('/getListVideo_selected/{album_id}', [AssetsController::class, 'getListVideo_selected']);
-Route::post('/getAlbumTags_selected/{album_id}', [AssetsController::class, 'getAlbumTags_selected']);
-Route::post('/getPhotoTags_selected/{photo_id}', [AssetsController::class, 'getPhotoTags_selected']);
-Route::post('/getVideoTags_selected/{video_id}', [AssetsController::class, 'getVideoTags_selected']);
-Route::get('getAllListVideo', [AssetsController::class, 'getAllListVideo']);
-Route::post('/getAlbumStatus/{album_id}', [AssetsController::class, 'getAlbumStatus']);
-Route::post('/getFeaturedStatus/{album_id}', [AssetsController::class, 'getFeaturedStatus']);
-Route::post('/getTrackingLog/{album_id}', [AssetsController::class, 'getTrackingLog']);
-Route::post('/getCommentLog/{album_id}', [AssetsController::class, 'getCommentLog']);
-
-Route::get('countAlbumEntry', [AssetsController::class, 'countAlbumEntry']);
-Route::post('/countAlbumPhotoEntry/{album_id}', [AssetsController::class, 'countAlbumPhotoEntry']);
-Route::post('/countAlbumComment/{album_id}', [AssetsController::class, 'countAlbumComment']);
-Route::post('/countAlbumVideoEntry/{album_id}', [AssetsController::class, 'countAlbumVideoEntry']);
-Route::post('/checkAlbumTagsExists/{album_id}/{tag_name}', [AssetsController::class, 'checkAlbumTagsExists']);
-
-// Route::post('/countEntry/{date}', 'TicketController@countEntry');
 
 
-Route::post('/deleteAlbum/{albumID}', [AssetsController::class, 'deleteAlbum']);
+    Route::get('getAllListPhoto', [AssetsController::class, 'getAllListPhoto']);
+    Route::post('/getEventDetails/{album_id}', [AssetsController::class, 'getEventDetails']);
+    Route::post('/getListPhoto_selected/{album_id}', [AssetsController::class, 'getListPhoto_selected']);
+    Route::post('/getPhotoDetails/{id}', [AssetsController::class, 'getPhotoDetails']);
+    Route::post('/getVideoDetails/{id}', [AssetsController::class, 'getVideoDetails']);
 
-Route::post('/updateAlbum/{albumID}', [AssetsController::class, 'updateAlbum']);
-Route::post('/updatePhoto/{photo_id}', [AssetsController::class, 'updatePhoto']);
-Route::post('/updateVideo/{photo_id}', [AssetsController::class, 'updateVideo']);
+    Route::post('/getAlbumID/{id}', [AssetsController::class, 'getAlbumID']);
+    Route::post('/getListVideo_selected/{album_id}', [AssetsController::class, 'getListVideo_selected']);
+    Route::post('/getAlbumTags_selected/{album_id}', [AssetsController::class, 'getAlbumTags_selected']);
+    Route::post('/getPhotoTags_selected/{photo_id}', [AssetsController::class, 'getPhotoTags_selected']);
+    Route::post('/getVideoTags_selected/{video_id}', [AssetsController::class, 'getVideoTags_selected']);
+    Route::get('getAllListVideo', [AssetsController::class, 'getAllListVideo']);
+    Route::post('/getAlbumStatus/{album_id}', [AssetsController::class, 'getAlbumStatus']);
+    Route::post('/getFeaturedStatus/{album_id}', [AssetsController::class, 'getFeaturedStatus']);
+    Route::post('/getTrackingLog/{album_id}', [AssetsController::class, 'getTrackingLog']);
+    Route::post('/getCommentLog/{album_id}', [AssetsController::class, 'getCommentLog']);
 
-Route::post('/updateTrackingLog/{albumID}', [AssetsController::class, 'updateTrackingLog']);
-Route::post('/updateTrackingLog_publisher/{albumID}', [AssetsController::class, 'updateTrackingLog_publisher']);
+    Route::get('countAlbumEntry', [AssetsController::class, 'countAlbumEntry']);
+    Route::post('/countAlbumPhotoEntry/{album_id}', [AssetsController::class, 'countAlbumPhotoEntry']);
+    Route::post('/countAlbumComment/{album_id}', [AssetsController::class, 'countAlbumComment']);
+    Route::post('/countAlbumVideoEntry/{album_id}', [AssetsController::class, 'countAlbumVideoEntry']);
+    Route::post('/checkAlbumTagsExists/{album_id}/{tag_name}', [AssetsController::class, 'checkAlbumTagsExists']);
+
+    // Route::post('/countEntry/{date}', 'TicketController@countEntry');
 
 
-Route::post('addTrackingLog', [AssetsController::class, 'addTrackingLog']);
-Route::post('addAlbumStatus_withAuthor', [AssetsController::class, 'addAlbumStatus_withAuthor']);
+    Route::post('/deleteAlbum/{albumID}', [AssetsController::class, 'deleteAlbum']);
 
-Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);
-Route::post('/updateAlbumStatus_withPublisher/{albumID}', [AssetsController::class, 'updateAlbumStatus_withPublisher']);
+    Route::post('/updateAlbum/{albumID}', [AssetsController::class, 'updateAlbum']);
+    Route::post('/updatePhoto/{photo_id}', [AssetsController::class, 'updatePhoto']);
+    Route::post('/updateVideo/{photo_id}', [AssetsController::class, 'updateVideo']);
 
-Route::post('/updateFeaturedStatus/{albumID}', [AssetsController::class, 'updateFeaturedStatus']);
+    Route::post('/updateTrackingLog/{albumID}', [AssetsController::class, 'updateTrackingLog']);
+    Route::post('/updateTrackingLog_publisher/{albumID}', [AssetsController::class, 'updateTrackingLog_publisher']);
+
+
+    Route::post('addTrackingLog', [AssetsController::class, 'addTrackingLog']);
+    Route::post('addAlbumStatus_withAuthor', [AssetsController::class, 'addAlbumStatus_withAuthor']);
+
+    Route::post('/updateAlbumStatus/{albumID}', [AssetsController::class, 'updateAlbumStatus']);
+    Route::post('/updateAlbumStatus_withPublisher/{albumID}', [AssetsController::class, 'updateAlbumStatus_withPublisher']);
+
+    Route::post('/updateFeaturedStatus/{albumID}', [AssetsController::class, 'updateFeaturedStatus']);

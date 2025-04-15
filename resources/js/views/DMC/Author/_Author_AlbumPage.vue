@@ -11,9 +11,9 @@
                     <div class="row g-2 align-items-center">
                         <div class="col">
                             <h2 class="page-title">
-                                <router-link to="/author/events" class="nav-link" style="text-decoration: underline;"> 
-                                    EVENTS 
-                                </router-link>    
+                                <router-link to="/author/events" class="nav-link" style="text-decoration: underline;">
+                                    EVENTS
+                                </router-link>
                                 > {{data_eventInformation.event_title}}
                             </h2>
                             <div style="margin-top: 1%;">
@@ -21,7 +21,7 @@
                                     <span class="status badge bg-cyan text-cyan-fg">Draft</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Submitted for Review' ">
-                                    <span class="status badge bg-orange text-orange-fg">Submitted to Publisher</span>
+                                    <span class="status badge bg-orange text-orange-fg">Submitted for Review</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Under Review' ">
                                     <span class="status badge bg-purple text-purple-fg">Under Review</span>
@@ -33,7 +33,7 @@
                                     <span class="status badge bg-red text-red-fg">Needs Revision</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Revision For Review' ">
-                                    <span class="status badge bg-orange text-orange-fg">Resubmitted to Publisher</span>
+                                    <span class="status badge bg-orange text-orange-fg">Resubmitted for Review</span>
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Unpublished' ">
                                     <span class="status badge bg-yellow text-yellow-fg">Unpublished</span>
@@ -57,10 +57,10 @@
 
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Published' ">
-                                    
+
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Unpublished' ">
-                                    
+
                                 </div>
                                 <div v-if="currentAlbumStatus === 'For Revision' ">
                                     <b-button @click="showModal_uploadPhoto()" class="mr-1" variant="primary"  v-b-tooltip.hover title="Upload Photo">
@@ -70,7 +70,7 @@
                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-video-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" /><path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" /><path d="M7 12l4 0" /><path d="M9 10l0 4" /></svg>    <!-- Upload Photo -->
                                     </b-button>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                                     Event Information
                                     </h3>
                                     <div class="card-actions">
-                                        
+
                                         <div v-if="currentAlbumStatus === 'Saved as Draft' ">
                                             <b-button @click="editAlbumInfo()" class="mr-1" variant="success" v-b-tooltip.hover title="Edit Event">
                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="100"  height="100"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
@@ -106,7 +106,7 @@
                                     <dl class="row">
                                         <dt class="col-5 font-title-size">EVENT ID:</dt>
                                         <dd class="col-7 font-body-size">{{data_eventInformation.album_id}}</dd>
-                                        
+
                                         <dt class="col-5 font-title-size">TITLE:</dt>
                                         <dd class="col-7 font-body-size">{{data_eventInformation.event_title}}</dd>
 
@@ -151,10 +151,10 @@
                                             Resubmit to Publisher
                                         </b-button>
                                     </div>
-                                    
+
                                 </div>
                             </div>
-                            
+
                             <div v-if="currentAlbumStatus === 'Return to Author' ">
                                 <div v-if="noOfComment === 0">
                                     <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
@@ -186,11 +186,16 @@
                                                 <br>
                                                 {{event.section_comment}}
                                             </span>
+                                            <span v-if="event.section_title === 'VIDEO DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}: </span> {{event.section_id}}
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div v-if="currentAlbumStatus === 'For Revision' ">
                                 <div v-if="noOfComment === 0">
                                     <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
@@ -222,11 +227,16 @@
                                                 <br>
                                                 {{event.section_comment}}
                                             </span>
+                                            <span v-if="event.section_title === 'VIDEO DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}: </span> {{event.section_id}}
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="card event-cardd" id="Event_Tracking_Log" style="margin-top: 15px">
                                 <div class="card-header">
                                     <h3 class="card-title">
@@ -279,7 +289,7 @@
                                             <div v-if="this.photo_length === 0">
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
-                                                        NO PHOTO AVAILAVLE 
+                                                        NO PHOTO AVAILAVLE
                                                     </div>
                                                 </div>
                                             </div>
@@ -338,7 +348,7 @@
                                                 <span v-if="this.video_length === 0">
                                                     <div class="row row-cards">
                                                         <div class="h3 m-0">
-                                                            NO VIDEO AVAILAVLE 
+                                                            NO VIDEO AVAILAVLE
                                                         </div>
                                                     </div>
                                                 </span>
@@ -354,7 +364,7 @@
                                                                 <div class="ratio ratio-4x3 card-img-top">
                                                                     <iframe width="420" height="315"
                                                                         :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
-                                                                        
+
                                                                     </iframe>
                                                                 </div>
                                                                 <div class="card-body">
@@ -380,7 +390,7 @@
                                                                     </dl>
                                                                 </div>
                                                                 <div class="card-footer">
-                                                                        
+
                                                                         <div v-if="currentAlbumStatus === 'Saved as Draft' ">
                                                                             <b-button @click="showModal_updateVideo(event.id)" class="" variant="success"  v-b-tooltip.hover title="Update Video">
                                                                                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
@@ -399,7 +409,7 @@
                                                         </div>
                                                     </div>
                                                 </span>
-                                        
+
                                         </div>
                                     </div>
                                 </div>
@@ -475,7 +485,7 @@
                             <div class="mb-3" style="color: black !important">
                                 <label class="form-label"><span style="color: red;">* </span>Tags:</label>
                                 <b-form-tags required input-id="tags-basic" name="tags" v-model="album_tags_new" placeholder="Add new tags separated by enter key..."></b-form-tags>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -496,27 +506,27 @@
                             <b-tab v-for="(photoEntry, i) in photo_tabs" :key="'dyn-tab-' + i" :title="'Photo ' + (i+1)">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-12 mb-0">
-                                        <b-form-group >   
+                                        <b-form-group >
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Select Photo:</label>
                                             <b-form-file placeholder="Choose a file or drop it here..." drop-placeholder="Drop file here..." v-model="photoEntry.photo_fileName">
                                             </b-form-file>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-lg-6 mb-0">
-                                        
+
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photographer:</label>
                                             <b-form-input  v-model="photoEntry.photo_photographer" placeholder="Enter Photographer..."   ></b-form-input>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
-                                            <b-form-select v-model="selected_photo_category" :options="options_photo_categoryList"></b-form-select>
-                                            
-                                        </b-form-group> 
+                                            <b-form-select v-model="photoEntry.photo_category" :options="options_photo_categoryList"></b-form-select>
+
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -524,7 +534,7 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Short Description of the Photo:</label>
                                             <b-form-textarea id="textarea" v-model="photoEntry.photo_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -532,7 +542,7 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Tags:</label>
                                             <b-form-tags input-id="tags-basic" name="tags" v-model="photoEntry.photo_tags" placeholder="Add new tags separated by enter key..."></b-form-tags>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <b-button style="margin-bottom: 2%" size="sm" variant="danger" class="float-right" @click="clearEntry(i)">
@@ -566,10 +576,10 @@
                             <b-tab v-for="(videoEntry, i) in vidClip_tabs" :key="'dyn-tab-' + i" :title="'Video ' + (i+1)">
                                 <div class="row">
                                     <div class="col-md-12 col-lg-12 mb-0">
-                                        <b-form-group >   
+                                        <b-form-group >
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Video (Youtube Link):</label>
                                             <b-form-input id="" v-model="videoEntry.video_link"  placeholder="Enter Youtube Link here..."   ></b-form-input>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -581,12 +591,12 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Videographer:</label>
                                             <b-form-input  v-model="videoEntry.video_videographer" placeholder="Enter Photographer..."   ></b-form-input>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
-                                            
+
                                             <b-form-select v-model="videoEntry.selected_video_category" :options="options_video_categoryList"></b-form-select>
                                         </b-form-group>
                                     </div>
@@ -596,7 +606,7 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Type:</label>
                                             <b-form-select id="input-3" v-model="videoEntry.selected_video_type" :options="options_category_type"   ></b-form-select>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                     <div class="col-md-6 col-lg-6 mb-0">
                                         <b-form-group class="group" id="form_externalEventDate">
@@ -606,7 +616,7 @@
                                                 locale="en"
                                                 :hour12="false"
                                             ></b-form-timepicker>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -614,7 +624,7 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Short Description of the Video:</label>
                                             <b-form-textarea id="textarea" v-model="videoEntry.video_description" placeholder="Short description of the Video..." rows="3" max-rows="6" ></b-form-textarea>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -622,7 +632,7 @@
                                         <b-form-group class="group" id="form_externalEventDate">
                                             <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Tags:</label>
                                             <b-form-tags input-id="tags-basic" name="tags" v-model="videoEntry.video_tags" placeholder="Add new tags separated by enter key..."></b-form-tags>
-                                        </b-form-group> 
+                                        </b-form-group>
                                     </div>
                                 </div>
                                 <b-button size="sm" variant="danger" class="float-right" @click="vidClip_closeTab(i)">
@@ -656,36 +666,36 @@
                 <div class="card-body">
                     <div class="row row-cards">
                         <div class="col-sm-6 col-md-6">
-                            <b-form-group >   
+                            <b-form-group >
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo:</label>
-                                    <div class="img-responsive rounded border" 
+                                    <div class="img-responsive rounded border"
                                     :style="{ backgroundImage: `url('/storage/images/${data_photoInformation_update.photo_fileName}')` }">
                                     </div>
-                                
-                            </b-form-group> 
-                            <b-form-group >   
+
+                            </b-form-group>
+                            <b-form-group >
                                 <b-button variant="info" value="1" @click="validate_upload_newPhoto()">Replace this photo</b-button>
-                                
-                            </b-form-group> 
+
+                            </b-form-group>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Description:</label>
                                 <b-form-textarea id="textarea" v-model="data_photoInformation_update.photo_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
-                            </b-form-group> 
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photographer:</label>
                                 <b-form-input  v-model="data_photoInformation_update.photo_photographer" placeholder="Enter Photographer..."   ></b-form-input>
-                            </b-form-group> 
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Category:</label>
                                 <b-form-select v-model="data_photoInformation_update.photo_category" :options="options_photo_categoryList"></b-form-select>
-                                
-                            </b-form-group> 
+
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Photo Tags:</label>
                                 <b-form-tags input-id="tags-basic" name="tags" v-model="photoTagsArray" placeholder="Add new tags separated by enter key..."></b-form-tags>
-                            </b-form-group> 
+                            </b-form-group>
                         </div>
                     </div>
                 </div>
@@ -705,32 +715,32 @@
                 <div class="card-body">
                     <div class="row row-cards">
                         <div class="col-sm-6 col-md-6">
-                            <b-form-group >   
+                            <b-form-group >
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video:</label>
                                 <br>
                                 <iframe width="500" height="315"
                                     :src='`https://www.youtube.com/embed/`+`${data_videoInformation_update.video_youtubeID}`'>
-                                    
+
                                 </iframe>
-                            </b-form-group> 
+                            </b-form-group>
                         </div>
                         <div class="col-sm-6 col-md-6">
-                            <b-form-group >   
+                            <b-form-group >
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video (Youtube Link):</label>
                                 <b-form-input id="" v-model="data_videoInformation_update.video_link"  placeholder="Enter Youtube Link here..."   ></b-form-input>
-                            </b-form-group> 
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Description:</label>
                                 <b-form-textarea id="textarea" v-model="data_videoInformation_update.video_description" placeholder="Short description of the Photo..." rows="3" max-rows="6" ></b-form-textarea>
-                            </b-form-group> 
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Videographer:</label>
                                 <b-form-input  v-model="data_videoInformation_update.video_videographer" placeholder="Enter Photographer..."   ></b-form-input>
-                            </b-form-group> 
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Category:</label>
-                                <b-form-select v-model="data_videoInformation_update.video_category" :options="options_video_categoryList"></b-form-select> 
-                            </b-form-group> 
+                                <b-form-select v-model="data_videoInformation_update.video_category" :options="options_video_categoryList"></b-form-select>
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Duration (HH:mm): </label>
                                 <b-form-timepicker
@@ -739,17 +749,17 @@
                                     placeholder="HH:mm"
                                     :hour12="false"
                                 ></b-form-timepicker>
-                            </b-form-group> 
-                            
+                            </b-form-group>
+
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Type:</label>
                                 <b-form-select id="input-3" v-model="data_videoInformation_update.video_type" :options="options_category_type"   ></b-form-select>
-                            </b-form-group> 
+                            </b-form-group>
                             <b-form-group class="group" id="form_externalEventDate">
                                 <label for="entryDate" class="label" style="color:black; font-weight: bold">Video Tags:</label>
                                 <!-- <b-form-tags input-id="tags-basic" name="tags" v-model="photo_tags_new" placeholder="Add new tags separated by enter key..."></b-form-tags> -->
                                 <b-form-tags input-id="tags-basic" name="tags" v-model="videoTagsArray" placeholder="Add new tags separated by enter key..."></b-form-tags>
-                            </b-form-group> 
+                            </b-form-group>
                         </div>
                     </div>
                 </div>
@@ -768,7 +778,7 @@
             </div>
         </b-modal>
 
-        <b-modal id="modal_validate_deletePhoto" ref="modal_validate_deletePhoto"  title="Are you sure you want to delete this photo?" size="lg" centered 
+        <b-modal id="modal_validate_deletePhoto" ref="modal_validate_deletePhoto"  title="Are you sure you want to delete this photo?" size="lg" centered
         :header-bg-variant="headerBG_deleteWarning" :header-text-variant="headerText_savedSuccessfully">
             <div>
                 Once deleted, photo will be permanently removed.
@@ -779,7 +789,7 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_validate_deleteVideo" ref="modal_validate_deleteVideo"  title="Are you sure you want to delete this video?" size="lg" centered 
+        <b-modal id="modal_validate_deleteVideo" ref="modal_validate_deleteVideo"  title="Are you sure you want to delete this video?" size="lg" centered
         :header-bg-variant="headerBG_deleteWarning" :header-text-variant="headerText_savedSuccessfully">
             <div>
                 Once deleted, video will be permanently removed.
@@ -790,7 +800,7 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_validate_deleteEvent" ref="modal_validate_deleteEvent"  title="Are you sure you want to delete this event?" size="lg" centered 
+        <b-modal id="modal_validate_deleteEvent" ref="modal_validate_deleteEvent"  title="Are you sure you want to delete this event?" size="lg" centered
         :header-bg-variant="headerBG_deleteWarning" :header-text-variant="headerText_savedSuccessfully">
             <div>
                 Once deleted, event will be permanently removed.
@@ -801,7 +811,7 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_validate_upload_newPhoto" ref="modal_validate_upload_newPhoto"  title="Are you sure you want to replace this photo?" size="lg" centered 
+        <b-modal id="modal_validate_upload_newPhoto" ref="modal_validate_upload_newPhoto"  title="Are you sure you want to replace this photo?" size="lg" centered
         :header-bg-variant="headerBG_deleteInfo" :header-text-variant="headerText_savedSuccessfully">
             <div>
                 Uploading a new photo will replace the previously uploaded photo.
@@ -812,7 +822,7 @@
             </template>
         </b-modal>
 
-        <b-modal id="modal_select_newPhoto" ref="modal_select_newPhoto"  title="Select new photossss" size="lg" centered 
+        <b-modal id="modal_select_newPhoto" ref="modal_select_newPhoto"  title="Select new photossss" size="lg" centered
         :header-bg-variant="headerBG_savedSuccessfully" :header-text-variant="headerText_savedSuccessfully">
             <!-- <div>
                 <input type="file" @change="handleFileUpload" />
@@ -821,33 +831,33 @@
             </div> -->
             <div>
                 <!-- <input type="file" @change="handleFileUpload" /> -->
-                <b-form-file 
-                    placeholder="Choose a file or drop it here..." 
-                    drop-placeholder="Drop file here..." 
+                <b-form-file
+                    placeholder="Choose a file or drop it here..."
+                    drop-placeholder="Drop file here..."
                     v-model="newPhoto">
                 </b-form-file>
-                
+
             </div>
-            
+
             <template #modal-footer>
                 <b-button variant="success" value="1" @click="replacePhoto()">Save</b-button>
                 <b-button variant="secondary" @click="$bvModal.hide('modal_select_newPhoto')">Cancel</b-button>
             </template>
         </b-modal>
-                            
+
     </div>
 </template>
 
 <script type="text/javascript">
-        
+
         import * as assets_service from '../../../services/assets_service.js';
         import * as auth_service from '../../../services/auth_service.js';
 
         export default {
-            
+
             data() {
                 return {
-                    
+
                     selected_photo_category: 'Please select photo category',
                     options_photo_categoryList: [
                         { value: 'Please select photo category', text: 'Please select photo category', disabled: true },
@@ -870,7 +880,7 @@
                         { value: 'Undersecretaries', text: 'Undersecretaries' },
                         { value: 'Others...', text: 'Others...' },
                     ],
-                    
+
                     selected_video_category: 'Please select video category',
                     options_video_categoryList: [
                         { value: 'Please select video category', text: 'Please select video category', disabled: true },
@@ -959,7 +969,7 @@
                             photo_fileName: null,
                             photo_personInvolved: '',
                             photo_title: '',
-                            selected_photo_category: '',
+                            photo_category: '',
                             photo_description: '',
                             photo_photographer: ''
                         }
@@ -1011,7 +1021,7 @@
                 setTimeout(() => {
                     this.initializeFsLightbox();
                 }, 2500); // Adjust delay if needed
-                      
+
                 this.loadEventDetails();
                 this.loadAlbumStatus();
                 this.loadTrackingLog();
@@ -1020,7 +1030,7 @@
 
                 this.createDate();
                 this.loadCommentLog();
-                
+
             },
             methods: {
                 createDate(){
@@ -1058,7 +1068,7 @@
                 loadCommentLog: async function (){
                     const response_commentLog = await assets_service.getCommentLog(this.event_id);
                     this.list_commentLog = response_commentLog.data;
-                    
+
                 },
                 initializeFsLightbox() {
                     if (typeof refreshFsLightbox === 'function') {
@@ -1084,12 +1094,12 @@
                     } else {
                         console.error("FS Lightbox is not available; check CDN loading");
                     }
-                    }, 1000); 
+                    }, 1000);
                 },
                 loadTrackingLog: async function (){
                     const response_trackingLog = await assets_service.getTrackingLog(this.event_id);
                     this.trackingLog = response_trackingLog.data;
-                    
+
                 },
                 loadAlbumStatus: async function (){
                     const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
@@ -1154,23 +1164,23 @@
 
 
                     const response = await assets_service.getPhotoTags_selected(this.data_photoInformation_update.photo_id);
-                    
+
                     this.photo_tags_new = response.data.map(item => item.photo_tagName);
 
-                    
+
 
                     this.$refs['modal_updatePhoto'].show();
                 },
                 showModal_updateVideo: async function(id){
                     const response_videoDetails = await assets_service.getVideoDetails(id);
                     this.data_videoInformation_update = response_videoDetails.data[0];
-                   
+
                     const response = await assets_service.getVideoTags_selected(this.data_videoInformation_update.video_id);
 
                     this.video_tags_new = response.data.map(item => item.video_tagName);
-                    
+
                     // console.log("Video ID: " + this.data_videoInformation_update.video_id);
-                    
+
                     this.$refs['modal_updateVideo'].show();
                 },
                 uploadPhoto: async function() {
@@ -1198,16 +1208,16 @@
                             formData_photoData.append(`photo_form[${index}][album_id]`, this.data_eventInformation.album_id);
                             formData_photoData.append(`photo_form[${index}][photo_id]`, this.photo_id );
                             formData_photoData.append(`photo_form[${index}][photo_fileName]`, photoEntry.photo_fileName);
-                            formData_photoData.append(`photo_form[${index}][photo_category]`, this.selected_photo_category);
+                            formData_photoData.append(`photo_form[${index}][photo_category]`, photoEntry.photo_category);
                             formData_photoData.append(`photo_form[${index}][photo_description]`, photoEntry.photo_description);
                             formData_photoData.append(`photo_form[${index}][photo_photographer]`, photoEntry.photo_photographer);
                             formData_photoData.append(`photo_form[${index}][photo_tags]`, photoEntry.photo_tags);
 
                             this.photo_tag_list = photoEntry.photo_tags;
                         });
-                        
+
                         const response_photoData = await assets_service.addPhotoData(formData_photoData);
-                            
+
 
                         // Save tags
                         let tagList = [];
@@ -1227,28 +1237,28 @@
                             message: 'Photo was added successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                         this.$refs['modal_uploadPhoto'].hide();
                         this.photo_tabs.forEach((photoEntry, index) => {
                             console.log("H E L L O O O O O O O O O O ");
                             console.log(index);
                             console.log(this.photo_tabs.length);
-                            
+
                             console.log("_______________AAAAAA_");
                             photoEntry.photo_fileName = null;
                             photoEntry.photo_title = '';
                             photoEntry.photo_photographer = '';
-                            this.selected_photo_category = 'Please select photo category';
+                            photoEntry.photo_category = 'Please select photo category';
                             photoEntry.photo_description = '';
                             photoEntry.photo_tags = '';
                             this.photo_tabs.splice(0,this.photo_tabs.length);
                         });
-                        
+
                     }catch(error){}
                 },
                 uploadVideo: async function() {
-                    
+
 
                     const response_countAlbumVideo = await assets_service.countAlbumVideoEntry(this.data_eventInformation.album_id);
 
@@ -1275,7 +1285,7 @@
                                 this.video_id = "ETV" + "2025" + "-" + "000" + this.result  + "-" + i;
                             }
                             else if (totalPhotoEntry > 9){
-                                
+
                                 let i = count_finalPhoto;
                                 this.video_id = "ETV" + "2025" + "-" + "00" + this.result  + "-" + i;
                             }
@@ -1283,7 +1293,7 @@
 
                             let url = videoEntry.video_link;
                             let urlID = url.split("v=")[1].substring(0, 11)
-                                
+
                             formData_videoData.append(`video_form[${index}][album_id]`, this.data_eventInformation.album_id);
                             formData_videoData.append(`video_form[${index}][video_id]`, this.video_id );
                             formData_videoData.append(`video_form[${index}][video_link]`, videoEntry.video_link);
@@ -1294,11 +1304,11 @@
                             formData_videoData.append(`video_form[${index}][video_duration]`, videoEntry.video_duration);
                             formData_videoData.append(`video_form[${index}][video_description]`, videoEntry.video_description);
                             formData_videoData.append(`video_form[${index}][video_tags]`, videoEntry.video_tags);
-                            
+
                             //console.log("aaa");
                             this.video_tag_list = videoEntry.video_tags;
                         });
-                        
+
                         const response_videoData = await assets_service.addVideoData(formData_videoData);
 
                         let tagList = [];
@@ -1318,7 +1328,7 @@
                             message: 'Video was added successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                         this.$refs['modal_uploadVideo'].hide();
                         this.vidClip_tabs.forEach((videoEntry, index) => {
@@ -1329,7 +1339,7 @@
                             videoEntry.video_duration = '';
                             videoEntry.video_description = '';
                             videoEntry.video_tags = '';
-                            
+
                         });
                     }catch(error){}
                 },
@@ -1345,9 +1355,9 @@
                         formData_.append('event_category', this.data_eventInformation_update.event_category);
                         formData_.append('event_sector', this.data_eventInformation_update.event_sector);
                         formData_.append('event_tags', this.album_tags_new);
-                        
+
                         const response_ = await assets_service.updateAlbum(albumID, formData_);
-                        
+
                         // Save tags
                         let formData_albumTags = new FormData();
                         let tagList = [];
@@ -1355,7 +1365,7 @@
 
                         for (let i = 0; i < tagList.length; i ++) {
                             let tagName = tagList.slice(i, i+1);
-             
+
                             const response_albumTags = await assets_service.checkAlbumTagsExists(this.data_eventInformation_update.album_id,tagName);
 
                             if (response_albumTags.data.message === "none"){
@@ -1372,17 +1382,17 @@
                             message: 'Event Information was updated successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                         this.$refs['modal_albumInfo'].hide();
-                        
+
                     }
                     catch(error){
                         //console.log("An error occurred!");
                     }
                 },
                 getAlbumID: async function(){
-                    
+
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
                     this.data_eventInformation = response_eventDetails.data[0];
                     let albumID = this.data_eventInformation.album_id;
@@ -1396,7 +1406,7 @@
                         this.albumStatus = "Submitted for Review";
                         // EVENT TRACKING STATUS
                         this.eventTrackingStatus = "Pending for Review";
-                        
+
                         try{
 
                             // CREATE EVENT TRACKING LOG
@@ -1419,7 +1429,7 @@
                                 message: 'Submitted to Publisher successfully!',
                                 type: 'success', // Options: 'success', 'info', 'error', 'default'
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                                duration: 5000, 
+                                duration: 5000,
                             });
 
                         }catch(error){
@@ -1427,7 +1437,7 @@
                                 message: 'An error occured!',
                                 type: 'error', // Options: 'success', 'info', 'error', 'default'
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                                duration: 5000, 
+                                duration: 5000,
                             });
                         }
 
@@ -1437,7 +1447,7 @@
                             message: 'Add Photo before submitting!',
                             type: 'error', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                 },
@@ -1467,7 +1477,7 @@
                             message: 'Resubmitted to Publisher successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     this.loadEventDetails();
@@ -1475,13 +1485,13 @@
                     this.loadTrackingLog();
                     this.loadCommentLog();
 
-                    
+
                 },
                 updatePhoto: async function() {
 
 
                     let photoID = this.data_photoInformation_update.photo_id;
-                    
+
                     try{
                         let formData_ = new FormData();
                         formData_.append('photo_fileName', this.data_photoInformation_update.photo_fileName);
@@ -1489,26 +1499,26 @@
                         formData_.append('photo_photographer', this.data_photoInformation_update.photo_photographer);
                         formData_.append('photo_category', this.data_photoInformation_update.photo_category);
                         formData_.append('photo_tags', this.photoTagsArray);
-                        
+
                         const response_ = await assets_service.updatePhoto(this.data_photoInformation_update.id, formData_);
-                        
+
 
                         this.loadEventPhotos();
                         this.$toast.open({
                             message: 'Photo information was updated successfully!',
-                            type: 'success', 
+                            type: 'success',
                             position: 'bottom-right',
-                            duration: 5000, 
+                            duration: 5000,
                         });
                         this.$refs['modal_updatePhoto'].hide();
-                        
+
                     }
                     catch(error){
                         this.$toast.open({
                             message: 'An error occured! Photo information was not updated.',
-                            type: 'danger', 
+                            type: 'danger',
                             position: 'bottom-right',
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                 },
@@ -1517,7 +1527,7 @@
                     let photoID = this.data_videoInformation_update.video_id;
                     try{
                         let formData_ = new FormData();
-                        
+
                         let url = this.data_videoInformation_update.video_link;
                         let urlID = url.split("v=")[1].substring(0, 11)
 
@@ -1529,30 +1539,30 @@
                         formData_.append('video_duration', this.data_videoInformation_update.video_duration);
                         formData_.append('video_type', this.data_videoInformation_update.video_type);
                         formData_.append('video_tags', this.videoTagsArray);
-                        
+
                         // formData_.append(`video_form[${index}][video_link]`, videoEntry.video_link);
                         // formData_.append(`video_form[${index}][video_youtubeID]`, urlID);
-                        
+
                         const response_ = await assets_service.updateVideo(this.data_videoInformation_update.id, formData_);
-                        
-                       
+
+
                         this.loadEventVideos();
                         this.$toast.open({
                             message: 'Video information was updated successfully!',
-                            type: 'success', 
+                            type: 'success',
                             position: 'bottom-right',
-                            duration: 5000, 
+                            duration: 5000,
                         });
 
                         this.$refs['modal_updateVideo'].hide();
-                        
+
                     }
                     catch(error){
                         this.$toast.open({
                             message: 'An error occured! Video information was not updated.',
-                            type: 'danger', 
+                            type: 'danger',
                             position: 'bottom-right',
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                 },
@@ -1564,12 +1574,12 @@
                             photo_fileName: null,
                             photo_title: '',
                             photo_photographer: '',
-                            selected_photo_category: '',
+                            photo_category: '',
                             photo_description: '',
                             photo_tags: '',
                         })
                     this.tabIndex_photo = this.photo_tabs.length+2;
-                    
+
                 },
                 vidClip_newTab() {
                     this.vidClip_tabs.push({
@@ -1591,36 +1601,36 @@
                     try{
                         let formData_ = new FormData();
                         formData_.append('is_deleted', "1");
-                        
+
                         const response_ = await assets_service.deleteAlbum(albumID, formData_);
-                        
+
                         this.$toast.open({
                             message: 'Event was deleted successfully!',
-                            type: 'success', 
+                            type: 'success',
                             position: 'bottom-right',
-                            duration: 5000, 
+                            duration: 5000,
                         });
 
                     }
                     catch(error){
                         this.$toast.open({
                             message: 'An error occured! Event cannot be deleted.',
-                            type: 'danger', 
+                            type: 'danger',
                             position: 'bottom-right',
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
 
 
                     this.$refs['modal_validate_deleteEvent'].hide();
-                    
+
                     this.$toast.open({
                         message: 'Event was deleted successfully!',
                         type: 'success', // Options: 'success', 'info', 'error', 'default'
                         position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                        duration: 5000, 
+                        duration: 5000,
                     });
-                    
+
                     this.$router.push('/author/events');
                 },
                 validate_delete_photo: async function(){
@@ -1628,14 +1638,14 @@
                 },
                 deletePhoto: async function () {
                     this.$refs['modal_validate_deletePhoto'].hide();
-                    
+
                     this.$toast.open({
                         message: 'Photo was deleted successfully!',
                         type: 'success', // Options: 'success', 'info', 'error', 'default'
                         position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                        duration: 5000, 
+                        duration: 5000,
                     });
-                    
+
                     this.loadEventPhotos();
                 },
                 validate_delete_video: async function(){
@@ -1643,14 +1653,14 @@
                 },
                 deleteVideo: async function () {
                     this.$refs['modal_validate_deleteVideo'].hide();
-                    
+
                     this.$toast.open({
                         message: 'Video was deleted successfully!',
                         type: 'success', // Options: 'success', 'info', 'error', 'default'
                         position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                        duration: 5000, 
+                        duration: 5000,
                     });
-                    
+
                     this.loadEventVideos();
                 },
                 validate_upload_newPhoto: async function(){
@@ -1683,15 +1693,15 @@
                                 message: 'Photo was replaced successfully!',
                                 type: 'success', // Options: 'success', 'info', 'error', 'default'
                                 position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                                duration: 5000, 
+                                duration: 5000,
                             });
                         } catch (error) {
-                            
+
                             this.$toast.open({
                                 message: 'An error occured! Photo cannot be replaced.',
-                                type: 'danger', 
+                                type: 'danger',
                                 position: 'bottom-right',
-                                duration: 5000, 
+                                duration: 5000,
                             });
                             console.error('Error replacing photo:', error.response?.data?.message || error.message);
                         }
@@ -1743,7 +1753,7 @@
             },
 
         }
-/** 
+/**
         onChange(e) {
             this.questionImage = e.target.files[0];
             this.fields.img = [this.questionImage];

@@ -32,7 +32,7 @@
                                         <div class="col-sm-6 col-lg-4" >
                                             <div class="row row-cards">
                                                 <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
+                                                    NO DATA AVAILAVLE
                                                 </div>
                                             </div>
                                         </div>
@@ -52,9 +52,7 @@
                                                     Revision for Review
                                                 </div>
                                             </template>
-
                                         </b-table>
-                                        
                                     </div>
                                 </b-tab>
                                 <!-- Under Review -->
@@ -72,7 +70,7 @@
                                         <div class="col-sm-6 col-lg-4" >
                                             <div class="row row-cards">
                                                 <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
+                                                    NO DATA AVAILAVLE
                                                 </div>
                                             </div>
                                         </div>
@@ -94,13 +92,13 @@
                                             </template>
 
                                         </b-table>
-                                        
+
                                     </div>
                                 </b-tab>
                                 <!-- For Revision  -->
                                 <b-tab>
                                     <template #title>
-                                        For Revision 
+                                        For Revision
                                         <span v-if="totalRows_forRevision != 0">
                                             <b-badge variant="danger">{{totalRows_forRevision}}</b-badge>
                                         </span>
@@ -112,7 +110,7 @@
                                         <div class="col-sm-6 col-lg-4" >
                                             <div class="row row-cards">
                                                 <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
+                                                    NO DATA AVAILAVLE
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +128,7 @@
                                                 </div>
                                             </template>
                                         </b-table>
-                                        
+
                                     </div>
                                 </b-tab>
                                 <!-- Unpublished -->
@@ -148,7 +146,7 @@
                                         <div class="col-sm-6 col-lg-4" >
                                             <div class="row row-cards">
                                                 <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
+                                                    NO DATA AVAILAVLE
                                                 </div>
                                             </div>
                                         </div>
@@ -178,7 +176,7 @@
                                         <div class="col-sm-6 col-lg-4" >
                                             <div class="row row-cards">
                                                 <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
+                                                    NO DATA AVAILAVLE
                                                 </div>
                                             </div>
                                         </div>
@@ -208,7 +206,7 @@
                                         <div class="col-sm-6 col-lg-4" >
                                             <div class="row row-cards">
                                                 <div class="h3 m-0">
-                                                    NO DATA AVAILAVLE 
+                                                    NO DATA AVAILAVLE
                                                 </div>
                                             </div>
                                         </div>
@@ -231,14 +229,14 @@
             </div>
         </div>
 
-        
+
 
     </div>
 </template>
 
 
 <script type="text/javascript">
-    
+
         import * as assets_service from '../../../services/assets_service.js';
         import * as auth_service from '../../../services/auth_service.js';
 
@@ -271,14 +269,14 @@
                     list_published: [], totalRows_published: '',
 
                     list_featured: [], totalRows_featured: '',
-                    
+
                     finalTime: '',
                     finalDate: '',
                     finalDateTime: '',
 
                     eventDetails: {},
                     albumStatus:'',
-                    
+
                 }
             },
             mounted(){
@@ -295,7 +293,7 @@
                 userData: async function(){
                     try{
 
-                        
+
                         const response = await auth_service.getUserData();
                         this.displayName=response.data.user.name;
                     } catch(error) {
@@ -341,6 +339,7 @@
                     try{
                         const response = await assets_service.getAllListForReview_publisher();
                         this.list_forReview = response.data;
+                        console.log("hello");
                         console.log(this.list_forReview);
                         this.totalRows_forReview= this.list_forReview.length;
                     } catch(error) {
@@ -354,7 +353,6 @@
                     try{
                         const response = await assets_service.getAllListUnderReview_publisher();
                         this.list_underReview = response.data;
-                        console.log(this.list_underReview);
                         this.totalRows_underReview= this.list_underReview.length;
                     } catch(error) {
                         this.flashMessage.error({
@@ -367,7 +365,6 @@
                     try{
                         const response = await assets_service.getAllListForRevision_publisher();
                         this.list_forRevision = response.data;
-                        console.log(this.list_forRevision);
                         this.totalRows_forRevision= this.list_forRevision.length;
                     } catch(error) {
                         this.flashMessage.error({
@@ -380,7 +377,6 @@
                     try{
                         const response = await assets_service.getAllListUnpublished_publisher();
                         this.list_unpublished = response.data;
-                        console.log(this.list_unpublished);
                         this.totalRows_unpublished= this.list_unpublished.length;
                     } catch(error) {
                         this.flashMessage.error({
@@ -393,7 +389,6 @@
                     try{
                         const response = await assets_service.getAllListPublished_publisher();
                         this.list_published = response.data;
-                        console.log(this.list_published);
                         this.totalRows_published= this.list_published.length;
                     } catch(error) {
                         this.flashMessage.error({
@@ -406,7 +401,6 @@
                     try{
                         const response = await assets_service.getAllListFeatured();
                         this.list_featured = response.data;
-                        console.log(this.list_featured);
                         this.totalRows_featured= this.list_featured.length;
                     } catch(error) {
                         this.flashMessage.error({
@@ -423,7 +417,7 @@
                 },
                 async navigateToReview(album_id) {
                     const link = await this.reviewEventLink(album_id);
-                    this.$router.push(link); 
+                    this.$router.push(link);
                 },
 
             }

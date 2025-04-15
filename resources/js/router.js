@@ -11,6 +11,7 @@ import Admin_Event_List from './views/DMC/Admin/_Admin_EventList.vue';
 
 import Author_Home from './views/DMC/Author/_Author_Home.vue';
 import Author_Events from './views/DMC/Author/_Author_Events.vue';
+import Author_Events_Upcoming from './views/DMC/Author/_Author_Events_Upcoming.vue';
 import Author_Dashboard from './views/DMC/Author/_Author_Dashboard.vue';
 import Author_Event_Add from './views/DMC/Author/_Author_EventAdd.vue';
 import Author_Event_List from './views/DMC/Author/_Author_EventList.vue';
@@ -32,7 +33,7 @@ import Video_List from './views/DMC/Admin/_Admin_EventAdd.vue';
 Vue.use(Router);
 
 const routes = [
-    
+
     {
         path: '/login',
         name: 'login',
@@ -84,6 +85,11 @@ const routes = [
                 path: '/author/events',
                 name: 'author-events',
                 component: Author_Events,
+            },
+            {
+                path: '/author/events/upcoming',
+                name: 'author-events-upcoming',
+                component: Author_Events_Upcoming,
             },
             {
                 path: '/author/event/add',

@@ -43,7 +43,7 @@
                         <div class="col-auto ms-auto d-print-none">
                             <div class="d-flex">
                                 <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                    
+
                                 </div>
                                 <div v-if="currentAlbumStatus === 'Submitted for Review' ">
                                     <b-button @click="changeStatus(3)" class="mr-1" variant="danger" >
@@ -107,7 +107,7 @@
                                             </b-button>
                                         </div>
                                         <div v-if="currentAlbumStatus === 'Saved as Draft' ">
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -156,19 +156,19 @@
                                         </h3>
                                     </div>
                                     <div class="card-body">
-                                        <div v-if="currentFeaturedStatus === '0' ">
-                                            <b-button @click="changeFeatured(0)" class="mr-1" variant="success" >
+                                        <div v-if="currentFeaturedStatus === '1' ">
+                                            <b-button @click="changeFeatured(1)" class="mr-1" variant="success" >
                                                 YES
                                             </b-button>
-                                            <b-button @click="changeFeatured(1)" class="mr-1" variant="secondary" >
+                                            <b-button @click="changeFeatured(0)" class="mr-1" variant="secondary" >
                                                 NO
                                             </b-button>
                                         </div>
-                                        <div v-if="currentFeaturedStatus === '1' ">
-                                            <b-button @click="changeFeatured(0)" class="mr-1" variant="secondary" >
+                                        <div v-if="currentFeaturedStatus === '0' ">
+                                            <b-button @click="changeFeatured(1)" class="mr-1" variant="secondary" >
                                                 YES
                                             </b-button>
-                                            <b-button @click="changeFeatured(1)" class="mr-1" variant="danger" >
+                                            <b-button @click="changeFeatured(0)" class="mr-1" variant="danger" >
                                                 NO
                                             </b-button>
                                         </div>
@@ -176,7 +176,7 @@
                                 </div>
 
                             </div>
-                            
+
                             <div v-if="currentAlbumStatus === 'For Comment' ">
                                 <div v-if="noOfComment === 0">
                                     <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
@@ -208,11 +208,16 @@
                                                 <br>
                                                 {{event.section_comment}}
                                             </span>
+                                            <span v-if="event.section_title === 'VIDEO DETAILS'">
+                                                <span style="font-weight: 700">{{event.section_title}}: </span> {{event.section_id}}
+                                                <br>
+                                                {{event.section_comment}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div v-if="currentAlbumStatus === 'For Revision' ">
                                 <div v-if="noOfComment === 0">
                                     <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
@@ -248,7 +253,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div v-if="currentAlbumStatus === 'Revision For Review' ">
                                 <div v-if="noOfComment === 0">
                                     <div class="card event-cardd"  id="Comment Section"  style="margin-top: 15px">
@@ -284,7 +289,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="card event-cardd" id="Event_Tracking_Log" style="margin-top: 15px">
                                 <div class="card-header">
                                     <h3 class="card-title">
@@ -312,7 +317,7 @@
                                     </pre>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="col-md-8">
                             <div class="card event-cardd">
@@ -335,11 +340,11 @@
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active show" id="tabs-home-7">
-                                            
+
                                             <div v-if="this.photo_length === 0">
                                                 <div class="row row-cards">
                                                     <div class="h3 m-0">
-                                                        NO PHOTO AVAILAVLE 
+                                                        NO PHOTO AVAILAVLE
                                                     </div>
                                                 </div>
                                             </div>
@@ -390,7 +395,7 @@
                                                 <span v-if="this.video_length === 0">
                                                     <div class="row row-cards">
                                                         <div class="h3 m-0">
-                                                            NO VIDEO AVAILAVLE 
+                                                            NO VIDEO AVAILAVLE
                                                         </div>
                                                     </div>
                                                 </span>
@@ -406,12 +411,12 @@
                                                                 <div class="ratio ratio-4x3 card-img-top">
                                                                     <iframe width="420" height="315"
                                                                         :src='`https://www.youtube.com/embed/`+`${event.video_youtubeID}`'>
-                                                                        
+
                                                                     </iframe>
                                                                 </div>
                                                                 <div class="ribbon ribbon-top">
                                                                     <div v-if="currentAlbumStatus === 'For Comment' ">
-                                                                        <b-button @click="leaveComment(event.id, 'VIDEO DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
+                                                                        <b-button @click="leaveComment(event.video_id, 'VIDEO DETAILS')" class="mr-1" variant="success" v-b-tooltip.hover title="Comment">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M12.01 18.594l-4.01 2.406v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v5.5" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
                                                                         </b-button>
                                                                     </div>
@@ -451,7 +456,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
@@ -462,7 +467,7 @@
             <div>
                 <b-form-group class="group" id="form_externalEventDate">
                     <b-form-textarea v-model="commentSection"  placeholder="Leave a comment here..." rows="5" max-rows="10" ></b-form-textarea>
-                </b-form-group> 
+                </b-form-group>
             </div>
 
             <template #modal-footer>
@@ -471,12 +476,12 @@
         </b-modal>
 
 
-                            
+
     </div>
 </template>
 
 <script type="text/javascript">
-        
+
         import * as assets_service from '../../../services/assets_service.js';
         import * as auth_service from '../../../services/auth_service.js';
 
@@ -521,7 +526,7 @@
                 setTimeout(() => {
                     this.initializeFsLightbox();
                 }, 2500); // Adjust delay if needed
-                      
+
                 this.userData();
                 this.createDate();
                 this.loadTrackingLog();
@@ -558,7 +563,7 @@
                     } else {
                         console.error("FS Lightbox is not available; check CDN loading");
                     }
-                    }, 1000); 
+                    }, 1000);
                 },
                 userData: async function(){
                     try{
@@ -614,7 +619,7 @@
                 loadCommentLog: async function (){
                     const response_commentLog = await assets_service.getCommentLog(this.event_id);
                     this.list_commentLog = response_commentLog.data;
-                    
+
                 },
                 loadAlbumStatus: async function (){
                     const response_statusAlbum = await assets_service.getAlbumStatus(this.event_id);
@@ -624,7 +629,7 @@
                 loadFeaturedStatus: async function (){
                     const response_featuredStatusAlbum = await assets_service.getFeaturedStatus(this.event_id);
                     this.currentFeaturedStatus = response_featuredStatusAlbum.data[0];
-                    
+
                 },
                 loadEventDetails: async function(data){
 
@@ -660,13 +665,11 @@
 
                     const response_countPhoto = await assets_service.countAlbumComment(this.event_id);
                     this.noOfComment = response_countPhoto.data;
-
-
                 },
                 leaveComment: async function (value, section){
                     this.sectionID = value;
                     this.sectionTitle = section;
-                    
+
                     this.$refs['modal_commentBox'].show();
                 },
                 submitComment: async function (){
@@ -681,7 +684,7 @@
                         formData_commentData.append('section_title', this.sectionTitle);
                         formData_commentData.append('section_comment', this.sectionComment);
                         const response_commentData = await assets_service.addComment(formData_commentData);
-                        
+
                         this.loadCountCommentEntry();
                         this.loadCommentLog();
                         this.commentSection = '';
@@ -691,12 +694,10 @@
                             message: 'Comment has been submitted',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
-
-
                     }catch (error) {
-                        
+
                     }
 
                 },
@@ -704,9 +705,9 @@
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
                     this.data_eventInformation = response_eventDetails.data[0];
                     let albumID = this.data_eventInformation.album_id;
-                    
+
                     if (value == "3"){
-                    
+
                         // EVENT STATUS
                         this.albumStatus = "Under Review";
                         let formData_albumStatus = new FormData();
@@ -726,11 +727,11 @@
                             message: 'Under review',
                             type: 'info', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     else if (value == "4"){
-                    
+
                         // EVENT STATUS
                         this.albumStatus = "For Revision";
                         let formData_albumStatus = new FormData();
@@ -749,11 +750,11 @@
                             message: 'Event Sent for Revision',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     else if (value == "6"){
-                    
+
                         // EVENT STATUS
                         this.albumStatus = "Unpublished";
                         let formData_albumStatus = new FormData();
@@ -772,17 +773,17 @@
                             message: 'Accepted and now for Publish!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     else if (value == "7"){
-                        
+
                         // EVENT STATUS
                         this.albumStatus = "Published";
                         let formData_albumStatus = new FormData();
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
-                        
+
                         // EVENT FEATURED
                         this.featuredStatus = "0"; // NO
                         let formData_featuredStatus = new FormData();
@@ -803,26 +804,26 @@
                             message: 'Published successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     else if (value == "8"){
-                    
+
                         // EVENT STATUS
                         this.albumStatus = "For Comment";
                         let formData_albumStatus = new FormData();
                         formData_albumStatus.append('album_status', this.albumStatus);
                         const response_albumStatusData = await assets_service.updateAlbumStatus(this.event_id, formData_albumStatus);
-                       
+
                         this.$toast.open({
                             message: 'Kindly leave a comment to indicate the reason for the revision',
                             type: 'info', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     else if (value == "9"){
-                    
+
                         // EVENT STATUS
                         this.albumStatus = "Unpublished";
                         let formData_albumStatus = new FormData();
@@ -841,7 +842,7 @@
                             message: 'Unpublished successfully!',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
 
@@ -853,7 +854,7 @@
                     const response_eventDetails = await assets_service.getEventDetails(this.event_id);
                     this.data_eventInformation = response_eventDetails.data[0];
                     let albumID = this.data_eventInformation.album_id;
-                    
+
                     if (value == "0"){
                         this.featuredStatus = "0"; // NO
                         let formData_featuredStatus = new FormData();
@@ -861,10 +862,10 @@
                         const response_featuredStatusData = await assets_service.updateFeaturedStatus(this.event_id, formData_featuredStatus);
 
                         this.$toast.open({
-                            message: 'The event is now listed as a featured event on your website',
+                            message: 'This is now removed as a featured event on your website',
                             type: 'success', // Options: 'success', 'info', 'error', 'default'
                             position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                            duration: 5000, 
+                            duration: 5000,
                         });
                     }
                     else if (value == "1"){
@@ -874,10 +875,10 @@
                         const response_featuredStatusData = await assets_service.updateFeaturedStatus(this.event_id, formData_featuredStatus);
 
                     this.$toast.open({
-                        message: 'The event is now removed as a featured event on your website',
+                        message: 'This is now listed as a featured event on your website',
                         type: 'success', // Options: 'success', 'info', 'error', 'default'
                         position: 'bottom-right', // Options: 'top', 'top-right', 'top-left', 'bottom', 'bottom-right', 'bottom-left'
-                        duration: 5000, 
+                        duration: 5000,
                     });
                     }
 
@@ -984,5 +985,5 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    
+
 </style>

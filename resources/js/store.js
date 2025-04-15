@@ -5,8 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        apiURL: 'http://127.0.0.1:8000/api',
-        serverPath: 'http://127.0.0.1:8000'
+        apiURL: 'http://127.0.0.1:8001/api',
+        serverPath: 'http://127.0.0.1:8001'
     },
     mutations: {},
     actions: {}
