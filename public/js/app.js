@@ -10248,10 +10248,10 @@ function _defineProperty(obj, key, value) {
                   return 0 && false;
                 }) {
                   var i = count_finalPhoto;
-                  _this2.photo_id = "ETP" + "2025" + "-" + "000" + i + "-" + i;
+                  _this2.photo_id = _this2.data_eventInformation.album_id + "-P" + i;
                 } else if (totalPhotoEntry > 9) {
                   var _i = count_finalPhoto;
-                  _this2.photo_id = "ETP" + "2025" + "-" + "00" + _i + "-" + _i;
+                  _this2.photo_id = _this2.data_eventInformation.album_id + "-P" + _i;
                 }
                 formData_photoData.append("photo_form[".concat(index, "][album_id]"), _this2.data_eventInformation.album_id);
                 formData_photoData.append("photo_form[".concat(index, "][photo_id]"), _this2.photo_id);
@@ -10353,10 +10353,12 @@ function _defineProperty(obj, key, value) {
                   return 0 && false;
                 }) {
                   var i = count_finalPhoto;
-                  _this3.video_id = "ETV" + "2025" + "-" + "000" + _this3.result + "-" + i;
+                  // this.video_id = "ETV" + "2025" + "-" + "000" + this.result  + "-" + i;
+                  _this3.video_id = _this3.data_eventInformation.album_id + "-V" + i;
                 } else if (totalPhotoEntry > 9) {
                   var _i2 = count_finalPhoto;
-                  _this3.video_id = "ETV" + "2025" + "-" + "00" + _this3.result + "-" + _i2;
+                  // this.video_id = "ETV" + "2025" + "-" + "00" + this.result  + "-" + i;
+                  _this3.video_id = _this3.data_eventInformation.album_id + "-V" + _i2;
                 }
                 var url = videoEntry.video_link;
                 var urlID = url.split("v=")[1].substring(0, 11);
@@ -15300,9 +15302,14 @@ function _asyncToGenerator(fn) {
         key: 'event_location',
         label: 'Location'
       }, {
-        key: 'actions',
-        label: 'Action'
-      }],
+        key: 'event_organizing_agency',
+        label: 'Organizing Agency'
+      }, {
+        key: 'event_description',
+        label: 'Brief Description'
+      }
+      // { key: 'actions', label: 'Action' }
+      ],
       pageOptions: [5, 10, 15, {
         value: 100,
         text: "Show a lot"
@@ -155457,7 +155464,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    apiURL: 'http://127.0.0.1:8001/api',
+    apiURL: 'http://127.0.0.1:8000/api',
     serverPath: 'http://127.0.0.1:8001'
   },
   mutations: {},

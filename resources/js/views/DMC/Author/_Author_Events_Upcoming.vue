@@ -131,7 +131,9 @@
                         { key: 'event_title', label: 'Event Title'},
                         { key: 'event_date', label: 'Date'},
                         { key: 'event_location', label: 'Location'},
-                        { key: 'actions', label: 'Action' }
+                        { key: 'event_organizing_agency', label: 'Organizing Agency'},
+                        { key: 'event_description', label: 'Brief Description'},
+                        // { key: 'actions', label: 'Action' }
                     ],
                     pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
                     totalRows: 0,

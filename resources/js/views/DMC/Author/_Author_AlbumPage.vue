@@ -1198,11 +1198,11 @@
                             let count_finalPhoto = count_newPhoto + totalPhotoEntry;
                             if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
-                                this.photo_id = "ETP" + "2025" + "-" + "000" + i  + "-" + i;
+                                this.photo_id = this.data_eventInformation.album_id + "-P" + i;
                             }
                             else if (totalPhotoEntry > 9){
                                 let i = count_finalPhoto;
-                                this.photo_id = "ETP" + "2025" + "-" + "00" + i  + "-" + i;
+                                this.photo_id = this.data_eventInformation.album_id + "-P" + i;
                             }
 
                             formData_photoData.append(`photo_form[${index}][album_id]`, this.data_eventInformation.album_id);
@@ -1282,12 +1282,14 @@
 
                             if (totalPhotoEntry => 0 && totalPhotoEntry <= 9 ){
                                 let i = count_finalPhoto;
-                                this.video_id = "ETV" + "2025" + "-" + "000" + this.result  + "-" + i;
+                                // this.video_id = "ETV" + "2025" + "-" + "000" + this.result  + "-" + i;
+                                this.video_id = this.data_eventInformation.album_id + "-V" + i;
                             }
                             else if (totalPhotoEntry > 9){
 
                                 let i = count_finalPhoto;
-                                this.video_id = "ETV" + "2025" + "-" + "00" + this.result  + "-" + i;
+                                // this.video_id = "ETV" + "2025" + "-" + "00" + this.result  + "-" + i;
+                                this.video_id = this.data_eventInformation.album_id + "-V" + i;
                             }
 
 
